@@ -1,4 +1,5 @@
 import Particle from './Particle';
+import Confetti from './Confetti';
 
 export default class ParticleSystem{
     constructor(origin) {
@@ -11,7 +12,15 @@ export default class ParticleSystem{
     }
 
     addParticle() {
-        this.particles.push(new Particle(this.origin, 10));
+        let p;
+        if(random(1) < 0.5){
+            p = new Particle(this.origin, 10);
+        }
+        else{
+            p = new Confetti(this.origin, 10);
+        }
+
+        this.particles.push(p);
     }
 
     update() {

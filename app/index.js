@@ -7,6 +7,7 @@ const p5functions = {
     setup: function() {
         createCanvas(window.innerWidth, window.innerHeight);
         let center = new p5.Vector(width / 2, height / 2);
+        particleSystems.push(new ParticleSystem(center))
     },
 
     draw: function() {
