@@ -8,7 +8,8 @@ let attractors = [];
 let gravity, wind;
 let repeller, attractor;
 const moverRadius = 5;
-const numMovers = 16;
+const numMovers = 10;
+const numAttractors = 5;
 const frictionCoefficient = 0.06
 const frictionNormal = 1
 const frictionMag = frictionCoefficient * frictionNormal
@@ -17,18 +18,26 @@ const p5functions = {
     setup: function() {
         createCanvas(window.innerWidth, window.innerHeight);
         background(20);
-        let center = new p5.Vector(width / 2, height / 2);
+        let center = new p5.Vector(0, height / 2);
 
         for(let i = 0; i < numMovers; i++){
-            movers.push(new Mover(5, center.copy(), i+1))
+            const pos = center.copy();
+            pos.y -= 10*numMovers;
+            pos.y += 10*i;
+            movers.push(new Mover(2, pos, 10))
         }
 
         gravity = new p5.Vector(0, 0.08);
         wind = new p5.Vector(0.05, 0);
 
         // repeller = new Repeller(new p5.Vector(width / 2 - 20, height / 2 + 80));
-        attractors.push(new Attractor(new p5.Vector(random(0, width), random(0, height))));
-        attractors.push(new Attractor(new p5.Vector(random(0, width), random(0, height))));
+        for(let i = 0; i < numAttractors; i++){
+            const x = random(0, width*0.7);
+            const pos = new p5.Vector(x, height/2);
+            const a = new Attractor((i+1)*5, pos);
+            attractors.push(a);
+            // a.draw();
+        }
     },
 
     draw: function() {
@@ -36,31 +45,25 @@ const p5functions = {
         movers.forEach(function (mv) {
             mv.run();
             // mv.applyForce(gravity);
-            if(keyIsPressed){
-                mv.applyForce(wind);
-            }
             // const repellerForce = repeller.repel(mv);
             // mv.applyForce(repellerForce);
             attractors.forEach(function(a){
                 const attrForce = a.attract(mv);
                 mv.applyForce(attrForce);
-                a.draw();
+                if(mouseIsPressed){
+                    a.draw();
+                }
             });
-
-            const friction = mv.velocity.copy()
-            friction.mult(-1);
-            friction.normalize();
-            friction.mult(frictionMag);
 
             // mv.applyForce(friction);
         });
 
     },
 
-    mousePressed: function(){
-        const pos = new p5.Vector(mouseX, mouseY);
-        movers.push(new Mover(moverRadius, pos))
-    }
+    // mousePressed: function(){
+    //     const pos = new p5.Vector(mouseX, mouseY);
+    //     movers.push(new Mover(moverRadius, pos))
+    // }
 }
 
 // set global functions for p5

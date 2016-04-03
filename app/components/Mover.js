@@ -1,8 +1,9 @@
-export default class Mover{
-    constructor(r, l, m=1){
+import Attractor from './Attractor'
+export default class Mover extends Attractor{
+    constructor(r, p, m=1){
+        super(m, p);
         this.radius = r;
         this.mass = m;
-        this.pos = l;
         this.velocity = new p5.Vector(0, 1); 
         this.acceleration = new p5.Vector(0, 0);
     }

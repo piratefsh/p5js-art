@@ -1,16 +1,16 @@
 
 export default class Attractpr{
-    constructor(pos){
+    constructor(m, pos){
         this.pos = pos;
 
         this.G = 0.4;
-        this.mass = 40;
+        this.mass = m;
         this.radius = this.mass;
     }
 
     draw(){
         noStroke();
-        fill(255, 100);
+        fill(255, 50);
         ellipse(this.pos.x, this.pos.y, this.radius, this.radius)
     }
 
@@ -25,7 +25,7 @@ export default class Attractpr{
         force.normalize();
 
         // constrain distance
-        distance = constrain(distance, 5, 100);
+        distance = constrain(distance, this.radius, 200);
 
         // magintude
         const strength = this.G * (this.mass * p.mass) / (distance * distance)
