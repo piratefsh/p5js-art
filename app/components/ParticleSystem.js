@@ -23,6 +23,19 @@ export default class ParticleSystem{
         this.particles.push(p);
     }
 
+    applyForce(force){
+        this.particles.forEach(function(p){
+            p.applyForce(force);
+        });
+    }
+
+    applyRepeller(repeller){
+        this.particles.forEach(function(p){
+            const force = repeller.repel(p);
+            p.applyForce(force);
+        });   
+    }
+
     update() {
         //  remove dead particles
         this.particles = this.particles.filter(function(p) {

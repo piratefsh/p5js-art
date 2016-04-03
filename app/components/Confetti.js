@@ -3,6 +3,7 @@ import Particle from './Particle'
 export default class Confetti extends Particle{
     constructor(origin, radius){
         super(origin, radius);
+        this.mass = 1.1;
     }
 
     draw(){
