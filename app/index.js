@@ -60,6 +60,12 @@ const p5functions = {
 
     },
 
+    keyPressed: function() {
+      if (keyCode === ENTER) {
+        save();
+      } 
+    }
+
     // mousePressed: function(){
     //     const pos = new p5.Vector(mouseX, mouseY);
     //     movers.push(new Mover(moverRadius, pos))
