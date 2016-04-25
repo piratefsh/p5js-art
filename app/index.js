@@ -2,7 +2,7 @@ import init from 'p5init'
 
 const gridSize = { x: 20, y: 20 }
 const cellSize = 36;
-const sizeRange = {x: 4, y: 24}
+const sizeRange = {x: 4, y: 32}
 let time = 0;
 const color = {bg: 0, fg: 255}
 const colorVector = {bg: 5, fg: -5}
@@ -15,9 +15,9 @@ const p5functions = {
 
     draw: function() {
         background(color.bg, 200);
-        time += 0.2;
-        color.bg += colorVector.bg;
-        color.fg += colorVector.fg;
+        time += 0.05;
+        // color.bg += colorVector.bg;
+        // color.fg += colorVector.fg;
         if(color.bg > 255 || color.bg < 0){
             colorVector.bg *= -1;
             colorVector.fg *= -1;
