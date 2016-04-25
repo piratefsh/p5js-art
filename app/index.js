@@ -1,40 +1,35 @@
 import init from 'p5init'
+import Stream from './components/Stream'
 
-const gridSize = { x: 20, y: 20 }
-const cellSize = 36;
-const sizeRange = {x: 4, y: 32}
-let time = 0;
-const color = {bg: 0, fg: 255}
-const colorVector = {bg: 5, fg: -5}
+const gridSize = {x: 5, y: 1};
+const timeSpeed = 0.1;
+const streams = new Array();
+const cellSize = 40;
 
 const p5functions = {
     setup: function() {
         createCanvas(window.innerWidth, window.innerHeight);
-        frameRate(10);
-    },
-
-    draw: function() {
-        background(color.bg, 200);
-        time += 0.05;
-        // color.bg += colorVector.bg;
-        // color.fg += colorVector.fg;
-        if(color.bg > 255 || color.bg < 0){
-            colorVector.bg *= -1;
-            colorVector.fg *= -1;
-        }
-
+        // frameRate(30);
         let x, y, n, radius;
         for(let i = 0; i < gridSize.x; i++){
             x = i * cellSize;
             for(let j = 0; j < gridSize.y; j++){
                 y = j * cellSize;
-                n = noise(i+time, j+time);
-                radius = map(n, 0, 1, sizeRange.x, sizeRange.y);
-                fill(color.fg, 200);
-                ellipse(x, y, radius, radius);
+                streams.push(new Stream(new p5.Vector(i, j), timeSpeed, new p5.Vector(x, y), new p5.Vector(x+width, y)));
             }
         }
-        
+        translate(width/2, height/2)
+        // noLoop();
+        background(0);
+    },
+
+    draw: function() {
+        // for(let i = 0; i < 30; i++){
+            streams.forEach(function(stream){
+                stream.update();
+                stream.draw();
+            })
+        // }
     },
 
     keyPressed: function() {
