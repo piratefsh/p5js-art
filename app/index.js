@@ -1,63 +1,40 @@
 import init from 'p5init'
-import Mover from './components/Mover';
-import Repeller from './components/Repeller';
-import Attractor from './components/Attractor';
 
-let movers = [];
-let attractors = [];
-let gravity, wind;
-let repeller, attractor;
-const moverRadius = 5;
-const numMovers = 10;
-const numAttractors = 5;
-const frictionCoefficient = 0.06
-const frictionNormal = 1
-const frictionMag = frictionCoefficient * frictionNormal
+const gridSize = { x: 20, y: 20 }
+const cellSize = 36;
+const sizeRange = {x: 4, y: 24}
+let time = 0;
+const color = {bg: 0, fg: 255}
+const colorVector = {bg: 5, fg: -5}
 
 const p5functions = {
     setup: function() {
         createCanvas(window.innerWidth, window.innerHeight);
-        background(20);
-        let center = new p5.Vector(0, height / 2);
-
-        for(let i = 0; i < numMovers; i++){
-            const pos = center.copy();
-            pos.y -= 10*numMovers;
-            pos.y += 10*i;
-            movers.push(new Mover(2, pos, 10))
-        }
-
-        gravity = new p5.Vector(0, 0.08);
-        wind = new p5.Vector(0.05, 0);
-
-        // repeller = new Repeller(new p5.Vector(width / 2 - 20, height / 2 + 80));
-        for(let i = 0; i < numAttractors; i++){
-            const x = random(0, width*0.7);
-            const pos = new p5.Vector(x, height/2);
-            const a = new Attractor((i+1)*5, pos);
-            attractors.push(a);
-            // a.draw();
-        }
+        frameRate(10);
     },
 
     draw: function() {
-        background(20, 0);
-        movers.forEach(function (mv) {
-            mv.run();
-            // mv.applyForce(gravity);
-            // const repellerForce = repeller.repel(mv);
-            // mv.applyForce(repellerForce);
-            attractors.forEach(function(a){
-                const attrForce = a.attract(mv);
-                mv.applyForce(attrForce);
-                if(mouseIsPressed){
-                    a.draw();
-                }
-            });
+        background(color.bg, 200);
+        time += 0.2;
+        color.bg += colorVector.bg;
+        color.fg += colorVector.fg;
+        if(color.bg > 255 || color.bg < 0){
+            colorVector.bg *= -1;
+            colorVector.fg *= -1;
+        }
 
-            // mv.applyForce(friction);
-        });
-
+        let x, y, n, radius;
+        for(let i = 0; i < gridSize.x; i++){
+            x = i * cellSize;
+            for(let j = 0; j < gridSize.y; j++){
+                y = j * cellSize;
+                n = noise(i+time, j+time);
+                radius = map(n, 0, 1, sizeRange.x, sizeRange.y);
+                fill(color.fg, 200);
+                ellipse(x, y, radius, radius);
+            }
+        }
+        
     },
 
     keyPressed: function() {
@@ -65,11 +42,7 @@ const p5functions = {
         save();
       } 
     }
-
-    // mousePressed: function(){
-    //     const pos = new p5.Vector(mouseX, mouseY);
-    //     movers.push(new Mover(moverRadius, pos))
-    // }
+  
 }
 
 // set global functions for p5
