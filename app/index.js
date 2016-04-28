@@ -7,8 +7,7 @@ let hand, img, mouseInit;
 let initMousePos = false;
 const p5functions = {
     preload: function(){
-        const url = '/' + mbs
-        img = loadImage(url);
+        img = loadImage(mbs);
         loadPixels(img);
 
 

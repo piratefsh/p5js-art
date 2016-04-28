@@ -1,0 +1,17 @@
+.original-img {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  width: 240px;
+  box-shadow: 0 0 2px 1px white;
+  border-radius: 4px; }
+
+body {
+  margin: 0;
+  font-family: sans-serif; }
+
+.how-to {
+  padding: 8px 16px;
+  position: fixed;
+  color: white;
+  font-size: 14px; }
