@@ -5,7 +5,7 @@ export default class UnsteadyHand{
     this.original = img.copyImage(width, height);
   }
 
-  getStamp(){
+  getStamp(opacity=80){
     const img = this.original.copyImage(width, height);
 
     // get pixels
@@ -15,7 +15,7 @@ export default class UnsteadyHand{
     let n = 0;
     while(n < img.pixels.length){
         const brightness = (img.pixels[n] + img.pixels[n+1] + img.pixels[n+2])/3;
-        img.pixels[n+3] = 80;
+        img.pixels[n+3] = opacity;
         n+=4;
     }
 
@@ -24,9 +24,24 @@ export default class UnsteadyHand{
     return img;
   }
 
-  spiral(center){
+  shake(movementFn, filter=NORMAL){
+    image(this.original, 0, 0, width, height);
 
+    const stamp = this.getStamp(40);
+    stamp.filter(BLUR, 1);
+    let time = 0;
+    let endTime = 1;
 
+    let movement = movementFn(time);
+
+    while(time <= endTime){  
+      let [i, j] = movement;
+      blend(stamp, 0, 0, width, height, i, j, width, height, filter);
+      stamp.setOpacity(255*(1-time));
+
+      time += 0.05;
+      movement = movementFn(time);
+    }
   }
 
   right(movement=10){

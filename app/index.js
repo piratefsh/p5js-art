@@ -1,7 +1,7 @@
 import 'styles/style.scss'
 import init from 'p5init'
 import UnsteadyHand from './components/UnsteadyHand';
-import mbs from 'images/mbs.jpg';
+import mbs from 'images/asm.jpg';
 
 let hand, img ;
 const p5functions = {
@@ -50,7 +50,26 @@ const p5functions = {
     },
 
     draw: function() {
-        hand.right(20);
+        // hand.right(20);
+        
+        // quadratic with slight random
+        // hand.shake(function(t){
+        //     const r = 10;
+        //     const b = 1;
+        //     const a = random(0,0.4);
+        //     const x = r * t;
+        //     const y = a * x * x + b * x;
+        //     let coord = [y, x]
+        //     return coord;
+        // }, LIGHTEST);
+
+        // linear with subtle random
+        hand.shake(function(t){
+            const r = 18;
+            const x = r*t
+            const y = -r*t*random(-0.05, 0.05)
+            return [x, y]
+        }, LIGHTEST);
     },
 
     keyPressed: function() {
