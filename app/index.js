@@ -1,47 +1,108 @@
+import 'styles/style.scss'
 import init from 'p5init'
-import Stream from './components/Stream'
+import UnsteadyHand from './components/UnsteadyHand';
+import mbs from 'images/asm.jpg';
 
-const gridSize = {x: 5, y: 1};
-const timeSpeed = 0.1;
-const streams = new Array();
-const cellSize = 40;
-
+let hand, img, mouseInit;
+let initMousePos = false;
 const p5functions = {
-    setup: function() {
-        createCanvas(window.innerWidth, window.innerHeight);
-        // frameRate(30);
-        let x, y, n, radius;
-        for(let i = 0; i < gridSize.x; i++){
-            x = i * cellSize;
-            for(let j = 0; j < gridSize.y; j++){
-                y = j * cellSize;
-                streams.push(new Stream(new p5.Vector(i, j), timeSpeed, new p5.Vector(x, y), new p5.Vector(x+width, y)));
-            }
+    preload: function(){
+        img = loadImage(mbs);
+        loadPixels(img);
+
+
+        p5.Image.prototype.getOpacity = function(){
+            return this.opacity || 255;
         }
-        translate(width/2, height/2)
-        // noLoop();
-        background(0);
+
+        p5.Image.prototype.setOpacity = function(opacity){
+            // if (opacity < 0) return;
+
+            this.loadPixels();
+            let n = 0;
+            while(n < this.pixels.length){
+                this.pixels[n+3] = opacity;
+                n+=4;
+            }
+            this.updatePixels();
+            this.opacity = opacity;
+        }
+
+        p5.Image.prototype.copyImage = function(width, height){
+            const copy = new p5.Image(width, height);
+            copy.copy(img, 0, 0, img.width, img.height, 0, 0, width, height); 
+            return copy;
+        }
+
+        document.querySelector('.original-img').src = mbs;
+
+
+    },
+    
+    setup: function() {
+        let w = img.width > window.innerWidth? window.innerWidth : img.width;
+        let h = w/img.width * img.height;
+
+        if(img.height > window.innerHeight){
+            h = window.innerHeight;
+            w = h/img.height * img.width;
+        }
+        createCanvas(w, h);
+        background(250);
+
+        hand = new UnsteadyHand(img);
+        hand.startShake();
     },
 
     draw: function() {
-        // for(let i = 0; i < 30; i++){
-            streams.forEach(function(stream){
-                stream.update();
-                stream.draw();
-            })
-        // }
+        // hand.right(20);
+
+        // quadratic with slight random
+        // hand.shake(function(t){
+        //     const r = 10;
+        //     const b = 1;
+        //     const a = random(0,0.4);
+        //     const x = r * t;
+        //     const y = a * x * x + b * x;
+        //     let coord = [y, x]
+        //     return coord;
+        // }, LIGHTEST);
+
+        // linear with subtle random
+        // hand.spiral(function(t){
+        //     const r = 18;
+        //     const x = r*t
+        //     const y = -r*t*random(-0.05, 0.05)
+        //     return [x, y]
+        // }, LIGHTEST, PI/4, -PI/8);
+
     },
 
     keyPressed: function() {
       if (keyCode === ENTER) {
         save();
       } 
+    },
+
+    mousePressed: function(){
+        if(!initMousePos){
+            mouseInit = {x: mouseX, y: mouseY};
+            initMousePos = true;
+        }
+        else{
+            initMousePos = false;
+        }
+    },
+
+    mouseMoved: function(){
+        if(initMousePos && hand != undefined){
+            const coord = [mouseX - mouseInit.x, mouseY - mouseInit.y];
+            hand.oneShake(coord, LIGHTEST, 0);
+        }
     }
-  
 }
 
 // set global functions for p5
 Object.assign(window, p5functions)
 
 init();
-
