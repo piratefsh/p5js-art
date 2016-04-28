@@ -1,7 +1,9 @@
+import 'styles/style.scss'
 import init from 'p5init'
+import UnsteadyHand from './components/UnsteadyHand';
 import mbs from 'images/mbs.jpg';
 
-let img;
+let hand, img ;
 const p5functions = {
     preload: function(){
         const url = '/' + mbs
@@ -26,6 +28,14 @@ const p5functions = {
             this.opacity = opacity;
         }
 
+        p5.Image.prototype.copyImage = function(width, height){
+            const copy = new p5.Image(width, height);
+            copy.copy(img, 0, 0, width, height, 0, 0, width, height); 
+            return copy;
+        }
+
+        document.querySelector('.original-img').src = mbs;
+
 
     },
     
@@ -34,42 +44,13 @@ const p5functions = {
         const h = w/img.width * img.height;
         createCanvas(w, h);
         background(250);
-        // frameRate(30);
         noLoop();
+
+        hand = new UnsteadyHand(img);
     },
 
     draw: function() {
-        background(0)
-        const originalImg = new p5.Image(width, height);
-        originalImg.copy(img, 0, 0, width, height, 0, 0, width, height); 
-        originalImg.filter(BLUR, 3);
-        image(originalImg, 0, 0, width, height);
-
-        //get pixels
-        img.loadPixels()
-
-        let n = 0;
-        while(n < img.pixels.length){
-            const brightness = (img.pixels[n] + img.pixels[n+1] + img.pixels[n+2])/3;
-            img.pixels[n+3] = 80;
-            n+=4;
-        }
-
-        img.updatePixels();
-
-        // blur
-        // img.filter(BLUR, 3);
-
-        let left = 10;
-        let bottom = 0;
-        let i = 0;
-        let j = 0;
-        while(i < left){
-            blend(img, 0, 0, width, height, i, j, width, height, LIGHTEST);
-            i += 1;
-            img.setOpacity(img.getOpacity() - i*10)
-            // j -= 2;
-        }
+        hand.right(20);
     },
 
     keyPressed: function() {
