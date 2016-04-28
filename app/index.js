@@ -30,7 +30,7 @@ const p5functions = {
 
         p5.Image.prototype.copyImage = function(width, height){
             const copy = new p5.Image(width, height);
-            copy.copy(img, 0, 0, width, height, 0, 0, width, height); 
+            copy.copy(img, 0, 0, img.width, img.height, 0, 0, width, height); 
             return copy;
         }
 
@@ -40,8 +40,13 @@ const p5functions = {
     },
     
     setup: function() {
-        const w = img.width > window.innerWidth? window.innerWidth : img.width;
-        const h = w/img.width * img.height;
+        let w = img.width > window.innerWidth? window.innerWidth : img.width;
+        let h = w/img.width * img.height;
+
+        if(img.height > window.innerHeight){
+            h = window.innerHeight;
+            w = h/img.height * img.width;
+        }
         createCanvas(w, h);
         background(250);
         noLoop();
@@ -51,7 +56,7 @@ const p5functions = {
 
     draw: function() {
         // hand.right(20);
-        
+
         // quadratic with slight random
         // hand.shake(function(t){
         //     const r = 10;
