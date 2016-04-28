@@ -77,12 +77,7 @@
 	var initMousePos = false;
 	var p5functions = {
 	    preload: function preload() {
-<<<<<<< HEAD
-	        var url = '/' + _imagesAsmJpg2['default'];
-	        img = loadImage(url);
-=======
 	        img = loadImage(_imagesAsmJpg2['default']);
->>>>>>> unsteady
 	        loadPixels(img);
 
 	        p5.Image.prototype.getOpacity = function () {
