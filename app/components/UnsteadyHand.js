@@ -44,7 +44,7 @@ export default class UnsteadyHand{
     }
   }
 
-  spiral(movementFn, filter=NORMAL){
+  spiral(movementFn, filter=NORMAL, rotation=TWO_PI, offset=0){
     image(this.original, 0, 0, width, height);
 
     const stamp = this.getStamp(40);
@@ -57,12 +57,14 @@ export default class UnsteadyHand{
     while(time <= endTime){  
       push();
 
+      // rotate with center as origin
       translate(width/2, height/2);
-      rotate(TWO_PI*time);
+      rotate(rotation*time + offset);
+      
+      // recenter
+      translate(-width/2, -height/2);
       
       let [i, j] = movement;
-
-      translate(-width/2, -height/2);
       blend(stamp, 0, 0, width, height, i, j, width, height, filter);
       stamp.setOpacity(255*(1-time));
 

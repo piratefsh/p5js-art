@@ -1,7 +1,7 @@
 import 'styles/style.scss'
 import init from 'p5init'
 import UnsteadyHand from './components/UnsteadyHand';
-import mbs from 'images/asm.jpg';
+import mbs from 'images/lights.jpg';
 
 let hand, img ;
 const p5functions = {
@@ -74,7 +74,7 @@ const p5functions = {
             const x = r*t
             const y = -r*t*random(-0.05, 0.05)
             return [x, y]
-        }, LIGHTEST);
+        }, LIGHTEST, PI/4, -PI/8);
     },
 
     keyPressed: function() {
