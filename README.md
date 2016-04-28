@@ -1,7 +1,7 @@
 # Unsteady hand
 Simple filter to make an image look like it was taken with an unsteady hand. Why would you want to do that? Because.
 
-![https://pbs.twimg.com/media/ChH29LtUcAMhQdK.jpg](demo)
+![demo image](https://pbs.twimg.com/media/ChH29LtUcAMhQdK.jpg)
 
 ## Development 
 ### Install
