@@ -24,21 +24,30 @@ export default class UnsteadyHand{
     return img;
   }
 
-  shake(movementFn, filter=NORMAL){
+  startShake(){
     image(this.original, 0, 0, width, height);
 
-    const stamp = this.getStamp(40);
-    stamp.filter(BLUR, 1);
+    this.stamp = this.getStamp(40);
+    this.stamp.filter(BLUR, 1);
+  }
+
+  oneShake(coord, filter=NORMAL, opacity=255){
+    const [x, y] = coord;
+    blend(this.stamp, 0, 0, width, height, x, y, width, height, filter);
+    this.stamp.setOpacity(255);
+  }
+
+  shake(movementFn, filter=NORMAL, step=1){
+    this.startShake();
     let time = 0;
     let endTime = 1;
 
-    let movement = movementFn(time);
+    let movement;
+    const stamp = this.stamp || this.getStamp();
+    movement = movementFn(time);
 
     while(time <= endTime){  
-      let [i, j] = movement;
-      blend(stamp, 0, 0, width, height, i, j, width, height, filter);
-      stamp.setOpacity(255*(1-time));
-
+      this.oneShake(movement, filter, 255(1-time));
       time += 0.05;
       movement = movementFn(time);
     }

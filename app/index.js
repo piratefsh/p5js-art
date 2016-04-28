@@ -1,9 +1,10 @@
 import 'styles/style.scss'
 import init from 'p5init'
 import UnsteadyHand from './components/UnsteadyHand';
-import mbs from 'images/lights.jpg';
+import mbs from 'images/asm.jpg';
 
-let hand, img ;
+let hand, img, mouseInit;
+let initMousePos = false;
 const p5functions = {
     preload: function(){
         const url = '/' + mbs
@@ -49,9 +50,9 @@ const p5functions = {
         }
         createCanvas(w, h);
         background(250);
-        noLoop();
 
         hand = new UnsteadyHand(img);
+        hand.startShake();
     },
 
     draw: function() {
@@ -69,18 +70,36 @@ const p5functions = {
         // }, LIGHTEST);
 
         // linear with subtle random
-        hand.spiral(function(t){
-            const r = 18;
-            const x = r*t
-            const y = -r*t*random(-0.05, 0.05)
-            return [x, y]
-        }, LIGHTEST, PI/4, -PI/8);
+        // hand.spiral(function(t){
+        //     const r = 18;
+        //     const x = r*t
+        //     const y = -r*t*random(-0.05, 0.05)
+        //     return [x, y]
+        // }, LIGHTEST, PI/4, -PI/8);
+
     },
 
     keyPressed: function() {
       if (keyCode === ENTER) {
         save();
       } 
+    },
+
+    mousePressed: function(){
+        if(!initMousePos){
+            mouseInit = {x: mouseX, y: mouseY};
+            initMousePos = true;
+        }
+        else{
+            initMousePos = false;
+        }
+    },
+
+    mouseMoved: function(){
+        if(initMousePos && hand != undefined){
+            const coord = [mouseX - mouseInit.x, mouseY - mouseInit.y];
+            hand.oneShake(coord, LIGHTEST, 0);
+        }
     }
 }
 
