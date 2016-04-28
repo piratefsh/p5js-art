@@ -80,7 +80,7 @@ const p5functions = {
 
     keyPressed: function() {
       if (keyCode === ENTER) {
-        save();
+        save('unsteady.jpg');
       } 
     },
 
