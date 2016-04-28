@@ -69,7 +69,7 @@ const p5functions = {
         // }, LIGHTEST);
 
         // linear with subtle random
-        hand.shake(function(t){
+        hand.spiral(function(t){
             const r = 18;
             const x = r*t
             const y = -r*t*random(-0.05, 0.05)

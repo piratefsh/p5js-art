@@ -44,21 +44,31 @@ export default class UnsteadyHand{
     }
   }
 
-  right(movement=10){
-    const img = this.getStamp();
-
-    // draw original
+  spiral(movementFn, filter=NORMAL){
     image(this.original, 0, 0, width, height);
 
-    // blur
-    // img.filter(BLUR, 3);
+    const stamp = this.getStamp(40);
+    stamp.filter(BLUR, 1);
+    let time = 0;
+    let endTime = 1;
 
-    // shift 
-    let i = 0;
-    while(i < movement){
-        blend(img, 0, 0, width, height, i, 0, width, height, LIGHTEST);
-        img.setOpacity(img.getOpacity() - i*10);
-        i++;
+    let movement = movementFn(time);
+
+    while(time <= endTime){  
+      push();
+
+      translate(width/2, height/2);
+      rotate(TWO_PI*time);
+      
+      let [i, j] = movement;
+
+      translate(-width/2, -height/2);
+      blend(stamp, 0, 0, width, height, i, j, width, height, filter);
+      stamp.setOpacity(255*(1-time));
+
+      time += 0.05;
+      movement = movementFn(time);
+      pop();
     }
   }
 }
