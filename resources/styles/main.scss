@@ -35,3 +35,15 @@ body {
     font-weight: bold;
   }
 }
+
+fieldset{
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: $space*2;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  > * {
+    flex: 1;
+  }
+}

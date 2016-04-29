@@ -75,10 +75,10 @@ const p5functions = {
         //     const y = -r*t*random(-0.05, 0.05)
         //     return [x, y]
         // }, LIGHTEST, PI/4, -PI/8);
-        if (keyIsDown(UP_ARROW)) {
+        if (keyIsDown(RIGHT_ARROW)) {
             hand.addRotation(TWO_PI/360);
         }
-        else if(keyIsDown(DOWN_ARROW)) {
+        else if(keyIsDown(LEFT_ARROW)) {
             hand.addRotation(-TWO_PI/360);
         }
 
