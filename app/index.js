@@ -1,7 +1,7 @@
 import 'styles/style.scss'
 import init from 'p5init'
 import UnsteadyHand from './components/UnsteadyHand';
-import mbs from 'images/noguchi.jpg';
+import mbs from 'images/asm.jpg';
 
 let hand, img, mouseInit;
 let initMousePos = false;
@@ -35,6 +35,9 @@ const p5functions = {
         }
 
         document.querySelector('.original-img').src = mbs;
+        document.getElementById('btn-save').addEventListener('click', () =>{
+            save(`masterpiece-${new Date()}.jpg`)
+        })
 
 
     },
@@ -75,6 +78,8 @@ const p5functions = {
         //     const y = -r*t*random(-0.05, 0.05)
         //     return [x, y]
         // }, LIGHTEST, PI/4, -PI/8);
+
+        // rotate on left/right keydown
         if (keyIsDown(RIGHT_ARROW)) {
             hand.addRotation(TWO_PI/360);
         }

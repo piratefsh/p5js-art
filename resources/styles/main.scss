@@ -5,7 +5,6 @@ $space: 8px;
   right: $space;
   width: 240px;
   border-radius: 4px;
-  margin-top: 16px;
 }
 
 body {
@@ -27,11 +26,10 @@ body {
   top: $space*2;
   right: $space*2;
   padding: 16px;
-  background-color: rgba(white, 0.3);
+  background-color: rgba(#eee, 0.8);
   border-radius: 4px;
 
   > p {
-    margin-top: 0px;
     font-weight: bold;
   }
 }

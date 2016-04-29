@@ -6,7 +6,8 @@
 </head>
 <body>
     <div class='controls'>
-      <p>Click and drag to start blurring. Click again to stop. Hit Enter to save.</p>
+      <img class='original-img'/>
+      <p>Click and drag to start blurring. Click again to stop.</p>
       <fieldset>
         <label>Rotate Right</label> <code> RIGHT ARROW </code>
       </fieldset>
@@ -34,8 +35,10 @@
           <option value="BURN">BURN</option>
         </select>
       </fieldset>
-    
-      <img class='original-img'/>
+      <fieldset>
+        <button id='btn-save'><strong>Save</strong></button>
+      </fieldset>
+      
     </div>
     <script src="bundle.js"></script>
 </body>
