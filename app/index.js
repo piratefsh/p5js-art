@@ -75,13 +75,19 @@ const p5functions = {
         //     const y = -r*t*random(-0.05, 0.05)
         //     return [x, y]
         // }, LIGHTEST, PI/4, -PI/8);
+        if (keyIsDown(UP_ARROW)) {
+            hand.addRotation(TWO_PI/360);
+        }
+        else if(keyIsDown(DOWN_ARROW)) {
+            hand.addRotation(-TWO_PI/360);
+        }
 
     },
 
     keyPressed: function() {
-      if (keyCode === ENTER) {
-        save('unsteady.jpg');
-      } 
+        if (keyCode === ENTER) {
+            save('unsteady.jpg');
+        } 
     },
 
     mousePressed: function(){

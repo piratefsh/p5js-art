@@ -1,6 +1,7 @@
 export default class UnsteadyHand{
   constructor(img){
     this.img = img;
+    this.rotation = 0;
     // save original
     this.original = img.copyImage(width, height);
   }
@@ -24,6 +25,12 @@ export default class UnsteadyHand{
     return img;
   }
 
+  addRotation(rotation){
+    if(rotation){
+      this.rotation += rotation;
+    }
+  }
+
   startShake(){
     image(this.original, 0, 0, width, height);
 
@@ -32,9 +39,22 @@ export default class UnsteadyHand{
   }
 
   oneShake(coord, filter=NORMAL, opacity=255){
+    push();
+    // if theres rotation
+    if(this.rotation){
+      // rotate with center as origin
+      translate(width/2, height/2);
+      rotate(this.rotation);
+      
+      // recenter
+      translate(-width/2, -height/2);
+    }
+
     const [x, y] = coord;
     blend(this.stamp, 0, 0, width, height, x, y, width, height, filter);
     this.stamp.setOpacity(255);
+
+    pop();
   }
 
   shake(movementFn, filter=NORMAL, step=1){
