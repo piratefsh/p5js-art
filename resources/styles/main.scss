@@ -1,20 +1,37 @@
+$space: 8px;
+
 .original-img {
-  position: fixed;
-  bottom: 8px;
-  right: 8px;
+  bottom: $space;
+  right: $space;
   width: 240px;
-  box-shadow: 0 0 2px 1px white;
   border-radius: 4px;
+  margin-top: 16px;
 }
 
 body {
   margin: 0;
   font-family: sans-serif;
+  color: #333;
+  font-size: 0.8em
 }
 
 .how-to {
-  padding: 8px 16px;
+  padding: $space 16px;
   position: fixed;
   color: white;
-  font-size: 14px;
+}
+
+.controls{
+  width: 240px;
+  position: fixed;
+  top: $space*2;
+  right: $space*2;
+  padding: 16px;
+  background-color: rgba(white, 0.3);
+  border-radius: 4px;
+
+  > p {
+    margin-top: 0px;
+    font-weight: bold;
+  }
 }

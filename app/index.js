@@ -1,7 +1,7 @@
 import 'styles/style.scss'
 import init from 'p5init'
 import UnsteadyHand from './components/UnsteadyHand';
-import mbs from 'images/asm.jpg';
+import mbs from 'images/noguchi.jpg';
 
 let hand, img, mouseInit;
 let initMousePos = false;
@@ -94,10 +94,14 @@ const p5functions = {
         }
     },
 
-    mouseMoved: function(){
+    mouseDragged: function(){
         if(initMousePos && hand != undefined){
+            const selector = document.getElementById('blend-mode-selector');
+            const selected = selector.options[selector.selectedIndex].value;
+            const blendMode = selected? window[selected.toUpperCase()] : LIGHTEST;
+
             const coord = [mouseX - mouseInit.x, mouseY - mouseInit.y];
-            hand.oneShake(coord, LIGHTEST, 0);
+            hand.oneShake(coord, blendMode, 0);
         }
     }
 }
