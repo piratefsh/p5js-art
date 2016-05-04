@@ -1,21 +1,26 @@
-import LSystem from 'components/LSystem'
+import LSystem from '../app/components/LSystem'
 import install from 'jasmine-es6';
-install();
+// install();
 
-describe('LSystem', () => {
+describe('LSystem', ()=>{
+    let l;
+
     beforeEach(() => {
         // create LSystem
-        this.l = new LSystem({
+        l = new LSystem({
             axiom: 'A',
             rules: {
                 'A': 'AB',
                 'B': 'A'
             },
+            angle: 30,
         })
     })
 
-    describe('replace()', () => {
-        expect(this.l.replace(0)).toBe('A')
-        expect(this.l.replace(1)).toBe('AB')
+    it('replace()', () => {
+        expect(l).not.toBe(null);
+        expect(l.replace(0)).toBe('A')
+        expect(l.replace(1)).toBe('AB')
+        // expect('a').toBe(false)
     })
 })
