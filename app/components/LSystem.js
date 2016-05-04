@@ -11,7 +11,7 @@ export default class LSystems{
         this.setAngle(options.angle);
         this.setAxiom(options.axiom);
         this.rules = options.rules || {};
-        this.len = 2;
+        this.len = 5;
     }
 
     setAngle(an) {
@@ -55,38 +55,70 @@ export default class LSystems{
         return result;
     }
 
-    draw(state) {
-        translate(width/2, height/2);
-        background(255, 0);
+    draw(state, offset) {
+        // track min-max coords
+        const min = new p5.Vector(Infinity, Infinity);
+        const max = new p5.Vector(-Infinity, -Infinity);
+        let coord = new p5.Vector(0, 0);
+        let theta = 0;
+
+        // apply offset to center drawing
+        if(offset){
+            const translateOffset = new p5.Vector(width/2, height/2);
+            const drawingSize = offset.max.sub(offset.min)
+            drawingSize.div(2)
+            drawingSize.rotate(-PI/2)
+            translateOffset.sub(drawingSize);
+            translate(translateOffset.x, translateOffset.y);
+        }
+
+        clear();
         stroke(0);
         const validVariables = Object.keys(this.rules);
         let variable;
+        let turtle = new p5.Vector(0, -this.len);
+        let states = new Array();
+
         for (let i = 0; i < state.length; i++) {
+            min.x = (coord.x < min.x) ? coord.x : min.x
+            min.y = (coord.y < min.y) ? coord.y : min.y
+            max.x = (coord.x > max.x) ? coord.x : max.x
+            max.y = (coord.y > max.y) ? coord.y : max.y
+
             variable = state[i];
+
             switch (variable){
                 case LSystemConstants.PLUS_ANGLE:
-                    rotate(radians(this.angle));
+                    theta = radians(this.angle);
+                    turtle.rotate(theta)
                     break;
                 case LSystemConstants.MINUS_ANGLE:
-                    rotate(-radians(this.angle));
+                    theta = -radians(this.angle);
+                    turtle.rotate(theta)
                     break;
                 case LSystemConstants.PUSH:
-                    push();
+                    states.push([coord.copy(), turtle.copy()]);
                     break;
                 case LSystemConstants.POP:
-                    pop();
+                    let [c, t] = states.pop();
+                    coord = c;
+                    turtle = t;
                     break;
                 default:
                     if (validVariables.indexOf(variable) > -1) {
-                        line(0, 0, 0, this.len);
-                        translate(0, this.len);
+                        line(coord.x, coord.y, coord.x+turtle.x, coord.y+turtle.y);
+                        coord.add(turtle);
                     }
                     else{
                         throw new Error('LSystem: Unknown token ' + variable)
                     }
             }
         }
-
+        if(!offset){
+            // console.log(min, max)
+            // redraw with offset
+            this.draw(state, {min: min, max: max})
+        }
     }
 
     run(n){

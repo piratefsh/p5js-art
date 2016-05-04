@@ -20,7 +20,15 @@ const p5functions = {
                 'F': 'F-F++F-F'
             }
         });
-        l.run(5);
+        l = new LSystem({
+            angle: 30,
+            axiom: 'X',
+            rules: {
+                'X': 'F[+X][-X]FX',
+                'F': 'FF'
+            }
+        });
+        l.run(4);
     },
 
     draw: function() {
