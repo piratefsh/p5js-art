@@ -11,7 +11,7 @@ export default class LSystems{
         this.setAngle(options.angle);
         this.setAxiom(options.axiom);
         this.rules = options.rules || {};
-        this.len = 5;
+        this.len = options.length || 5;
     }
 
     setAngle(an) {
@@ -69,7 +69,8 @@ export default class LSystems{
             drawingSize.div(2)
             drawingSize.rotate(-PI/2)
             translateOffset.sub(drawingSize);
-            translate(translateOffset.x, translateOffset.y);
+            // translate(translateOffset.x, translateOffset.y);
+            translate(-offset.min.x, -offset.min.y);
         }
 
         clear();

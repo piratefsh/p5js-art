@@ -13,6 +13,7 @@ const p5functions = {
         createCanvas(window.innerWidth, window.innerHeight);
         background(250);
 
+        //koch
         l = new LSystem({
             angle: 60,
             axiom: 'F++F++F',
@@ -20,6 +21,7 @@ const p5functions = {
                 'F': 'F-F++F-F'
             }
         });
+        //arrow weed
         l = new LSystem({
             angle: 30,
             axiom: 'X',
@@ -28,7 +30,18 @@ const p5functions = {
                 'F': 'FF'
             }
         });
-        l.run(4);
+
+        // weed
+        l = new LSystem({
+            angle: 30,
+            axiom: 'X',
+            rules: {
+                'X': 'F-[[X]+X]+F[+FX]-X',
+                'F': 'FF'
+            },
+            length: 5
+        });
+        l.run(5);
     },
 
     draw: function() {
