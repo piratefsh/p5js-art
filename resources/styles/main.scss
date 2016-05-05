@@ -24,6 +24,9 @@ body{
     display: flex;
     margin-bottom: $space*2;
   }
+  textarea{
+    height: 120px;
+  }
 }
 
 .hidden{

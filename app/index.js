@@ -11,7 +11,6 @@ const p5functions = {
     },
     
     setup: function() {
-
         // p5functions.reset()
         p5functions.editor()
 
