@@ -1,110 +1,83 @@
 import 'styles/style.scss'
 import init from 'p5init'
 import LSystem from './components/LSystem';
+import LSystemExamples from './components/LSystemExamples';
 
-let ls;
+let ls, currLSystem;
 
 const p5functions = {
     preload: function(){
 
     },
     
-    setup: () => {
+    setup: function() {
 
-        p5functions.reset()
+        // p5functions.reset()
+        p5functions.editor()
 
         document.getElementById('btn-reset').addEventListener('click', ()=>{
             p5functions.reset()
         })
     },
 
+    editor: () => {
+        // show controls
+        document.getElementById('editor').classList.remove('hidden')
+        document.getElementById('controls').classList.add('hidden')
+
+        createCanvas(window.innerWidth, window.innerHeight);
+
+        document.getElementById('btn-draw').addEventListener('click', ()=>{
+            const rules = {}
+            const allRules = document.getElementById('editor-rules').value.split('\n');
+            allRules.forEach(function(rule){
+                // ignore whitespace
+                rule = rule.trim();
+                if(rule.length < 1){
+                    return;
+                } 
+
+                // find rule
+                const matches = rule.match('([A-Z])=(.*)');
+                if(matches){
+                    rules[matches[1]] = matches[2].split(',')
+                }
+                else{
+                    window.alert(`${rule} is not a valid rule.`)
+                }
+            });
+
+            const l = new LSystem({
+                angle: document.getElementById('editor-angle').value,
+                axiom: document.getElementById('editor-axiom').value,
+                rules: rules,
+            });
+            const iterations = document.getElementById('editor-iterations').value;
+            push();
+
+            clear();
+            translate(width/3, height-50);
+            l.run(iterations);
+            pop();
+        });
+    },
+
     reset: () => {
-        // createCanvas(window.innerWidth, window.innerHeight);
+        document.getElementById('editor').classList.add('hidden');
+        document.getElementById('controls').classList.remove('hidden');
+
         createCanvas(1260, 480);
-        // background(250);
 
-        //koch
-        const koch = new LSystem({
-            name: 'koch snowflake',
-            angle: 60,
-            axiom: 'F++F++F',
-            rules: {
-                'F': 'F-F++F-F'
-            }
-        });
-        //arrow weed
-        const arrow = new LSystem({
-            name: 'arrow weed',
-            angle: 30,
-            axiom: 'X',
-            rules: {
-                'X': 'F[+X][-X]FX',
-                'F': 'FF'
-            }
-        });
-
-        // weed 1
-        const weed1 = new LSystem({
-            name: 'generic weed 1',
-            angle: 22.5,
-            axiom: 'X',
-            rules: {
-                'X': 'F-[[X]+X]+F[+FX]-X',
-                'F': 'FF'
-            },
-            length: 5
-        });
-        
-        // weed 2
-        const weed2 = new LSystem({
-            name: 'generic weed 2',
-            angle: 25,
-            axiom: 'X',
-            rules: {
-                'X': 'F[-X]F[-X]+X',
-                'F': 'FF'
-            },
-            length: 5
-        });
-
-        // weed 3
-        const weed3 = new LSystem({
-            name: 'generic weed 3',
-            angle: 25,
-            axiom: 'F',
-            rules: {
-                'F': 'F[+F]F[-F]F',
-            },
-            length: 5
-        });
-
-        const weed4 = new LSystem({
-            name: 'generic weed 4',
-            angle: 22.5,
-            axiom: 'F',
-            rules: {
-                'F': 'FF-[-F+F+F]+[+F-F-F]',
-            },
-            length: 5
-        });
-
-
-        const sWeed1 = new LSystem({
-            name: 'stochastic generic weed 1',
-            angle: 22.5,
-            axiom: 'X',
-            rules: {
-                '0.5X': ['F-[[X]+X]+F[+FX]-X', 'F+[[X]-X]-F[-FX]+X',],
-                'F': 'FF'
-            }
-        });
         clear();
         strokeWeight(1.5);
+        background(20);
         stroke(255);
         const distanceX = 200;
 
         // l systems to draw
-        const systems = [ weed3, weed1, arrow, weed2, weed4];
+        const systems = [ LSystemExamples.weed3, LSystemExamples.weed1, LSystemExamples.arrow, 
+            LSystemExamples.weed2, LSystemExamples.weed4];
+
         const iterations = [4, 5, 5, 5, 4];
 
         translate(0, height-50);

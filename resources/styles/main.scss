@@ -6,5 +6,27 @@ $space: 8px;
   top: $space;
 }
 body{
-  background: #222;
+  display: flex;
+  background: #eee;
+  #defaultCanvas{
+    flex: 1;
+  }
 }
+
+#editor{
+  min-width: 300px;
+  background-color: rgba(#222, 0.8);
+  padding: $space*4;
+  color: white;
+  align-self: stretch;
+
+  fieldset{
+    display: flex;
+    margin-bottom: $space
+  }
+}
+
+.hidden{
+  display: none;
+}
+

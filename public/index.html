@@ -6,8 +6,35 @@
 </head>
 <body>
     <script src="bundle.js"></script>
-    <div class='controls'>
+    <div id='controls' class='controls hidden'>
       <button id='btn-reset' class='btn btn-default'>re-run</button>
+    </div>
+
+    <div id='editor' class='hidden'> 
+      <h1>L-Systems</h1>
+      <fieldset>
+        <label>angle</label>
+        <input id='editor-angle' class="form-control" type='number' value='22'/>
+      </fieldset>  
+      <fieldset>
+        <label>iterations</label>
+        <input id='editor-iterations' class="form-control" type='number' value='3'/>
+      </fieldset>    
+      <fieldset>
+        <label>axiom</label>
+        <input id='editor-axiom' class="form-control"  type='text' value='X'/>
+      </fieldset> 
+
+      <fieldset>
+        <label>rules</label>
+        <textarea id='editor-rules' class="form-control">
+X=F-[[X]+X]+F[+FX]-X
+F=FF
+        </textarea>
+      </fieldset>    
+      <fieldset>
+        <button id='btn-draw' class='btn btn-primary'>Draw</button>
+      </fieldset>    
     </div>
 </body>
 </html>
