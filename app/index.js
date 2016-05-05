@@ -19,9 +19,10 @@ const p5functions = {
     },
 
     reset: () => {
-        createCanvas(window.innerWidth, window.innerHeight);
-        background(250);
-        
+        // createCanvas(window.innerWidth, window.innerHeight);
+        createCanvas(860, 380);
+        // background(250);
+
         //koch
         l = new LSystem({
             name: 'koch snowflake',
@@ -64,8 +65,8 @@ const p5functions = {
             }
         });
         clear();
-        background(250);
         strokeWeight(2);
+        stroke(255)
 
         const iterations = 4;
         const distanceX = 180;
