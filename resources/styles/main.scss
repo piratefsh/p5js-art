@@ -1,47 +1,7 @@
 $space: 8px;
 
-.original-img {
-  bottom: $space;
-  right: $space;
-  width: 240px;
-  border-radius: 4px;
-}
-
-body {
-  margin: 0;
-  font-family: sans-serif;
-  color: #333;
-  font-size: 0.8em
-}
-
-.how-to {
-  padding: $space 16px;
-  position: fixed;
-  color: white;
-}
-
 .controls{
-  width: 240px;
   position: fixed;
-  top: $space*2;
-  right: $space*2;
-  padding: 16px;
-  background-color: rgba(#eee, 0.8);
-  border-radius: 4px;
-
-  > p {
-    font-weight: bold;
-  }
-}
-
-fieldset{
-  padding: 0px;
-  margin: 0px;
-  margin-bottom: $space*2;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  > * {
-    flex: 1;
-  }
+  right: $space;
+  top: $space;
 }

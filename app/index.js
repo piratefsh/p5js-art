@@ -9,10 +9,19 @@ const p5functions = {
 
     },
     
-    setup: function() {
+    setup: () => {
+
+        p5functions.reset()
+
+        document.getElementById('btn-reset').addEventListener('click', ()=>{
+            p5functions.reset()
+        })
+    },
+
+    reset: () => {
         createCanvas(window.innerWidth, window.innerHeight);
         background(250);
-
+        
         //koch
         l = new LSystem({
             name: 'koch snowflake',
