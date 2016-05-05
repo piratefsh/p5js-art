@@ -4,14 +4,16 @@ LSystemConstants.PLUS_ANGLE = '+';
 LSystemConstants.MINUS_ANGLE = '-';
 LSystemConstants.PUSH = '[';
 LSystemConstants.POP = ']';
-
+LSystemConstants.STOCHASTIC_PTN = new RegExp("([\.0-9]+)([a-zA-Z])")
 
 export default class LSystems{
     constructor(options) {
         this.setAngle(options.angle);
         this.setAxiom(options.axiom);
-        this.rules = options.rules || {};
+        this.rules = {};
+        this.addRules(options.rules);
         this.len = options.length || 5;
+        this.name = options.name || 'l-system'
     }
 
     setAngle(an) {
@@ -22,6 +24,25 @@ export default class LSystems{
     setAxiom(ax) {
         if (!ax) throw new Error('LSystem: missing axiom');
         this.axiom = ax;
+    }
+
+    addRules(rules){
+        const newRules = {};
+        Object.keys(rules).forEach(function(key){
+            const matches = key.match(LSystemConstants.STOCHASTIC_PTN)
+
+            if(matches){
+                const probability = matches[1]
+                const variable = matches[2]
+                // assign all keys
+                newRules[variable] = rules[key]
+            }
+            else{
+                newRules[key] = [rules[key]]
+            }
+        });
+
+        Object.assign(this.rules, newRules);
     }
 
     addRule(variable, replacement) {
@@ -43,7 +64,9 @@ export default class LSystems{
             for (let j = 0; j < result.length; j++) {
                 v = result[j]
                 if(variables.indexOf(v) > -1){
-                    replaced += this.rules[v];
+                    const rules = this.rules[v];
+                    const randIdx = Math.floor(random(rules.length)) // pick random rule
+                    replaced += rules[randIdx];
                 }
                 else{
                     replaced += v;
@@ -55,8 +78,9 @@ export default class LSystems{
         return result;
     }
 
-    draw(state, offset) {
+    draw(state, offset, drawLines) {
         // track min-max coords
+        push();
         const min = new p5.Vector(Infinity, Infinity);
         const max = new p5.Vector(-Infinity, -Infinity);
         let coord = new p5.Vector(0, 0);
@@ -70,11 +94,10 @@ export default class LSystems{
             drawingSize.rotate(-PI/2)
             translateOffset.sub(drawingSize);
             // translate(translateOffset.x, translateOffset.y);
-            translate(-offset.min.x, -offset.min.y);
+            // translate(-offset.min.x, -offset.min.y);
+            // translate(width/3, height*2/3);
         }
 
-        clear();
-        stroke(0);
         const validVariables = Object.keys(this.rules);
         let variable;
         let turtle = new p5.Vector(0, -this.len);
@@ -107,7 +130,9 @@ export default class LSystems{
                     break;
                 default:
                     if (validVariables.indexOf(variable) > -1) {
-                        line(coord.x, coord.y, coord.x+turtle.x, coord.y+turtle.y);
+                        if(drawLines){
+                            line(coord.x, coord.y, coord.x+turtle.x, coord.y+turtle.y);
+                        }
                         coord.add(turtle);
                     }
                     else{
@@ -118,8 +143,9 @@ export default class LSystems{
         if(!offset){
             // console.log(min, max)
             // redraw with offset
-            this.draw(state, {min: min, max: max})
+            this.draw(state, {min: min, max: max}, true)
         }
+        pop();
     }
 
     run(n){

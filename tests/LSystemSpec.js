@@ -23,4 +23,17 @@ describe('LSystem', ()=>{
         expect(l.replace(1)).toBe('AB')
         // expect('a').toBe(false)
     })
+
+    it('stochastic', () => {
+        l = new LSystem({
+            angle: 30,
+            axiom: 'X',
+            rules: {
+                '0.5F': 'FF-[-F+F]+[+F-F]',
+                '0.5F': 'FF'
+            }
+        });
+
+        // expect(l.replace(2)).not.toBe(l.replace(2));
+    });
 })

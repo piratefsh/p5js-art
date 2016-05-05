@@ -15,6 +15,7 @@ const p5functions = {
 
         //koch
         l = new LSystem({
+            name: 'koch snowflake',
             angle: 60,
             axiom: 'F++F++F',
             rules: {
@@ -23,6 +24,7 @@ const p5functions = {
         });
         //arrow weed
         l = new LSystem({
+            name: 'arrow weed',
             angle: 30,
             axiom: 'X',
             rules: {
@@ -31,8 +33,9 @@ const p5functions = {
             }
         });
 
-        // weed
+        // weed 1
         l = new LSystem({
+            name: 'generic weed',
             angle: 30,
             axiom: 'X',
             rules: {
@@ -41,7 +44,27 @@ const p5functions = {
             },
             length: 5
         });
+
+        l = new LSystem({
+            name: 'stochastic generic weed',
+            angle: 45,
+            axiom: 'X',
+            rules: {
+                '0.33X': ['F-[[X]+X]+F[+FX]-X', 'F[X]+X', 'F[X]-X'],
+                'F': 'FF'
+            }
+        });
+        clear();
+        translate(150, height*3/4);
+        strokeWeight(2);
+        stroke(random(100,200),random(100,200),0)
         l.run(5);
+
+        for(let i = 0; i < 4; i++){
+            translate(150, 0)
+            stroke(random(100,200),random(100,200),0)
+            l.run(5);
+        }
     },
 
     draw: function() {
@@ -49,7 +72,7 @@ const p5functions = {
 
     keyPressed: function() {
         if (keyCode === ENTER) {
-            save('cool.jpg');
+            save(`${l.name}.png`);
         } 
     }
 }
