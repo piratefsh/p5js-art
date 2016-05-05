@@ -71,7 +71,7 @@ export default {
         angle: 22.5,
         axiom: 'X',
         rules: {
-            '0.5X': ['F-[[X]+X]+F[+FX]-X', 'F+[[X]-X]-F[-FX]+X',],
+            'X': ['F-[[X]+X]+F[+FX]-X', 'F+[[X]-X]-F[-FX]+X'],
             'F': 'FF'
         }
     }),

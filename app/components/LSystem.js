@@ -29,16 +29,12 @@ export default class LSystems{
     addRules(rules){
         const newRules = {};
         Object.keys(rules).forEach(function(key){
-            const matches = key.match(LSystemConstants.STOCHASTIC_PTN)
-
-            if(matches){
-                const probability = matches[1]
-                const variable = matches[2]
-                // assign all keys
-                newRules[variable] = rules[key]
+            const val = rules[key]
+            if(typeof val == 'string'){
+                newRules[key] = [rules[key].trim()]
             }
             else{
-                newRules[key] = [rules[key]]
+                newRules[key] = rules[key].map((str) => str.trim())
             }
         });
 
@@ -47,7 +43,7 @@ export default class LSystems{
 
     addRule(variable, replacement) {
         if (!variable || !replacement) throw new Error('LSystem: missing rule variable/replacement');
-        this.rules[variable] = replacement;
+        this.rules[variable] = replacement.trim();
     }
 
     replace(iterations) {

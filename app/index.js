@@ -21,12 +21,12 @@ const p5functions = {
     },
 
     editor: () => {
-        // show controls
         document.getElementById('editor').classList.remove('hidden')
         document.getElementById('controls').classList.add('hidden')
 
         createCanvas(window.innerWidth, window.innerHeight);
 
+        // on draw
         document.getElementById('btn-draw').addEventListener('click', ()=>{
             const rules = {}
             const allRules = document.getElementById('editor-rules').value.split('\n');
@@ -37,14 +37,16 @@ const p5functions = {
                     return;
                 } 
 
-                // find rule
+                // find rule and break
                 const matches = rule.match('([A-Z])=(.*)');
                 if(matches){
-                    rules[matches[1]] = matches[2].split(',')
+                    const rs = matches[2].split(',');
+                    rules[matches[1]] = rs;
                 }
                 else{
                     window.alert(`${rule} is not a valid rule.`)
                 }
+                console.log(rules)
             });
 
             const l = new LSystem({
@@ -88,9 +90,6 @@ const p5functions = {
             translate(distanceX, 0)
             l.run(iterations[i]);
         }
-    },
-
-    draw: function() {
     },
 
     keyPressed: function() {
