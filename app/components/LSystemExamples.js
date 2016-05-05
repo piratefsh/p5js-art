@@ -75,4 +75,16 @@ export default {
             'F': 'FF'
         }
     }),
+
+
+    dragon : new LSystem({
+        name: 'dragon curve',
+        angle: 90,
+        axiom: 'FX',
+        rules: {
+            'X': 'X+YF+',
+            'Y': '-FX-Y',
+            'F': 'F',
+        }
+    }),
 }

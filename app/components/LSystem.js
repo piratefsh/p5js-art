@@ -82,18 +82,10 @@ export default class LSystems{
         const max = new p5.Vector(-Infinity, -Infinity);
         let coord = new p5.Vector(0, 0);
         let theta = 0;
-
-        // apply offset to center drawing
+        let pad = 30;
+        // apply offset to align drawing to top left
         if(offset){
-            const translateOffset = new p5.Vector(width/2, height/2);
-            const drawingSize = offset.max.sub(offset.min)
-            drawingSize.div(2)
-            drawingSize.rotate(-PI/2)
-            translateOffset.sub(drawingSize);
-            // uncomment for auto centering
-            // translate(translateOffset.x, translateOffset.y);
-            // translate(-offset.min.x, -offset.min.y);
-            // translate(width/3, height*2/3);
+            translate(-offset.min.x + pad, -offset.min.y + pad)
         }
 
         const validVariables = Object.keys(this.rules);

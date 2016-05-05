@@ -11,12 +11,14 @@ const p5functions = {
     },
     
     setup: function() {
-        // p5functions.reset()
+        p5functions.reset()
         p5functions.editor()
 
         document.getElementById('btn-reset').addEventListener('click', ()=>{
             p5functions.reset()
-        })
+        });
+
+        document.getElementById('btn-draw').click();
     },
 
     editor: () => {
@@ -27,6 +29,11 @@ const p5functions = {
 
         // on draw
         document.getElementById('btn-draw').addEventListener('click', ()=>{
+            clear();
+            background(20);
+            stroke(255);
+            strokeWeight(1.2);
+
             const rules = {}
             const allRules = document.getElementById('editor-rules').value.split('\n');
             allRules.forEach(function(rule){
@@ -56,8 +63,6 @@ const p5functions = {
             const iterations = document.getElementById('editor-iterations').value;
             push();
 
-            clear();
-            translate(width/3, height-50);
             l.run(iterations);
             pop();
         });
@@ -76,9 +81,8 @@ const p5functions = {
         const distanceX = 200;
 
         // l systems to draw
-        const systems = [ LSystemExamples.weed3, LSystemExamples.weed1, LSystemExamples.arrow, 
+        const systems = [LSystemExamples.weed3, LSystemExamples.weed1, LSystemExamples.arrow, 
             LSystemExamples.weed2, LSystemExamples.weed4];
-
         const iterations = [4, 5, 5, 5, 4];
 
         translate(0, height-50);
