@@ -47,23 +47,25 @@ const p5functions = {
 
         l = new LSystem({
             name: 'stochastic generic weed',
-            angle: 45,
+            angle: 30,
             axiom: 'X',
             rules: {
-                '0.33X': ['F-[[X]+X]+F[+FX]-X', 'F[X]+X', 'F[X]-X'],
+                '0.5X': ['F-[[X]+X]+F[+FX]-X', 'F+[[X]-X]-F[-FX]+X',],
                 'F': 'FF'
             }
         });
         clear();
-        translate(150, height*3/4);
+        background(250);
         strokeWeight(2);
-        stroke(random(100,200),random(100,200),0)
-        l.run(5);
 
+        const iterations = 4;
+        const distanceX = 180;
+
+        translate(0, height-50);
         for(let i = 0; i < 4; i++){
-            translate(150, 0)
+            translate(distanceX, 0)
             stroke(random(100,200),random(100,200),0)
-            l.run(5);
+            l.run(iterations);
         }
     },
 

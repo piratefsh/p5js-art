@@ -64,8 +64,9 @@ export default class LSystems{
             for (let j = 0; j < result.length; j++) {
                 v = result[j]
                 if(variables.indexOf(v) > -1){
+                    // pick random rule
                     const rules = this.rules[v];
-                    const randIdx = Math.floor(random(rules.length)) // pick random rule
+                    const randIdx = Math.floor(random(rules.length)) 
                     replaced += rules[randIdx];
                 }
                 else{
@@ -93,6 +94,7 @@ export default class LSystems{
             drawingSize.div(2)
             drawingSize.rotate(-PI/2)
             translateOffset.sub(drawingSize);
+            // uncomment for auto centering
             // translate(translateOffset.x, translateOffset.y);
             // translate(-offset.min.x, -offset.min.y);
             // translate(width/3, height*2/3);
@@ -141,7 +143,6 @@ export default class LSystems{
             }
         }
         if(!offset){
-            // console.log(min, max)
             // redraw with offset
             this.draw(state, {min: min, max: max}, true)
         }
