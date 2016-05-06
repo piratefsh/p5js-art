@@ -57,6 +57,7 @@ export default class LSystemEditor{
         const l = new LSystem({
             angle: document.getElementById('editor-angle').value,
             axiom: document.getElementById('editor-axiom').value,
+            length: document.getElementById('editor-length').value,
             rules: rules,
         });
         const iterations = document.getElementById('editor-iterations').value;
@@ -95,6 +96,7 @@ export default class LSystemEditor{
                 document.getElementById('editor-iterations').value = e.iterations;
                 document.getElementById('editor-axiom').value = e.axiom;
                 document.getElementById('editor-rules').value = this.rulesToString(e.rules);
+                document.getElementById('editor-length').value = e.length;
                 // draw
                 this.drawCurrentSystem();
             });

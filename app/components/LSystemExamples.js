@@ -1,5 +1,16 @@
 import LSystem from './LSystem'
 export default {
+    binaryTree: new LSystem({
+        name: 'binary tree',
+        angle: 30,
+        axiom: 'XXF',
+        rules: {
+            'F': 'F[-F][+F]'
+        },
+        iterations: 6,
+        length: 36
+    }),
+
     koch : new LSystem({
         name: 'koch snowflake',
         angle: 60,
@@ -9,8 +20,18 @@ export default {
         },
         iterations: 4
     }),
+    
+    dragon : new LSystem({
+        name: 'dragon curve',
+        angle: 90,
+        axiom: 'FX',
+        rules: {
+            'X': 'X+YF+',
+            'Y': '-FX-Y',
+        },
+        iterations: 9
+    }),
 
-    //arrow weed
     arrow : new LSystem({
         name: 'arrow weed',
         angle: 30,
@@ -22,9 +43,8 @@ export default {
         iterations: 5
     }),
 
-    // weed 1
     weed1 : new LSystem({
-        name: 'generic weed 1',
+        name: 'fuzzy weed',
         angle: 22.5,
         axiom: 'X',
         rules: {
@@ -35,9 +55,8 @@ export default {
         iterations: 5
     }),
 
-    // weed 2
     weed2 : new LSystem({
-        name: 'generic weed 2',
+        name: 'twiggy weed',
         angle: 25,
         axiom: 'X',
         rules: {
@@ -48,9 +67,8 @@ export default {
         iterations: 5
     }),
 
-    // weed 3
     weed3 : new LSystem({
-        name: 'generic weed 3',
+        name: 'tall seaweed',
         angle: 25,
         axiom: 'F',
         rules: {
@@ -61,7 +79,7 @@ export default {
     }),
 
     weed4 : new LSystem({
-        name: 'generic weed 4',
+        name: 'wavy seaweed',
         angle: 22.5,
         axiom: 'F',
         rules: {
@@ -71,9 +89,8 @@ export default {
         iterations: 4
     }),
 
-
     sWeed1 : new LSystem({
-        name: 'stochastic generic weed 1',
+        name: 'stochastic fuzzy weed',
         angle: 22.5,
         axiom: 'X',
         rules: {
@@ -81,17 +98,5 @@ export default {
             'F': 'FF'
         },
         iterations: 4
-    }),
-
-
-    dragon : new LSystem({
-        name: 'dragon curve',
-        angle: 90,
-        axiom: 'FX',
-        rules: {
-            'X': 'X+YF+',
-            'Y': '-FX-Y',
-        },
-        iterations: 9
     }),
 }

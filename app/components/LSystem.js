@@ -13,7 +13,7 @@ export default class LSystems{
         this.setAxiom(options.axiom);
         this.rules = {};
         this.addRules(options.rules);
-        this.len = options.length || 5;
+        this.length = options.length || 5;
         this.name = options.name || 'l-system'
         this.iterations = options.iterations || 4;
     }
@@ -92,7 +92,7 @@ export default class LSystems{
 
         const validVariables = Object.keys(this.rules);
         let variable;
-        let turtle = new p5.Vector(0, -this.len);
+        let turtle = new p5.Vector(0, -this.length);
         let states = new Array();
 
         for (let i = 0; i < state.length; i++) {
