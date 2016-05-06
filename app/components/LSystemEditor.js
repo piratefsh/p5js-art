@@ -6,9 +6,18 @@ export default class LSystemEditor{
         this.initForm();
         this.initExampleList();
 
-        // draw first example
-        const firstExample = document.querySelector('#examples-list li a')
-        firstExample.click();
+        const hasDraw = window.location.search.indexOf('d') > -1;
+        const example = document.getElementById(window.location.search.split('=')[1]);
+        
+        if(example){
+            // draw pattern if exists
+            example.click();
+        }
+        else{
+            // else draw first example
+            const firstExample = document.querySelector('#examples-list li a')
+            firstExample.click();
+        }
     }
 
     rulesToString(rules){
@@ -76,6 +85,7 @@ export default class LSystemEditor{
             let e = LSystemExamples[example];
             const li = document.createElement('li');
             const a = document.createElement('a');
+            a.id = e.name.split(' ').join('-');
             a.classList.add('btn');
             a.classList.add('btn-default');
             a.innerHTML = e.name;
