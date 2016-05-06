@@ -118,6 +118,7 @@ export default {
             'A': '+B-A-B+',
             'B': '-A+B+A-'
         },
-        iterations: 5
+        iterations: 7,
+        length: 3
     })
 }

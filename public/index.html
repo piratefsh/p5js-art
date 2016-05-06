@@ -11,44 +11,50 @@
     </div>
 
     <div id='editor' class='hidden'> 
-      <h3>L-Systems renderer</h3>
-      <div class='field'>
-        <label>angle</label>
-        <input id='editor-angle' class="form-control" type='number'/>
-      </div>  
+      <div class='editor-header'>
+        <h3>L-Systems renderer</h3>
+      </div>
 
-      <div class='field'>
-        <label>axiom</label>
-        <input id='editor-axiom' class="form-control" type='text'/>
-      </div> 
+      <div class='editor-content'>
+        <div class='field'>
+          <label>angle</label>
+          <input id='editor-angle' class="form-control" type='number'/>
+        </div>  
 
-      <div class='field'>
-        <label>rules</label>
-        <textarea id='editor-rules' class="form-control">
-        </textarea>
-      </div>   
+        <div class='field'>
+          <label>axiom</label>
+          <input id='editor-axiom' class="form-control" type='text'/>
+        </div> 
 
-      <div class='field'>
-        <label>iterations</label>
-        <input id='editor-iterations' class="form-control" type='number'/>
-      </div> 
+        <div class='field'>
+          <label>rules</label>
+          <textarea id='editor-rules' class="form-control">
+          </textarea>
+        </div>   
 
-      <div class='field'>
-        <label>length</label>
-        <input id='editor-length' class="form-control" type='number'/>
-      </div>  
+        <div class='field'>
+          <label>iterations</label>
+          <input id='editor-iterations' class="form-control" type='number'/>
+        </div> 
 
-      <div class='field'>
-        <label></label>
-        <div class='right'>
-          <a id='btn-save' class='btn btn-default'>save</a>
-          <a id='btn-draw' class='btn btn-primary'>draw</a>
+        <div class='field'>
+          <label>length</label>
+          <input id='editor-length' class="form-control" type='number'/>
+        </div>  
+
+        <div class='field'>
+          <label></label>
+          <div class='right'>
+            <a id='btn-save' class='btn btn-default'>save</a>
+            <a id='btn-draw' class='btn btn-primary'>draw</a>
+          </div>
+        </div> 
+
+        <div class='show-on-hover'>
+          <ul class='list-unstyled list-inline' id='examples-list'>
+          <h5>examples</h5>
+          </ul>
         </div>
-      </div> 
-
-      <div class='field' >
-        <ul class='list-unstyled list-inline' id='examples-list'>
-        </ul>
       </div>
     </div>
     <div class="canvas-container">

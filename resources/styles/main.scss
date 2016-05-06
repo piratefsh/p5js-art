@@ -10,6 +10,7 @@ $bg-color: rgba(20,20,20,1);
 }
 
 body{
+  font-size: 1.5em;
   display: flex;
   background: $bg-color;
   #defaultCanvas0{
@@ -19,16 +20,25 @@ body{
 }
 
 #editor{
-  h1, h2, h3{
-    margin-top: 0px;
-  }
   min-width: 340px;
-  background-color: rgba(#222, 0.8);
-  padding: $space*2 $space*3;
-  color: white;
+  background-color: rgba(#eee, 1);
+  // background-color: rgba(#222, 0.8);
+  // color: white;
   align-self: stretch;
   max-height: 100vh;
   overflow-y: scroll;
+  .editor-header{
+    background-color: #ddd;
+  }
+
+  .editor-content, 
+  .editor-header{
+    padding: $space*2 $space*3;
+    h1, h2, h3{
+      margin: 0px;
+    }
+  }
+
   .field{
     display: flex;
     margin-bottom: $space*2;
@@ -39,7 +49,7 @@ body{
       flex: 1;
 
       + * {
-        flex: 2;
+        flex: 2.5;
         display: inline-block;
       }
     }
@@ -48,13 +58,14 @@ body{
     border: none;
     border-bottom: 2px solid #ddd;
     background-color: transparent; 
-    color: white;
+    // color: white;
+    box-shadow: none;
     &:focus{
       border-bottom: 2px solid $brand-primary;
     }
   }
   textarea{
-    height: 120px;
+    height: 100px;
   }
   textarea, input{
     font-family: monospace;
@@ -74,7 +85,7 @@ body{
   opacity: 0;
   transition: opacity 0.5s;
   &:hover{
-    opacity: 1
+    opacity: 1;
   }
 }
 
