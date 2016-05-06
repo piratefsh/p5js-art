@@ -5,6 +5,7 @@ $space: 8px;
   right: $space;
   top: $space;
 }
+
 body{
   display: flex;
   background: #eee;
@@ -14,18 +15,35 @@ body{
 }
 
 #editor{
+  h1, h2, h3{
+    margin-top: 0px;
+  }
   min-width: 340px;
   background-color: rgba(#222, 0.8);
   padding: $space*2 $space*3;
   color: white;
   align-self: stretch;
-
-  fieldset{
+  max-height: 100vh;
+  overflow-y: scroll;
+  .field{
     display: flex;
     margin-bottom: $space*2;
+    > label{
+      text-align: right;
+      margin-right: $space*2;
+      flex: 1;
+
+      + * {
+        flex: 2;
+        display: inline-block;
+      }
+    }
   }
   textarea{
     height: 120px;
+  }
+  textarea, input{
+    font-family: monospace;
   }
 }
 
@@ -39,4 +57,20 @@ body{
     margin-right: $space;
     margin-bottom: $space;
   }
+}
+
+#status{
+  background: rgba(black, 0.8);
+  padding: $space*2;
+  position: fixed;
+  bottom: 0px;
+  max-height: 80px;
+  overflow: scroll;
+  color: white;
+}
+#string{
+  font-family: monospace;
+}
+.right{
+  text-align: right;
 }

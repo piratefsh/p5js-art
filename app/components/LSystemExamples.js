@@ -7,7 +7,7 @@ export default {
         rules: {
             'X': 'F[-X][+X]'
         },
-        iterations: 6,
+        iterations: 4,
         length: 36
     }),
 

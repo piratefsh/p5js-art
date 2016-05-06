@@ -8,7 +8,6 @@ let ls, currLSystem, editor;
 
 const p5functions = {
     preload: function(){
-
     },
     
     setup: function() {
@@ -50,13 +49,6 @@ const p5functions = {
             l.run(iterations[i]);
         }
     },
-
-    keyPressed: function() {
-        if (keyCode === ENTER) {
-            const name = 'l-systems'
-            save(`${name}${new Date()}.png`);
-        } 
-    }
 }
 
 // set global functions for p5

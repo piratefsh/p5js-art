@@ -3,8 +3,10 @@ import LSystemExamples from './LSystemExamples';
 
 export default class LSystemEditor{
     constructor(){
+        this.elem = document.getElementById('editor')
         this.initForm();
         this.initExampleList();
+        this.curr = null;
 
         const hasDraw = window.location.search.indexOf('d') > -1;
         const example = document.getElementById(window.location.search.split('=')[1]);
@@ -18,6 +20,11 @@ export default class LSystemEditor{
             const firstExample = document.querySelector('#examples-list li a')
             firstExample.click();
         }
+    }
+
+    save(){
+        const name = this.curr.name;
+        save(`${name}-${new Date()}.png`);
     }
 
     rulesToString(rules){
@@ -64,18 +71,28 @@ export default class LSystemEditor{
 
         l.run(iterations);
         pop();
+
+        document.getElementById('string').innerHTML = l.getString();
+
+        this.curr = l;
     }
 
     initForm(){
-        document.getElementById('editor').classList.remove('hidden')
+        this.elem.classList.remove('hidden')
         document.getElementById('controls').classList.add('hidden')
 
-        createCanvas(window.innerWidth, window.innerHeight);
+        createCanvas(window.innerWidth - this.elem.getBoundingClientRect().width, window.innerHeight);
 
         // on draw
         document.getElementById('btn-draw').addEventListener('click', ()=>{
             this.drawCurrentSystem();
         });
+
+
+        // on save
+        document.getElementById('btn-save').addEventListener('click', ()=>{
+            this.save();
+        });    
     }
 
     initExampleList(){
