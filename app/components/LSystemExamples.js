@@ -6,7 +6,8 @@ export default {
         axiom: 'F++F++F',
         rules: {
             'F': 'F-F++F-F'
-        }
+        },
+        iterations: 4
     }),
 
     //arrow weed
@@ -17,7 +18,8 @@ export default {
         rules: {
             'X': 'F[+X][-X]FX',
             'F': 'FF'
-        }
+        },
+        iterations: 4
     }),
 
     // weed 1
@@ -29,7 +31,8 @@ export default {
             'X': 'F-[[X]+X]+F[+FX]-X',
             'F': 'FF'
         },
-        length: 5
+        length: 5,
+        iterations: 4
     }),
 
     // weed 2
@@ -41,7 +44,8 @@ export default {
             'X': 'F[-X]F[-X]+X',
             'F': 'FF'
         },
-        length: 5
+        length: 5,
+        iterations: 4
     }),
 
     // weed 3
@@ -52,7 +56,8 @@ export default {
         rules: {
             'F': 'F[+F]F[-F]F',
         },
-        length: 5
+        length: 5,
+        iterations: 4
     }),
 
     weed4 : new LSystem({
@@ -62,7 +67,8 @@ export default {
         rules: {
             'F': 'FF-[-F+F+F]+[+F-F-F]',
         },
-        length: 5
+        length: 5,
+        iterations: 4
     }),
 
 
@@ -73,7 +79,8 @@ export default {
         rules: {
             'X': ['F-[[X]+X]+F[+FX]-X', 'F+[[X]-X]-F[-FX]+X'],
             'F': 'FF'
-        }
+        },
+        iterations: 4
     }),
 
 
@@ -85,6 +92,7 @@ export default {
             'X': 'X+YF+',
             'Y': '-FX-Y',
             'F': 'F',
-        }
+        },
+        iterations: 9
     }),
 }

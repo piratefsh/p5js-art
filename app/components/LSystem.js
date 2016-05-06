@@ -14,6 +14,7 @@ export default class LSystems{
         this.addRules(options.rules);
         this.len = options.length || 5;
         this.name = options.name || 'l-system'
+        this.iterations = options.iterations || 4;
     }
 
     setAngle(an) {
@@ -138,6 +139,6 @@ export default class LSystems{
     }
 
     run(n){
-        this.draw(this.replace(n));
+        this.draw(this.replace(n || this.iterations));
     }
 }

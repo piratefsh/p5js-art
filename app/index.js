@@ -1,9 +1,10 @@
 import 'styles/style.scss'
 import init from 'p5init'
 import LSystem from './components/LSystem';
+import LSystemEditor from './components/LSystemEditor';
 import LSystemExamples from './components/LSystemExamples';
 
-let ls, currLSystem;
+let ls, currLSystem, editor;
 
 const p5functions = {
     preload: function(){
@@ -22,50 +23,7 @@ const p5functions = {
     },
 
     editor: () => {
-        document.getElementById('editor').classList.remove('hidden')
-        document.getElementById('controls').classList.add('hidden')
-
-        createCanvas(window.innerWidth, window.innerHeight);
-
-        // on draw
-        document.getElementById('btn-draw').addEventListener('click', ()=>{
-            clear();
-            background(20);
-            stroke(255);
-            strokeWeight(1.2);
-
-            const rules = {}
-            const allRules = document.getElementById('editor-rules').value.split('\n');
-            allRules.forEach(function(rule){
-                // ignore whitespace
-                rule = rule.trim();
-                if(rule.length < 1){
-                    return;
-                } 
-
-                // find rule and break
-                const matches = rule.match('([A-Z])=(.*)');
-                if(matches){
-                    const rs = matches[2].split(',');
-                    rules[matches[1]] = rs;
-                }
-                else{
-                    window.alert(`${rule} is not a valid rule.`)
-                }
-                console.log(rules)
-            });
-
-            const l = new LSystem({
-                angle: document.getElementById('editor-angle').value,
-                axiom: document.getElementById('editor-axiom').value,
-                rules: rules,
-            });
-            const iterations = document.getElementById('editor-iterations').value;
-            push();
-
-            l.run(iterations);
-            pop();
-        });
+       editor = new LSystemEditor();
     },
 
     reset: () => {

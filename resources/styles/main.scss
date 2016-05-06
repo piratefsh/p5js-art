@@ -14,9 +14,9 @@ body{
 }
 
 #editor{
-  min-width: 300px;
+  min-width: 320px;
   background-color: rgba(#222, 0.8);
-  padding: $space*4;
+  padding: $space*2 $space*3;
   color: white;
   align-self: stretch;
 
@@ -33,3 +33,10 @@ body{
   display: none;
 }
 
+#examples-list{
+  li{
+    padding: 0px;
+    margin-right: $space;
+    margin-bottom: $space;
+  }
+}
