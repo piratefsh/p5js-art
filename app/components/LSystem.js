@@ -5,6 +5,7 @@ LSystemConstants.MINUS_ANGLE = '-';
 LSystemConstants.PUSH = '[';
 LSystemConstants.POP = ']';
 LSystemConstants.STOCHASTIC_PTN = new RegExp("([\.0-9]+)([a-zA-Z])")
+LSystemConstants.VALID_VAR_PTN = new RegExp("[a-zA-Z]")
 
 export default class LSystems{
     constructor(options) {
@@ -120,7 +121,7 @@ export default class LSystems{
                     turtle = t;
                     break;
                 default:
-                    if (validVariables.indexOf(variable) > -1) {
+                    if (validVariables.indexOf(variable) > -1 || variable.match(LSystemConstants.VALID_VAR_PTN)) {
                         if(drawLines){
                             line(coord.x, coord.y, coord.x+turtle.x, coord.y+turtle.y);
                         }

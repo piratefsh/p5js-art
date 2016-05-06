@@ -91,7 +91,6 @@ export default {
         rules: {
             'X': 'X+YF+',
             'Y': '-FX-Y',
-            'F': 'F',
         },
         iterations: 9
     }),
