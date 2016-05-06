@@ -5,6 +5,10 @@ export default class LSystemEditor{
     constructor(){
         this.initForm();
         this.initExampleList();
+
+        // draw first example
+        const firstExample = document.querySelector('#examples-list li a')
+        firstExample.click();
     }
 
     rulesToString(rules){

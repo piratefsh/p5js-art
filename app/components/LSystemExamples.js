@@ -19,7 +19,7 @@ export default {
             'X': 'F[+X][-X]FX',
             'F': 'FF'
         },
-        iterations: 4
+        iterations: 5
     }),
 
     // weed 1
@@ -32,7 +32,7 @@ export default {
             'F': 'FF'
         },
         length: 5,
-        iterations: 4
+        iterations: 5
     }),
 
     // weed 2
@@ -45,7 +45,7 @@ export default {
             'F': 'FF'
         },
         length: 5,
-        iterations: 4
+        iterations: 5
     }),
 
     // weed 3

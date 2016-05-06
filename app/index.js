@@ -18,8 +18,6 @@ const p5functions = {
         document.getElementById('btn-reset').addEventListener('click', ()=>{
             p5functions.reset()
         });
-
-        document.getElementById('btn-draw').click();
     },
 
     editor: () => {
