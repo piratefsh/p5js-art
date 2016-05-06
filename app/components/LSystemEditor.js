@@ -79,9 +79,10 @@ export default class LSystemEditor{
 
     initForm(){
         this.elem.classList.remove('hidden')
+        const status = document.getElementById('status')
         document.getElementById('controls').classList.add('hidden')
 
-        createCanvas(window.innerWidth - this.elem.getBoundingClientRect().width, window.innerHeight);
+        createCanvas(window.innerWidth - this.elem.getBoundingClientRect().width, window.innerHeight - status.getBoundingClientRect().height);
 
         // on draw
         document.getElementById('btn-draw').addEventListener('click', ()=>{
