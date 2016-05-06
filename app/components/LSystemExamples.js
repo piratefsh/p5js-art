@@ -110,4 +110,14 @@ export default {
         },
         iterations: 4
     }),
+    sierpinksi: new LSystem({
+        name: "Sierpinski's triangle",
+        angle: 60,
+        axiom: 'A',
+        rules:{
+            'A': '+B-A-B+',
+            'B': '-A+B+A-'
+        },
+        iterations: 5
+    })
 }
