@@ -36,7 +36,7 @@ export default class LSystemEditor{
 
     drawCurrentSystem(){
         clear();
-        background(20);
+        // background(20);
         stroke(255);
         strokeWeight(1.2);
 
@@ -84,11 +84,12 @@ export default class LSystemEditor{
 
         createCanvas(window.innerWidth - this.elem.getBoundingClientRect().width, window.innerHeight - status.getBoundingClientRect().height);
 
+
         // on draw
-        document.getElementById('btn-draw').addEventListener('click', ()=>{
+        document.getElementById('lsystem-form').addEventListener('submit', (e)=>{
+            e.preventDefault();
             this.drawCurrentSystem();
         });
-
 
         // on save
         document.getElementById('btn-save').addEventListener('click', ()=>{
