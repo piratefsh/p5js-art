@@ -16,6 +16,7 @@ export default class LSystems{
         this.length = options.length || 5;
         this.name = options.name || 'l-system'
         this.iterations = options.iterations || 4;
+        this.lineWidth = options.lineWidth || 1;
     }
 
     setAngle(an) {
@@ -80,6 +81,9 @@ export default class LSystems{
     draw(state, offset, drawLines) {
         // track min-max coords
         push();
+
+        strokeWeight(this.lineWidth)
+
         const min = new p5.Vector(Infinity, Infinity);
         const max = new p5.Vector(-Infinity, -Infinity);
         let coord = new p5.Vector(0, 0);
@@ -139,7 +143,12 @@ export default class LSystems{
         pop();
     }
 
+    getString(){
+        return this.string;
+    }
+
     run(n){
-        this.draw(this.replace(n || this.iterations));
+        this.string = this.replace(n || this.iterations);
+        this.draw(this.string);
     }
 }

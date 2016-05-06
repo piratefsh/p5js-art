@@ -3,9 +3,9 @@ export default {
     binaryTree: new LSystem({
         name: 'binary tree',
         angle: 30,
-        axiom: 'XXF',
+        axiom: 'X',
         rules: {
-            'F': 'F[-F][+F]'
+            'X': 'F[-X][+X]'
         },
         iterations: 6,
         length: 36
@@ -19,6 +19,17 @@ export default {
             'F': 'F-F++F-F'
         },
         iterations: 4
+    }),
+
+    kochEdge : new LSystem({
+        name: 'koch edge',
+        angle: 60,
+        axiom: 'F',
+        rules: {
+            'F': 'F-F++F-F'
+        },
+        iterations: 1,
+        length: 36
     }),
     
     dragon : new LSystem({

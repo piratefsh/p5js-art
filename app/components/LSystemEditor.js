@@ -23,7 +23,6 @@ export default class LSystemEditor{
     rulesToString(rules){
         const vars = Object.keys(rules)
         return vars.reduce(function(acc, key){
-            console.log('key', key)
             return `${key}=${rules[key].join(',')}\n${acc}`
         }, "")
     }
@@ -89,6 +88,7 @@ export default class LSystemEditor{
             a.id = e.name.split(' ').join('-');
             a.classList.add('btn');
             a.classList.add('btn-default');
+            a.classList.add('btn-sm');
             a.innerHTML = e.name;
             a.addEventListener('click', () => {
                 // load data
