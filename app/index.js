@@ -1,3 +1,4 @@
+import 'file?name=[name].[ext]!../public/index.html'
 import 'styles/style.scss'
 import init from 'p5init'
 import LSystem from './components/LSystem';
