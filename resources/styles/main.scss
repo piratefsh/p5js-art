@@ -82,7 +82,7 @@ body{
     margin-right: $space;
     margin-bottom: $space;
   }
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.5s;
   &:hover{
     opacity: 1;
