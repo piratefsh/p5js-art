@@ -43,6 +43,18 @@ export default {
         iterations: 9
     }),
 
+    sierpinksi: new LSystem({
+        name: "Sierpinski's triangle",
+        angle: 60,
+        axiom: 'A',
+        rules:{
+            'A': '+B-A-B+',
+            'B': '-A+B+A-'
+        },
+        iterations: 7,
+        length: 3
+    }),
+
     arrow : new LSystem({
         name: 'arrow weed',
         angle: 30,
@@ -110,15 +122,4 @@ export default {
         },
         iterations: 4
     }),
-    sierpinksi: new LSystem({
-        name: "Sierpinski's triangle",
-        angle: 60,
-        axiom: 'A',
-        rules:{
-            'A': '+B-A-B+',
-            'B': '-A+B+A-'
-        },
-        iterations: 7,
-        length: 3
-    })
 }
