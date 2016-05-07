@@ -1,105 +1,54 @@
 import 'styles/style.scss'
 import init from 'p5init'
-import UnsteadyHand from './components/UnsteadyHand';
-import mbs from 'images/asm.jpg';
+import LSystem from './components/LSystem';
+import LSystemEditor from './components/LSystemEditor';
+import LSystemExamples from './components/LSystemExamples';
 
-let hand, img, mouseInit;
-let initMousePos = false;
+let ls, currLSystem, editor;
+
 const p5functions = {
     preload: function(){
-        img = loadImage(mbs);
-        loadPixels(img);
-
-
-        p5.Image.prototype.getOpacity = function(){
-            return this.opacity || 255;
-        }
-
-        p5.Image.prototype.setOpacity = function(opacity){
-            // if (opacity < 0) return;
-
-            this.loadPixels();
-            let n = 0;
-            while(n < this.pixels.length){
-                this.pixels[n+3] = opacity;
-                n+=4;
-            }
-            this.updatePixels();
-            this.opacity = opacity;
-        }
-
-        p5.Image.prototype.copyImage = function(width, height){
-            const copy = new p5.Image(width, height);
-            copy.copy(img, 0, 0, img.width, img.height, 0, 0, width, height); 
-            return copy;
-        }
-
-        document.querySelector('.original-img').src = mbs;
-
-
     },
     
     setup: function() {
-        let w = img.width > window.innerWidth? window.innerWidth : img.width;
-        let h = w/img.width * img.height;
+        // p5functions.reset()
+        p5functions.editor()
 
-        if(img.height > window.innerHeight){
-            h = window.innerHeight;
-            w = h/img.height * img.width;
-        }
-        createCanvas(w, h);
-        background(250);
-
-        hand = new UnsteadyHand(img);
-        hand.startShake();
+        document.getElementById('btn-reset').addEventListener('click', ()=>{
+            p5functions.reset()
+        });
     },
 
-    draw: function() {
-        // hand.right(20);
-
-        // quadratic with slight random
-        // hand.shake(function(t){
-        //     const r = 10;
-        //     const b = 1;
-        //     const a = random(0,0.4);
-        //     const x = r * t;
-        //     const y = a * x * x + b * x;
-        //     let coord = [y, x]
-        //     return coord;
-        // }, LIGHTEST);
-
-        // linear with subtle random
-        // hand.spiral(function(t){
-        //     const r = 18;
-        //     const x = r*t
-        //     const y = -r*t*random(-0.05, 0.05)
-        //     return [x, y]
-        // }, LIGHTEST, PI/4, -PI/8);
-
+    editor: () => {
+       editor = new LSystemEditor();
     },
 
-    keyPressed: function() {
-      if (keyCode === ENTER) {
-        save('unsteady.jpg');
-      } 
-    },
+    reset: () => {
+        document.getElementById('editor').classList.add('hidden');
+        document.getElementById('controls').classList.remove('hidden');
 
-    mousePressed: function(){
-        if(!initMousePos){
-            mouseInit = {x: mouseX, y: mouseY};
-            initMousePos = true;
-        }
-        else{
-            initMousePos = false;
+        createCanvas(1260, 480);
+
+        clear();
+        strokeWeight(1.5);
+        background(20);
+        stroke(255);
+        const distanceX = 200;
+
+        // l systems to draw
+        const systems = [LSystemExamples.weed3, LSystemExamples.weed1, LSystemExamples.arrow, 
+            LSystemExamples.weed2, LSystemExamples.weed4];
+        const iterations = [4, 5, 5, 5, 4];
+
+        translate(0, height-50);
+        // stroke(random(100,200),random(100,200),0)
+
+        for(let i = 0; i < systems.length; i++){
+            const l = systems[i];
+            translate(distanceX, 0)
+            l.run(iterations[i]);
         }
     },
-
-    mouseMoved: function(){
-        if(initMousePos && hand != undefined){
-            const coord = [mouseX - mouseInit.x, mouseY - mouseInit.y];
-            hand.oneShake(coord, LIGHTEST, 0);
-        }
-    }
 }
 
 // set global functions for p5

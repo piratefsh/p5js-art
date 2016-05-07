@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public/unsteady'),
+        path: path.resolve(__dirname, 'public/lsystems'),
         publicPath: '',
         filename: 'bundle.js'
     },

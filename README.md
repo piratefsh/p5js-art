@@ -1,7 +1,7 @@
-# Unsteady hand
-Simple filter to make an image look like it was taken with an unsteady hand. Why would you want to do that? Because.
+# L-Systems Renderer
 
-![demo image](https://pbs.twimg.com/media/ChH29LtUcAMhQdK.jpg)
+Simple L-Systems Renderer.
+
 
 ## Development 
 ### Install
@@ -9,6 +9,9 @@ Simple filter to make an image look like it was taken with an unsteady hand. Why
 npm install
 npm install webpack-dev-server webpack -g
 ```
+
+### Install p5
+For some reason, I can't include the p5 as a module, so I just download p5.js from [here](http://p5js.org/download/) and put it in node_modules/lib/p5.js. It's hacky, but shhh. Let me know if you have a better solution!
 
 ### Serve
 
