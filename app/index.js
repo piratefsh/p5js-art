@@ -8,6 +8,7 @@ const startRadius = 100;
 // this is where center is.
 const centerX = window.innerWidth/2;
 const centerY = window.innerHeight/2;
+let mic;
 
 const p5functions = {
     preload: function(){
@@ -15,10 +16,13 @@ const p5functions = {
     
     setup: function() {
         p5functions.reset()
-
+        frameRate(24);
         document.getElementById('btn-reset').addEventListener('click', ()=>{
             p5functions.reset()
         });
+
+        mic = new p5.AudioIn();
+        mic.start();
 
     },
 
@@ -61,30 +65,35 @@ const p5functions = {
     draw: () => {
         
         // bg color
-        //background(250,10);
+        background(250, 0);
         
         //console.log(pVectorArr);
 
         //
         // Start Drawing
         //
-
-        const randRange = 1;
+        let level = mic.getLevel();
+        const randRange = map(level, 0, 1, 0, 160);
 
         beginShape();
 
         push();
-        translate(mouseX,mouseY);
+        translate(mouseX || centerX,mouseY || centerY);
+        // translate(centerX, centerY)
 
+        const randomness = new Array(formResolution);
+        for (let i=0; i < formResolution; i++){
+            randomness[i] = pVectorArr[i].copy();
+            randomness[i].add(createVector(random(-randRange, randRange), random(-randRange, randRange)));
+        }
+        
         // include '9' so we can draw '0' > '1'
-        const pLast = pVectorArr.length-1; 
-        curveVertex( pVectorArr[pLast].x , pVectorArr[pLast].y ); // draw
+        const pLast = randomness[pVectorArr.length-1]; 
+        curveVertex(pLast.x , pLast.y); // draw
 
         for (let i=0; i<formResolution; i++){
 
-            const p = pVectorArr[i];
-            p.x+=random(randRange,-randRange);
-            p.y+=random(randRange,-randRange);
+            const p = randomness[i];
 
             // draw 1 circle right in the center. with
             //fill(255,255,255);
@@ -101,13 +110,13 @@ const p5functions = {
         
 
         // include '0' so we can draw '8' > '9'
-        curveVertex( pVectorArr[0].x , pVectorArr[0].y ); // draw
+        curveVertex( randomness[0].x , randomness[0].y ); // draw
 
         // include '1' so we can draw '9' > '0'
-        curveVertex( pVectorArr[1].x , pVectorArr[1].y ); // draw
+        curveVertex( randomness[1].x , randomness[1].y ); // draw
 
-        fill(random(0,255),random(0,255),random(0,255),100)
-        stroke(random(0,255),random(0,255),random(0,255),100)
+        fill(random(0,255),random(0,200), 180 ,100)
+        stroke(random(0,255),random(0,200), 180,100)
         //fill(255,255,100,100);
         endShape();
         pop();
