@@ -47,6 +47,7 @@ const p5functions = {
 
         };
         
+        background(20);
     },
 
     draw2: () => {
@@ -59,13 +60,16 @@ const p5functions = {
         rotate(radians(count++))
         line(0, 0, 100, 100)
         pop();
-
     },
 
     draw: () => {
+        push();
         
         // bg color
-        background(250, 0);
+        blendMode(BLEND);
+        background(2, 20);
+        
+        
         
         //console.log(pVectorArr);
 
@@ -77,9 +81,8 @@ const p5functions = {
 
         beginShape();
 
-        push();
-        translate(mouseX || centerX,mouseY || centerY);
-        // translate(centerX, centerY)
+        // translate(mouseX || centerX,mouseY || centerY);
+        translate(centerX, centerY)
 
         const randomness = new Array(formResolution);
         for (let i=0; i < formResolution; i++){
@@ -115,10 +118,13 @@ const p5functions = {
         // include '1' so we can draw '9' > '0'
         curveVertex( randomness[1].x , randomness[1].y ); // draw
 
-        fill(random(0,255),random(0,200), 180 ,100)
-        stroke(random(0,255),random(0,200), 180,100)
+        const colorIntensity = map(level*5, 0, 1, 0, 255) ;
+        const minColor = 30;
+        fill(random(minColor,colorIntensity),random(minColor,colorIntensity), random(minColor,colorIntensity))
+        stroke(random(minColor,colorIntensity),random(minColor,colorIntensity), random(minColor,colorIntensity))
         //fill(255,255,100,100);
         endShape();
+
         pop();
     },
 
