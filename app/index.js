@@ -1,55 +1,94 @@
 import 'file?name=[name].[ext]!../public/index.html'
 import 'styles/style.scss'
 import init from 'p5init'
-import LSystem from './components/LSystem';
-import LSystemEditor from './components/LSystemEditor';
-import LSystemExamples from './components/LSystemExamples';
 
-let ls, currLSystem, editor;
+let grid;
+let gridCellSize;
+let colorA, colorB;
 
 const p5functions = {
     preload: function(){
     },
     
     setup: function() {
-        // p5functions.reset()
-        p5functions.editor()
+        p5functions.reset()
+        frameRate(10);
 
         document.getElementById('btn-reset').addEventListener('click', ()=>{
             p5functions.reset()
         });
-    },
 
-    editor: () => {
-       editor = new LSystemEditor();
     },
 
     reset: () => {
-        document.getElementById('editor').classList.add('hidden');
-        document.getElementById('controls').classList.remove('hidden');
+        createCanvas(window.innerWidth, window.innerHeight);
 
-        createCanvas(1260, 480);
+        // create grid, and save
 
-        clear();
-        strokeWeight(1.5);
-        background(20);
-        stroke(255);
-        const distanceX = 200;
+        colorA = color(random(100, 250), 180, 180, 200);
+        colorB = color(180, random(100, 250), 180, 200);
 
-        // l systems to draw
-        const systems = [LSystemExamples.weed3, LSystemExamples.weed1, LSystemExamples.arrow, 
-            LSystemExamples.weed2, LSystemExamples.weed4];
-        const iterations = [4, 5, 5, 5, 4];
+        gridCellSize = new p5.Vector(50, 50);
+        const gridSize = new p5.Vector(Math.ceil(width/gridCellSize.x), Math.ceil(height/gridCellSize.y));
+        grid = new Array(gridSize.x);
 
-        translate(0, height-50);
-        // stroke(random(100,200),random(100,200),0)
-
-        for(let i = 0; i < systems.length; i++){
-            const l = systems[i];
-            translate(distanceX, 0)
-            l.run(iterations[i]);
+        for(let i = 0; i < gridSize.x; i++){
+            grid[i] = new Array(gridSize.y);
+            for(let j = 0; j < gridSize.y; j++){
+                grid[i][j] = Math.trunc(random(0, 2));
+            }
         }
     },
+
+    draw: () => {
+        background(240);
+
+        // noStroke();
+
+        // translate(gridCellSize.x/2, gridCellSize.y/2);
+
+        // draw grid from saved
+        for(let i = 0; i < grid.length; i++){
+            for(let j = 0; j < grid[i].length; j++){
+                fill(random(100, 255),0,0);
+                const x = i * gridCellSize.x;
+                const y = j * gridCellSize.y;
+
+                if(grid[i][j] == 0){
+                    // type a
+                    strokeWeight(mouseY/20 || 1);
+                    stroke(colorA, 200);
+                    line(x, y, x+gridCellSize.x, y+gridCellSize.y);
+                }
+                else{
+                    // type b
+                    stroke(colorB, 200);
+                    strokeWeight(mouseX/20 || 1);
+                    line(x + gridCellSize.y, y, x, y+gridCellSize.y);
+                    
+                }
+            }
+        }
+    },
+
+    keyReleased: () => {
+        switch(key){
+            case '1':
+                strokeCap(ROUND)
+                break;
+            case '2':
+                strokeCap(SQUARE)
+                break;
+            case '3':
+                strokeCap(PROJECT)
+                break;
+            case 's':
+            case 'S':
+                save('masterpiece.csv');
+                break;
+        }
+    }
+
 }
 
 // set global functions for p5
