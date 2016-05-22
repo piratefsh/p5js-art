@@ -118,8 +118,8 @@ const p5functions = {
         // include '1' so we can draw '9' > '0'
         curveVertex( randomness[1].x , randomness[1].y ); // draw
 
+        const minColor = 150;
         const colorIntensity = map(level*5, 0, 1, 0, 255) ;
-        const minColor = 30;
         fill(random(minColor,colorIntensity),random(minColor,colorIntensity), random(minColor,colorIntensity))
         stroke(random(minColor,colorIntensity),random(minColor,colorIntensity), random(minColor,colorIntensity))
         //fill(255,255,100,100);
