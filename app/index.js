@@ -47,7 +47,7 @@ const p5functions = {
 
         };
         
-        background(20);
+        background(250);
     },
 
     draw2: () => {
@@ -77,12 +77,12 @@ const p5functions = {
         // Start Drawing
         //
         let level = mic.getLevel();
-        const randRange = map(level, 0, 1, 0, 160);
+        const randRange = map(level, 0, 0.5, 0, startRadius);
 
         beginShape();
 
-        // translate(mouseX || centerX,mouseY || centerY);
-        translate(centerX, centerY)
+        translate(mouseX || centerX,mouseY || centerY);
+        // translate(centerX, centerY)
 
         const randomness = new Array(formResolution);
         for (let i=0; i < formResolution; i++){
@@ -98,17 +98,8 @@ const p5functions = {
 
             const p = randomness[i];
 
-            // draw 1 circle right in the center. with
-            //fill(255,255,255);
-            //ellipse(p.x,p.y,20,20);
-            
-            //fill(0,0,0);
-            //text(i,p.x-3,p.y+4); 
-
             // connect a line through the dots
             curveVertex(p.x,p.y);
-
-            
         };
         
 
@@ -118,10 +109,10 @@ const p5functions = {
         // include '1' so we can draw '9' > '0'
         curveVertex( randomness[1].x , randomness[1].y ); // draw
 
-        const minColor = 150;
-        const colorIntensity = map(level*5, 0, 1, 0, 255) ;
-        fill(random(minColor,colorIntensity),random(minColor,colorIntensity), random(minColor,colorIntensity))
-        stroke(random(minColor,colorIntensity),random(minColor,colorIntensity), random(minColor,colorIntensity))
+        const minColor = 180;
+        const colorIntensity = map(level, 0, 0.3, 0, 255) ;
+        fill(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity))
+        stroke(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity))
         //fill(255,255,100,100);
         endShape();
 
