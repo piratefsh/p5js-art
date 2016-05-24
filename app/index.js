@@ -4,11 +4,13 @@ import init from 'p5init'
 
 let pVectorArr = [];
 const formResolution = 10;
-const startRadius = 100;
+const startRadius = 90;
 // this is where center is.
 const centerX = window.innerWidth/2;
 const centerY = window.innerHeight/2;
 let mic;
+
+let prevIntensity = 0;
 
 const p5functions = {
     preload: function(){
@@ -47,19 +49,7 @@ const p5functions = {
 
         };
         
-        background(250);
-    },
-
-    draw2: () => {
-        fill(255, 0, 0)
-
-        push();
-        translate(width/2, height/2)
-
-        // translate(50, 0)
-        rotate(radians(count++))
-        line(0, 0, 100, 100)
-        pop();
+        background(2);
     },
 
     draw: () => {
@@ -69,10 +59,6 @@ const p5functions = {
         blendMode(BLEND);
         background(2, 20);
         
-        
-        
-        //console.log(pVectorArr);
-
         //
         // Start Drawing
         //
@@ -94,7 +80,7 @@ const p5functions = {
         const pLast = randomness[pVectorArr.length-1]; 
         curveVertex(pLast.x , pLast.y); // draw
 
-        for (let i=0; i<formResolution; i++){
+        for (let i=0; i < formResolution; i++){
 
             const p = randomness[i];
 
@@ -111,8 +97,17 @@ const p5functions = {
 
         const minColor = 180;
         const colorIntensity = map(level, 0, 0.3, 0, 255) ;
-        fill(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity))
-        stroke(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity))
+
+        if(Math.abs(colorIntensity - prevIntensity) > 0.2){
+            fill(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity))
+            stroke(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity))
+            prevIntensity = colorIntensity;
+        }
+        else{
+            fill(minColor, 100, 100)
+            stroke(minColor, 90, 90)
+        }
+
         //fill(255,255,100,100);
         endShape();
 
