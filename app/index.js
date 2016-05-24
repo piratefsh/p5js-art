@@ -29,7 +29,7 @@ const p5functions = {
         colorA = color(randR, 255-randR, 150, 210);
         colorB = color(255-randG, randG, 150, 210);
 
-        const size = Math.floor(random(5, 10) * 5);
+        const size = Math.floor(random(4, 8) * 5);
         gridCellSize = new p5.Vector(size, size);
         const gridSize = new p5.Vector(Math.ceil(width/gridCellSize.x), Math.ceil(height/gridCellSize.y));
         grid = new Array(gridSize.x);
