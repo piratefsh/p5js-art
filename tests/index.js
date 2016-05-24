@@ -1,1 +1,0 @@
-import LSystemSpec from './LSystemSpec'
