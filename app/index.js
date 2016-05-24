@@ -65,7 +65,8 @@ const p5functions = {
         // Start Drawing
         //
         let level = mic.getLevel();
-        const randRange = map(level, 0, 0.2, 0, startRadius);
+        const randRange = map(level, 0, 0.5, 0, startRadius);
+        const colorIntensity = map(level, 0, 0.2, 0, 255);
         p5functions.init(map(level, 0, 0.5, 20, 100));
 
         beginShape();
@@ -100,7 +101,6 @@ const p5functions = {
         curveVertex( randomness[1].x , randomness[1].y ); // draw
 
         const minColor = 180;
-        const colorIntensity = map(level, 0, 1, 0, 255);
         let opacity = 255;
         if(Math.abs(colorIntensity - prevIntensity) > 0.2){
             prevIntensity = colorIntensity;
