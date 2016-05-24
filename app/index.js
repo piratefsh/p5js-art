@@ -24,9 +24,10 @@ const p5functions = {
         createCanvas(window.innerWidth, window.innerHeight);
 
         // create grid, and save
-
-        colorA = color(random(100, 250), 180, 180);
-        colorB = color(180, random(100, 250), 180);
+        const randR = random(100, 250)
+        const randG = random(100, 250)
+        colorA = color(randR, 255-randR, 150);
+        colorB = color(255-randG, randG, 150);
 
         const size = Math.floor(random(5, 10) * 5);
         gridCellSize = new p5.Vector(size, size);
