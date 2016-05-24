@@ -1,2 +1,8 @@
 @import "bootstrap";
-@import './main';
+
+$space: 12px;
+#btn-reset{
+    position: fixed;
+    top: $space;
+    left: $space;
+}

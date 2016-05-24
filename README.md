@@ -1,4 +1,4 @@
-# L-Systems Renderer
+# Blobs
 
 Simple L-Systems Renderer.
 
@@ -11,7 +11,9 @@ npm install webpack-dev-server webpack -g
 ```
 
 ### Install p5
-For some reason, I can't include the p5 as a module, so I just download p5.js from [here](http://p5js.org/download/) and put it in node_modules/lib/p5.js. It's hacky, but shhh. Let me know if you have a better solution!
+For some reason, I can't include the p5 as a module, so I just download p5.js from [here](http://p5js.org/download/) and put it in `node_modules/lib/p5.js`. It's hacky, but shhh. Let me know if you have a better solution!
+
+Also, download [p5.sound](https://github.com/processing/p5.js-sound/blob/master/lib/p5.sound.js) and put it in `node_modules/lib/p5.sound.js`
 
 ### Serve
 
