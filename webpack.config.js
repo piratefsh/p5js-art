@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public/maze'),
+        path: path.resolve(__dirname, 'public/magnetism'),
         publicPath: '',
         filename: 'bundle.js'
     },
