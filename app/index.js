@@ -25,10 +25,11 @@ const p5functions = {
 
         // create grid, and save
 
-        colorA = color(random(100, 250), 180, 180, 200);
-        colorB = color(180, random(100, 250), 180, 200);
+        colorA = color(random(100, 250), 180, 180);
+        colorB = color(180, random(100, 250), 180);
 
-        gridCellSize = new p5.Vector(50, 50);
+        const size = Math.floor(random(5, 10) * 5);
+        gridCellSize = new p5.Vector(size, size);
         const gridSize = new p5.Vector(Math.ceil(width/gridCellSize.x), Math.ceil(height/gridCellSize.y));
         grid = new Array(gridSize.x);
 
@@ -41,7 +42,7 @@ const p5functions = {
     },
 
     draw: () => {
-        background(240);
+        background('#224');
 
         // noStroke();
 
@@ -56,14 +57,14 @@ const p5functions = {
 
                 if(grid[i][j] == 0){
                     // type a
-                    strokeWeight(mouseY/20 || 1);
-                    stroke(colorA, 200);
+                    strokeWeight(mouseY/30 || 1);
+                    stroke(colorA);
                     line(x, y, x+gridCellSize.x, y+gridCellSize.y);
                 }
                 else{
                     // type b
-                    stroke(colorB, 200);
-                    strokeWeight(mouseX/20 || 1);
+                    stroke(colorB);
+                    strokeWeight(mouseX/30 || 1);
                     line(x + gridCellSize.y, y, x, y+gridCellSize.y);
                     
                 }
