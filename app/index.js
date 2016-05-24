@@ -4,7 +4,7 @@ import init from 'p5init'
 
 let pVectorArr = [];
 const formResolution = 10;
-const startRadius = 90;
+let startRadius = 90;
 // this is where center is.
 const centerX = window.innerWidth/2;
 const centerY = window.innerHeight/2;
@@ -31,39 +31,42 @@ const p5functions = {
     reset: () => {
         createCanvas(window.innerWidth, window.innerHeight);
         stroke(0);
+        background(2);
+        p5functions.init();
+    },
 
+    init: () => {
+        startRadius = random(30, 90);
         pVectorArr = [];
         // for loop to save positions of circles in an array
         
         // what is the angle of where 1 of the object would be placed at?
         const angle = radians(360/formResolution);
 
-        for (let i=0; i<formResolution; i++){
-           
+        for (let i = 0; i < formResolution; i++){
             const tmpX = cos(angle*i) *startRadius;
             const tmpY = sin(angle*i) *startRadius;
             //const tmpX = random(10,-10)+cos(angle*i) *startRadius;
             //const tmpY = random(10,-10)+sin(angle*i) *startRadius;
             const pv = createVector(tmpX,tmpY);
             pVectorArr.push(pv);
-
         };
         
-        background(2);
     },
 
     draw: () => {
         push();
         
         // bg color
-        blendMode(BLEND);
-        background(2, 20);
+        // blendMode(BLEND);
+        // background(2, 20);
         
         //
         // Start Drawing
         //
         let level = mic.getLevel();
         const randRange = map(level, 0, 0.5, 0, startRadius);
+        p5functions.init(map(level, 0, 0.5, 20, 100));
 
         beginShape();
 
@@ -96,18 +99,19 @@ const p5functions = {
         curveVertex( randomness[1].x , randomness[1].y ); // draw
 
         const minColor = 180;
-        const colorIntensity = map(level, 0, 0.3, 0, 255) ;
-
+        const colorIntensity = map(level, 0, 0.3, 0, 255);
+        let opacity = 255;
         if(Math.abs(colorIntensity - prevIntensity) > 0.2){
-            fill(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity))
-            stroke(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity))
             prevIntensity = colorIntensity;
         }
         else{
-            fill(minColor, 100, 100)
-            stroke(minColor, 90, 90)
+            opacity = 100;
         }
 
+
+        fill(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity), opacity)
+        stroke(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity), opacity)
+        
         //fill(255,255,100,100);
         endShape();
 
