@@ -72,6 +72,8 @@
 	var colorA = undefined,
 	    colorB = undefined;
 
+	var prevIntensity = 0;
+
 	var p5functions = {
 	    preload: function preload() {},
 
@@ -86,14 +88,13 @@
 
 	    reset: function reset() {
 	        createCanvas(window.innerWidth, window.innerHeight);
-
 	        // create grid, and save
 	        var randR = random(100, 250);
 	        var randG = random(100, 250);
 	        colorA = color(randR, 255 - randR, 150, 210);
 	        colorB = color(255 - randG, randG, 150, 210);
 
-	        var size = Math.floor(random(5, 10) * 5);
+	        var size = Math.floor(random(4, 8) * 5);
 	        gridCellSize = new p5.Vector(size, size);
 	        var gridSize = new p5.Vector(Math.ceil(width / gridCellSize.x), Math.ceil(height / gridCellSize.y));
 	        grid = new Array(gridSize.x);
