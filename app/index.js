@@ -2,13 +2,9 @@ import 'file?name=[name].[ext]!../public/index.html'
 import 'styles/style.scss'
 import init from 'p5init'
 
-let pVectorArr = [];
-const formResolution = 10;
-const startRadius = 100;
-// this is where center is.
-const centerX = window.innerWidth/2;
-const centerY = window.innerHeight/2;
-let mic;
+let grid;
+let gridCellSize;
+let colorA, colorB;
 
 const p5functions = {
     preload: function(){
@@ -16,116 +12,63 @@ const p5functions = {
     
     setup: function() {
         p5functions.reset()
-        frameRate(24);
+        frameRate(10);
+
         document.getElementById('btn-reset').addEventListener('click', ()=>{
             p5functions.reset()
         });
-
-        mic = new p5.AudioIn();
-        mic.start();
 
     },
 
     reset: () => {
         createCanvas(window.innerWidth, window.innerHeight);
-        stroke(0);
 
-        pVectorArr = [];
-        // for loop to save positions of circles in an array
-        
-        // what is the angle of where 1 of the object would be placed at?
-        const angle = radians(360/formResolution);
+        // create grid, and save
 
-        for (let i=0; i<formResolution; i++){
-           
-            const tmpX = cos(angle*i) *startRadius;
-            const tmpY = sin(angle*i) *startRadius;
-            //const tmpX = random(10,-10)+cos(angle*i) *startRadius;
-            //const tmpY = random(10,-10)+sin(angle*i) *startRadius;
-            const pv = createVector(tmpX,tmpY);
-            pVectorArr.push(pv);
+        colorA = color(random(100, 250), 180, 180, 200);
+        colorB = color(180, random(100, 250), 180, 200);
 
-        };
-        
-        background(20);
-    },
+        gridCellSize = new p5.Vector(50, 50);
+        const gridSize = new p5.Vector(Math.ceil(width/gridCellSize.x), Math.ceil(height/gridCellSize.y));
+        grid = new Array(gridSize.x);
 
-    draw2: () => {
-        fill(255, 0, 0)
-
-        push();
-        translate(width/2, height/2)
-
-        // translate(50, 0)
-        rotate(radians(count++))
-        line(0, 0, 100, 100)
-        pop();
+        for(let i = 0; i < gridSize.x; i++){
+            grid[i] = new Array(gridSize.y);
+            for(let j = 0; j < gridSize.y; j++){
+                grid[i][j] = Math.trunc(random(0, 2));
+            }
+        }
     },
 
     draw: () => {
-        push();
-        
-        // bg color
-        blendMode(BLEND);
-        background(2, 20);
-        
-        
-        
-        //console.log(pVectorArr);
+        background(240);
 
-        //
-        // Start Drawing
-        //
-        let level = mic.getLevel();
-        const randRange = map(level, 0, 1, 0, 160);
+        // noStroke();
 
-        beginShape();
+        // translate(gridCellSize.x/2, gridCellSize.y/2);
 
-        // translate(mouseX || centerX,mouseY || centerY);
-        translate(centerX, centerY)
+        // draw grid from saved
+        for(let i = 0; i < grid.length; i++){
+            for(let j = 0; j < grid[i].length; j++){
+                fill(random(100, 255),0,0);
+                const x = i * gridCellSize.x;
+                const y = j * gridCellSize.y;
 
-        const randomness = new Array(formResolution);
-        for (let i=0; i < formResolution; i++){
-            randomness[i] = pVectorArr[i].copy();
-            randomness[i].add(createVector(random(-randRange, randRange), random(-randRange, randRange)));
+                if(grid[i][j] == 0){
+                    // type a
+                    strokeWeight(mouseY/20 || 1);
+                    stroke(colorA, 200);
+                    line(x, y, x+gridCellSize.x, y+gridCellSize.y);
+                }
+                else{
+                    // type b
+                    stroke(colorB, 200);
+                    strokeWeight(mouseX/20 || 1);
+                    line(x + gridCellSize.y, y, x, y+gridCellSize.y);
+                    
+                }
+            }
         }
-        
-        // include '9' so we can draw '0' > '1'
-        const pLast = randomness[pVectorArr.length-1]; 
-        curveVertex(pLast.x , pLast.y); // draw
-
-        for (let i=0; i<formResolution; i++){
-
-            const p = randomness[i];
-
-            // draw 1 circle right in the center. with
-            //fill(255,255,255);
-            //ellipse(p.x,p.y,20,20);
-            
-            //fill(0,0,0);
-            //text(i,p.x-3,p.y+4); 
-
-            // connect a line through the dots
-            curveVertex(p.x,p.y);
-
-            
-        };
-        
-
-        // include '0' so we can draw '8' > '9'
-        curveVertex( randomness[0].x , randomness[0].y ); // draw
-
-        // include '1' so we can draw '9' > '0'
-        curveVertex( randomness[1].x , randomness[1].y ); // draw
-
-        const minColor = 150;
-        const colorIntensity = map(level*5, 0, 1, 0, 255) ;
-        fill(random(minColor,colorIntensity),random(minColor,colorIntensity), random(minColor,colorIntensity))
-        stroke(random(minColor,colorIntensity),random(minColor,colorIntensity), random(minColor,colorIntensity))
-        //fill(255,255,100,100);
-        endShape();
-
-        pop();
     },
 
     keyReleased: () => {
@@ -141,7 +84,7 @@ const p5functions = {
                 break;
             case 's':
             case 'S':
-                save('masterpiece.png');
+                save('masterpiece.csv');
                 break;
         }
     }
