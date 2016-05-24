@@ -67,11 +67,13 @@
 
 	var pVectorArr = [];
 	var formResolution = 10;
-	var startRadius = 100;
+	var startRadius = 90;
 	// this is where center is.
 	var centerX = window.innerWidth / 2;
 	var centerY = window.innerHeight / 2;
 	var mic = undefined;
+
+	var prevIntensity = 0;
 
 	var p5functions = {
 	    preload: function preload() {},
@@ -107,19 +109,7 @@
 	            pVectorArr.push(pv);
 	        };
 
-	        background(250);
-	    },
-
-	    draw2: function draw2() {
-	        fill(255, 0, 0);
-
-	        push();
-	        translate(width / 2, height / 2);
-
-	        // translate(50, 0)
-	        rotate(radians(count++));
-	        line(0, 0, 100, 100);
-	        pop();
+	        background(2);
 	    },
 
 	    draw: function draw() {
@@ -128,8 +118,6 @@
 	        // bg color
 	        blendMode(BLEND);
 	        background(2, 20);
-
-	        //console.log(pVectorArr);
 
 	        //
 	        // Start Drawing
@@ -168,8 +156,16 @@
 
 	        var minColor = 180;
 	        var colorIntensity = map(level, 0, 0.3, 0, 255);
-	        fill(minColor, random(minColor, colorIntensity), random(minColor, colorIntensity));
-	        stroke(minColor, random(minColor, colorIntensity), random(minColor, colorIntensity));
+
+	        if (Math.abs(colorIntensity - prevIntensity) > 0.2) {
+	            fill(minColor, random(minColor, colorIntensity), random(minColor, colorIntensity));
+	            stroke(minColor, random(minColor, colorIntensity), random(minColor, colorIntensity));
+	            prevIntensity = colorIntensity;
+	        } else {
+	            fill(minColor, 100, 100);
+	            stroke(minColor, 90, 90);
+	        }
+
 	        //fill(255,255,100,100);
 	        endShape();
 
