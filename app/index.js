@@ -26,10 +26,10 @@ const p5functions = {
         // create grid, and save
         const randR = random(100, 250)
         const randG = random(100, 250)
-        colorA = color(randR, 255-randR, 150);
-        colorB = color(255-randG, randG, 150);
+        colorA = color(randR, 255-randR, 150, 210);
+        colorB = color(255-randG, randG, 150, 210);
 
-        const size = Math.floor(random(5, 10) * 5);
+        const size = Math.floor(random(5, 8) * 5);
         gridCellSize = new p5.Vector(size, size);
         const gridSize = new p5.Vector(Math.ceil(width/gridCellSize.x), Math.ceil(height/gridCellSize.y));
         grid = new Array(gridSize.x);
@@ -60,14 +60,28 @@ const p5functions = {
                     // type a
                     strokeWeight(mouseY/30 || 1);
                     stroke(colorA);
-                    line(x, y, x+gridCellSize.x, y+gridCellSize.y);
+                    
+                    push();
+                    
+                    // offset to grid position
+                    translate(x, y)
+                    
+                    // rotate towards mouse position
+                    rotate(atan2(mouseY-y, mouseX-x))
+
+                    // draw line
+                    line(0, 0, gridCellSize.x, gridCellSize.y);
+                    pop();
                 }
                 else{
                     // type b
                     stroke(colorB);
                     strokeWeight(mouseX/30 || 1);
-                    line(x + gridCellSize.y, y, x, y+gridCellSize.y);
-                    
+                    push();
+                    translate(x, y)
+                    rotate(atan2(mouseY-y, mouseX-x))
+                    line(gridCellSize.y, 0, 0, gridCellSize.y);
+                    pop();
                 }
             }
         }
