@@ -29,7 +29,7 @@ const p5functions = {
         colorA = color(randR, 255-randR, 150, 210);
         colorB = color(255-randG, randG, 150, 210);
 
-        const size = Math.floor(random(5, 8) * 5);
+        const size = Math.floor(random(5, 10) * 5);
         gridCellSize = new p5.Vector(size, size);
         const gridSize = new p5.Vector(Math.ceil(width/gridCellSize.x), Math.ceil(height/gridCellSize.y));
         grid = new Array(gridSize.x);
@@ -52,7 +52,7 @@ const p5functions = {
         // draw grid from saved
         for(let i = 0; i < grid.length; i++){
             for(let j = 0; j < grid[i].length; j++){
-                fill(random(100, 255),0,0);
+                fill(random(100, 255),50,100);
                 const x = i * gridCellSize.x;
                 const y = j * gridCellSize.y;
 
@@ -65,7 +65,7 @@ const p5functions = {
                     
                     // offset to grid position
                     translate(x, y)
-                    
+
                     // rotate towards mouse position
                     rotate(atan2(mouseY-y, mouseX-x))
 
@@ -80,7 +80,7 @@ const p5functions = {
                     push();
                     translate(x, y)
                     rotate(atan2(mouseY-y, mouseX-x))
-                    line(gridCellSize.y, 0, 0, gridCellSize.y);
+                    ellipse(gridCellSize.x/2, gridCellSize.x/2, gridCellSize.x/2, gridCellSize.y/2);
                     pop();
                 }
             }
@@ -100,7 +100,7 @@ const p5functions = {
                 break;
             case 's':
             case 'S':
-                save('masterpiece.csv');
+                save('masterpiece.png');
                 break;
         }
     }
