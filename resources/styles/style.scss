@@ -6,3 +6,12 @@ $space: 12px;
     top: $space;
     left: $space;
 }
+
+.credits{
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    padding: $space;
+    color: #bbb;
+    font-size: 12px;
+}
