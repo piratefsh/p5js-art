@@ -5013,3 +5013,11 @@ button.close {
   position: fixed;
   top: 12px;
   left: 12px; }
+
+.credits {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  padding: 12px;
+  color: #bbb;
+  font-size: 12px; }
