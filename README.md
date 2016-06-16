@@ -2,6 +2,7 @@
 
 Simple L-Systems Renderer. [Check it out here](http://piratefsh.github.io/p5js-art/public/lsystems/).
 
+![l systems renderer screenshot](https://pbs.twimg.com/media/Ch4Go8DXEAYG2wy.jpg:large)
 
 ## Development 
 ### Install
