@@ -2,7 +2,8 @@ import LSystem from './LSystem';
 import LSystemExamples from './LSystemExamples';
 
 export default class LSystemEditor{
-    constructor(){
+    constructor(sketch){
+        this.p = sketch;
         this.elem = document.getElementById('editor')
         this.initForm();
         this.initExampleList();
@@ -30,15 +31,18 @@ export default class LSystemEditor{
     rulesToString(rules){
         const vars = Object.keys(rules)
         return vars.reduce(function(acc, key){
-            return `${key}=${rules[key].join(',')}\n${acc}`
+            const stringified = typeof rules[key] == 'string' ? rules[key] : rules[key].join(',')
+            return `${key}=${stringified}\n${acc}`
         }, "")
     }
 
     drawCurrentSystem(){
-        clear();
+        const p  = this.p;
+
+        p.clear();
         // background(20);
-        stroke(255);
-        strokeWeight(1.2);
+        p.stroke(255);
+        p.strokeWeight(1.2);
 
         const rules = {}
         const allRules = document.getElementById('editor-rules').value.split('\n');
@@ -61,16 +65,17 @@ export default class LSystemEditor{
         });
 
         const l = new LSystem({
+            p: this.p,
             angle: document.getElementById('editor-angle').value,
             axiom: document.getElementById('editor-axiom').value,
             length: document.getElementById('editor-length').value,
             rules: rules,
         });
         const iterations = document.getElementById('editor-iterations').value;
-        push();
+        p.push();
 
         l.run(iterations);
-        pop();
+        p.pop();
 
         document.getElementById('string').innerHTML = l.getString();
 
@@ -82,7 +87,7 @@ export default class LSystemEditor{
         const status = document.getElementById('status')
         document.getElementById('controls').classList.add('hidden')
 
-        createCanvas(window.innerWidth - this.elem.getBoundingClientRect().width, window.innerHeight - status.getBoundingClientRect().height);
+        this.p.createCanvas(window.innerWidth - this.elem.getBoundingClientRect().width, window.innerHeight - status.getBoundingClientRect().height);
 
 
         // on draw

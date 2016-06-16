@@ -17,18 +17,15 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.5",
     "fs": "0.0.2",
-    "jasmine-core": "^2.4.1",
-    "karma": "^0.13.22",
-    "karma-jasmine": "^0.3.8",
-    "karma-phantomjs-launcher": "^1.0.0",
-    "karma-webpack": "^1.7.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
     "node-sass": "^3.4.2",
-    "p5": "git+https://github.com/processing/p5.js.git",
     "sass-loader": "^3.0.0",
     "style-loader": "^0.12.4",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.2"
+  },
+  "dependencies": {
+    "p5": "^0.5.1"
   }
 }

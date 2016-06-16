@@ -9,6 +9,7 @@ LSystemConstants.VALID_VAR_PTN = new RegExp("[a-zA-Z]")
 
 export default class LSystems{
     constructor(options) {
+        this.p = options.p;
         this.setAngle(options.angle);
         this.setAxiom(options.axiom);
         this.rules = {};
@@ -65,7 +66,7 @@ export default class LSystems{
                 if(variables.indexOf(v) > -1){
                     // pick random rule
                     const rules = this.rules[v];
-                    const randIdx = Math.floor(random(rules.length)) 
+                    const randIdx = Math.floor(this.p.random(rules.length)) 
                     replaced += rules[randIdx];
                 }
                 else{
@@ -79,24 +80,26 @@ export default class LSystems{
     }
 
     draw(state, offset, drawLines) {
+        const p = this.p;
+
         // track min-max coords
-        push();
+        p.push();
 
-        strokeWeight(this.lineWidth)
+        p.strokeWeight(this.lineWidth)
 
-        const min = new p5.Vector(Infinity, Infinity);
-        const max = new p5.Vector(-Infinity, -Infinity);
-        let coord = new p5.Vector(0, 0);
+        const min = new p.createVector(Infinity, Infinity);
+        const max = new p.createVector(-Infinity, -Infinity);
+        let coord = new p.createVector(0, 0);
         let theta = 0;
         let pad = 30;
         // apply offset to align drawing to top left
         if(offset){
-            translate(-offset.min.x + pad, -offset.min.y + pad)
+            p.translate(-offset.min.x + pad, -offset.min.y + pad)
         }
 
         const validVariables = Object.keys(this.rules);
         let variable;
-        let turtle = new p5.Vector(0, -this.length);
+        let turtle = new p.createVector(0, -this.length);
         let states = new Array();
 
         for (let i = 0; i < state.length; i++) {
@@ -109,11 +112,11 @@ export default class LSystems{
 
             switch (variable){
                 case LSystemConstants.PLUS_ANGLE:
-                    theta = radians(this.angle);
+                    theta = p.radians(this.angle);
                     turtle.rotate(theta)
                     break;
                 case LSystemConstants.MINUS_ANGLE:
-                    theta = -radians(this.angle);
+                    theta = -p.radians(this.angle);
                     turtle.rotate(theta)
                     break;
                 case LSystemConstants.PUSH:
@@ -127,7 +130,7 @@ export default class LSystems{
                 default:
                     if (validVariables.indexOf(variable) > -1 || variable.match(LSystemConstants.VALID_VAR_PTN)) {
                         if(drawLines){
-                            line(coord.x, coord.y, coord.x+turtle.x, coord.y+turtle.y);
+                            p.line(coord.x, coord.y, coord.x+turtle.x, coord.y+turtle.y);
                         }
                         coord.add(turtle);
                     }
@@ -140,7 +143,7 @@ export default class LSystems{
             // redraw with offset
             this.draw(state, {min: min, max: max}, true)
         }
-        pop();
+        p.pop();
     }
 
     getString(){

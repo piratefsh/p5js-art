@@ -11,9 +11,6 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
-        noParse: [
-          path.resolve(__dirname, './node_modules/p5/lib/p5.js')
-        ],
         loaders: [
             // Babel loader
             {

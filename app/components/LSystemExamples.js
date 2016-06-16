@@ -1,6 +1,6 @@
 import LSystem from './LSystem'
 export default {
-    binaryTree: new LSystem({
+    binaryTree: {
         name: 'binary tree',
         angle: 30,
         axiom: 'X',
@@ -9,9 +9,9 @@ export default {
         },
         iterations: 4,
         length: 36
-    }),
+    },
 
-    koch : new LSystem({
+    koch : {
         name: 'koch snowflake',
         angle: 60,
         axiom: 'F++F++F',
@@ -19,9 +19,9 @@ export default {
             'F': 'F-F++F-F'
         },
         iterations: 4
-    }),
+    },
 
-    kochEdge : new LSystem({
+    kochEdge : {
         name: 'koch edge',
         angle: 60,
         axiom: 'F',
@@ -30,9 +30,9 @@ export default {
         },
         iterations: 1,
         length: 36
-    }),
+    },
     
-    dragon : new LSystem({
+    dragon : {
         name: 'dragon curve',
         angle: 90,
         axiom: 'FX',
@@ -41,9 +41,9 @@ export default {
             'Y': '-FX-Y',
         },
         iterations: 9
-    }),
+    },
 
-    sierpinksi: new LSystem({
+    sierpinksi: {
         name: "Sierpinski's triangle",
         angle: 60,
         axiom: 'A',
@@ -53,9 +53,9 @@ export default {
         },
         iterations: 7,
         length: 3
-    }),
+    },
 
-    arrow : new LSystem({
+    arrow : {
         name: 'arrow weed',
         angle: 30,
         axiom: 'X',
@@ -64,9 +64,9 @@ export default {
             'F': 'FF'
         },
         iterations: 5
-    }),
+    },
 
-    weed1 : new LSystem({
+    weed1 : {
         name: 'fuzzy weed',
         angle: 22.5,
         axiom: 'X',
@@ -76,9 +76,9 @@ export default {
         },
         length: 5,
         iterations: 5
-    }),
+    },
 
-    weed2 : new LSystem({
+    weed2 : {
         name: 'twiggy weed',
         angle: 25,
         axiom: 'X',
@@ -88,9 +88,9 @@ export default {
         },
         length: 5,
         iterations: 5
-    }),
+    },
 
-    weed3 : new LSystem({
+    weed3 : {
         name: 'tall seaweed',
         angle: 25,
         axiom: 'F',
@@ -99,9 +99,9 @@ export default {
         },
         length: 5,
         iterations: 4
-    }),
+    },
 
-    weed4 : new LSystem({
+    weed4 : {
         name: 'wavy seaweed',
         angle: 22.5,
         axiom: 'F',
@@ -110,9 +110,9 @@ export default {
         },
         length: 5,
         iterations: 4
-    }),
+    },
 
-    sWeed1 : new LSystem({
+    sWeed1 : {
         name: 'stochastic fuzzy weed',
         angle: 22.5,
         axiom: 'X',
@@ -121,5 +121,5 @@ export default {
             'F': 'FF'
         },
         iterations: 4
-    }),
+    },
 }
