@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --content-inline=public/"
+    "start": "webpack-dev-server --content-inline=public/",
+    "build": "webpack --config webpack.config.js"
   },
   "author": "",
   "license": "ISC",

@@ -26,7 +26,13 @@ webpack-dev-server --inline  --content-base public/
 
 ### Build
 
-To compile HTML/CSS and JavaScript files for production:
+To compile HTML/CSS and JavaScript files for production (at `public/lsystems`):
+
+```
+npm run build
+```
+
+or
 
 ```
 webpack --config webpack.config.js
