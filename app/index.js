@@ -42,10 +42,18 @@ const sketch = p => {
     p.drawVariation = (x, y) => {
         const offsetx = 0.003 * p.randomGaussian();
         const offsety = 0.003 * p.randomGaussian();
-        let xx = p.map(x + offsetx, x1, x2, NUM_LINES, p.width - NUM_LINES);
-        let yy = p.map(y + offsety, y1, y2, NUM_LINES, p.height - NUM_LINES);
+        const v = p.sinusoidal(p.createVector(x, y), 3);
+
+        let xx = p.map(v.x + offsetx, x1, x2, NUM_LINES, p.width - NUM_LINES);
+        let yy = p.map(v.y + offsety, y1, y2, NUM_LINES, p.height - NUM_LINES);
+
         p.point(xx, yy);
     };
+
+    p.sinusoidal = (point, r) => {
+        return p.createVector(r * Math.sin(point.x), r * Math.sin(point.y))
+    }
+
 };
 
 // set global functions for p5
