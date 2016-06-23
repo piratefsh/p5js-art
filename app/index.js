@@ -13,7 +13,7 @@ const sketch = p => {
 
     p.reset = () => {
         flame = new FractalFlame(p);
-        flame.setType('sech');
+        flame.setType('ex');
 
         p.smooth(8);
         p.strokeWeight(0.9);

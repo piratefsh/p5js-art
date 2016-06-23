@@ -42,6 +42,9 @@ export default class FractalFlame{
       case 'sech':
         this.type = this.sech;
         break;
+      case 'ex':
+        this.type = this.ex;
+        break;
     }
   }
 
@@ -108,6 +111,18 @@ export default class FractalFlame{
       }
       const x = d * Math.cos(point.y) * Math.cosh(point.x)
       const y = -d * Math.sin(point.y) * Math.sinh(point.x)
+      return this.p.createVector(x, y);
+    }
+
+    ex(point, scale){
+      const r = point.mag();
+      const theta = Math.atan2(point.x, point.y);
+      const p0 = Math.sin(theta + r);
+      const p1 = Math.cos(theta - 1);
+
+      const x = r * (Math.pow(p0, 3) + Math.pow(p1, 3))
+      const y = r * (Math.pow(p0, 3) - Math.pow(p1, 3))
+
       return this.p.createVector(x, y);
     }
 }
