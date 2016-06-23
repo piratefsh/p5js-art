@@ -8,19 +8,33 @@ const sketch = p => {
 
     p.setup = () => {
         p.createCanvas(600, 600);
+        p.reset();
+    };
 
+    p.reset = () => {
         flame = new FractalFlame(p);
+        flame.setType('sech');
 
         p.smooth(8);
         p.strokeWeight(0.9);
         p.stroke(20, 15);
         p.background(250);
-
-    };
+    }
 
     p.draw = () => {
+
         flame.draw();
     };
+
+    p.keyPressed = () => {
+        switch(p.key){
+            case 'S':
+                p.save('tadaaa.png');
+                break;
+            case 'R':
+                p.reset();
+        }
+    }        
 };
 
 // set global functions for p5
