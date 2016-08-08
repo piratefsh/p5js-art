@@ -1,10 +1,10 @@
 import 'file?name=[name].[ext]!../public/index.html';
 import 'styles/style.scss';
 import p5 from 'p5';
-import FractalFlame from './components/FractalFlame'
+import Place from './components/Place'
 
 const sketch = p => {
-    let flame;
+    let place;
 
     p.setup = () => {
         p.createCanvas(600, 600);
@@ -12,19 +12,13 @@ const sketch = p => {
     };
 
     p.reset = () => {
-        flame = new FractalFlame(p);
-        flame.setType('ex');
-
-        p.smooth(8);
-        p.strokeWeight(0.9);
-        p.stroke(20, 15);
         p.background(250);
+        place = new Place(p)
     }
 
     p.draw = () => {
-
-        flame.draw();
-    };
+        place.draw()
+    }
 
     p.keyPressed = () => {
         switch(p.key){
