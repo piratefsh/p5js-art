@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public/lsystems'),
+        path: path.resolve(__dirname, 'public/friends'),
         publicPath: '',
         filename: 'bundle.js'
     },

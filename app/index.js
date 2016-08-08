@@ -16,7 +16,7 @@ const sketch = p => {
     }
 
     p.draw = () => {
-        // p.background(250);
+        p.background(250);
         place.update();
         place.draw()
     }
