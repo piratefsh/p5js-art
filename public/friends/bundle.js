@@ -31593,6 +31593,7 @@
 	    this.types = new Array(5);
 	    this.rotation = p5.random(this.p5.PI);
 	    this.changeTypes();
+	    this.groups = {};
 
 	    var x = undefined,
 	        y = undefined,
@@ -31605,10 +31606,23 @@
 	      y = r * p5.sin(t);
 	      type = this.types[Math.floor(p5.random(this.types.length))];
 	      this.agents[i] = new _Agent2['default'](p5, p5.createVector(x, y), type);
+	      this.addToGroup(this.agents[i]);
 	    }
+
+	    console.log(this.groups);
 	  }
 
 	  _createClass(Place, [{
+	    key: 'addToGroup',
+	    value: function addToGroup(agent) {
+	      var type = agent.type;
+	      if (Array.isArray(this.groups[type])) {
+	        this.groups[type].push(agent);
+	      } else {
+	        this.groups[type] = [agent];
+	      }
+	    }
+	  }, {
 	    key: 'changeTypes',
 	    value: function changeTypes() {
 	      for (var i = 0; i < 5; i++) {
@@ -31627,20 +31641,19 @@
 	        var nearestFriend = null;
 	        var furthestFriend = null;
 
-	        for (var j = i + 1; j < _this.agents.length; j++) {
-	          var other = _this.agents[j];
+	        // iterate through friends
+	        _this.groups[agent.type].forEach(function (other) {
 	          if (other === agent) return;
-	          // if is friend, find out how close
-	          if (other.type === agent.type) {
-	            // draw line to friend
-	            if (other.distance(agent) < nearestDistance) {
-	              nearestFriend = other;
-	            }
-	            if (other.distance(agent) > furthestDistance) {
-	              furthestFriend = other;
-	            }
+
+	          // draw line to friend
+	          var dist = other.distance(agent);
+	          if (dist < nearestDistance) {
+	            nearestFriend = other;
 	          }
-	        };
+	          if (dist > furthestDistance) {
+	            furthestFriend = other;
+	          }
+	        });
 
 	        if (furthestFriend) agent.headTowards(furthestFriend);
 	        // if(nearestFriend) agent.headTowards(nearestFriend);
@@ -31649,6 +31662,7 @@
 	        // birth new agent
 	        if (agent.dead) {
 	          _this.agents[i] = new _Agent2['default'](_this.p5, agent.originalPos, agent.type + 1);
+	          _this.addToGroup(_this.agents[i]);
 	        }
 	      });
 	    }
@@ -31663,12 +31677,11 @@
 	      this.p5.rotate(this.rotation);
 	      this.agents.forEach(function (agent, i) {
 	        agent.draw();
-	        for (var j = 0; j < _this2.agents.length; j++) {
-	          var other = _this2.agents[j];
+	        _this2.groups[agent.type].forEach(function (other) {
 	          if (agent.friend(other)) {
 	            agent.connect(other);
 	          }
-	        }
+	        });
 	      });
 
 	      this.p5.pop();
@@ -31828,7 +31841,7 @@
 	    key: "connect",
 	    value: function connect(other) {
 	      this.p5.push();
-	      this.p5.stroke(0, 10);
+	      this.p5.stroke(0, 15);
 	      this.p5.line(this.pos.x, this.pos.y, other.pos.x, other.pos.y);
 	      this.p5.pop();
 	    }
