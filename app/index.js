@@ -4,7 +4,7 @@ import p5 from 'p5';
 import Place from './components/Place'
 
 const sketch = p => {
-    let place;
+    let place, place2, place3;
 
     p.setup = () => {
         p.createCanvas(window.innerWidth, window.innerHeight);
@@ -13,12 +13,18 @@ const sketch = p => {
 
     p.reset = () => {
         place = new Place(p)
+        place2 = new Place(p)
+        place3 = new Place(p)
     }
 
     p.draw = () => {
         p.background(250);
         place.update();
+        place2.update();
+        place3.update();
         place.draw()
+        place2.draw()
+        place3.draw()
     }
 
     p.keyPressed = () => {

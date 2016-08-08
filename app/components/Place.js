@@ -3,13 +3,12 @@ import Agent from './Agent'
 export default class Place{
   constructor(p5){
     this.p5 = p5;
-    this.NUM_AGENTS = 70;
+    this.NUM_AGENTS = 30;
     this.RADIUS = 180;
     this.agents = new Array(this.NUM_AGENTS);
     this.types = new Array(5);
-
+    this.rotation = p5.random(this.p5.PI);
     this.changeTypes();
-
     let x, y, t, type;
     const r = this.RADIUS
     for(let i = 0; i < this.NUM_AGENTS; i++){
@@ -42,10 +41,11 @@ export default class Place{
         // if is friend, find out how close
         if(other.type === agent.type){
           // draw line to friend
-          if(other.distance(agent) < nearestDistance){
+          const dist = other.distance(agent)
+          if(dist < nearestDistance){
             nearestFriend = other;
           }
-          if(other.distance(agent) > furthestDistance){
+          if(dist > furthestDistance){
             furthestFriend = other;
           }
         }
@@ -67,6 +67,7 @@ export default class Place{
     this.p5.push()
     
     this.p5.translate(this.p5.width/2, this.p5.height/2);
+    this.p5.rotate(this.rotation);
     this.agents.forEach((agent, i) => {
       agent.draw();
       for(let j =0; j < this.agents.length; j++){

@@ -1,7 +1,7 @@
 export default class Agent{
   constructor(p5, pos, type){
     this.id = Agent.ID_COUNTER++;
-    this.STEP_SIZE = 3;
+    this.STEP_SIZE = 1;
     this.originalPos = pos.copy()
     this.p5 = p5;
     this.pos = pos;
@@ -15,6 +15,7 @@ export default class Agent{
     const direction = other.pos.copy().sub(this.pos).normalize();
 
     this.vector.set(direction);
+    this.vector.mult(this.STEP_SIZE)
 
     if(this.dying()){
       this.die()
@@ -45,7 +46,7 @@ export default class Agent{
 
   connect(other){
     this.p5.push();
-    this.p5.stroke(0, 30);
+    this.p5.stroke(0, 10);
     this.p5.line(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
     this.p5.pop();
   }
