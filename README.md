@@ -1,8 +1,6 @@
-# L-Systems Renderer
+# Spaceship friends
 
-Simple L-Systems Renderer. [Check it out here](http://piratefsh.github.io/p5js-art/public/lsystems/).
-
-![l systems renderer screenshot](https://pbs.twimg.com/media/Ch4Go8DXEAYG2wy.jpg:large)
+Bunch of points on a circle perimeter. Each point has a friend type. Friends of similar types seek each other out. They coast at similar velocities, forming spaceship things. 
 
 ## Development 
 ### Install
