@@ -46,7 +46,7 @@ export default class Agent{
 
   connect(other){
     this.p5.push();
-    this.p5.stroke(0, 10);
+    this.p5.stroke(0, 15);
     this.p5.line(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
     this.p5.pop();
   }

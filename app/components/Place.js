@@ -9,6 +9,8 @@ export default class Place{
     this.types = new Array(5);
     this.rotation = p5.random(this.p5.PI);
     this.changeTypes();
+    this.groups = {};
+
     let x, y, t, type;
     const r = this.RADIUS
     for(let i = 0; i < this.NUM_AGENTS; i++){
@@ -17,6 +19,19 @@ export default class Place{
       y = r * p5.sin(t);
       type = this.types[Math.floor(p5.random(this.types.length))];
       this.agents[i] = new Agent(p5, p5.createVector(x, y), type)
+      this.addToGroup(this.agents[i]);
+    }
+
+    console.log(this.groups)
+  }
+
+  addToGroup(agent){
+    const type = agent.type
+    if(Array.isArray(this.groups[type])){
+      this.groups[type].push(agent)
+    }
+    else{
+      this.groups[type] = [agent]
     }
   }
 
@@ -35,21 +50,19 @@ export default class Place{
       let nearestFriend = null;
       let furthestFriend = null;
 
-      for(let j = i + 1; j < this.agents.length; j++){
-        const other = this.agents[j];
+      // iterate through friends
+      this.groups[agent.type].forEach((other) => {
         if (other === agent) return;
-        // if is friend, find out how close
-        if(other.type === agent.type){
-          // draw line to friend
-          const dist = other.distance(agent)
-          if(dist < nearestDistance){
-            nearestFriend = other;
-          }
-          if(dist > furthestDistance){
-            furthestFriend = other;
-          }
+
+        // draw line to friend
+        const dist = other.distance(agent)
+        if(dist < nearestDistance){
+          nearestFriend = other;
         }
-      };
+        if(dist > furthestDistance){
+          furthestFriend = other;
+        }
+      })
 
       if(furthestFriend) agent.headTowards(furthestFriend);
       // if(nearestFriend) agent.headTowards(nearestFriend);
@@ -58,6 +71,7 @@ export default class Place{
       // birth new agent
       if(agent.dead){
         this.agents[i] = new Agent(this.p5, agent.originalPos, agent.type + 1)
+        this.addToGroup(this.agents[i])
       }
     });
 
@@ -70,12 +84,11 @@ export default class Place{
     this.p5.rotate(this.rotation);
     this.agents.forEach((agent, i) => {
       agent.draw();
-      for(let j =0; j < this.agents.length; j++){
-        const other = this.agents[j];
+      this.groups[agent.type].forEach((other) => {
         if(agent.friend(other)){
           agent.connect(other);
         }
-      }
+      });
     })
 
     this.p5.pop()
