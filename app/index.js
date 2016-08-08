@@ -7,16 +7,17 @@ const sketch = p => {
     let place;
 
     p.setup = () => {
-        p.createCanvas(600, 600);
+        p.createCanvas(window.innerWidth, window.innerHeight);
         p.reset();
     };
 
     p.reset = () => {
-        p.background(250);
         place = new Place(p)
     }
 
     p.draw = () => {
+        // p.background(250);
+        place.update();
         place.draw()
     }
 
