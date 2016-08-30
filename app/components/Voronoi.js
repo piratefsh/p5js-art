@@ -49,6 +49,10 @@ export default class Voronoi{
     const beach = this.state.beachLineTree;
     
     beach.insert(site.x);
+  }
+
+  printBeachTree(){
+    const beach = this.state.beachLineTree;
     let str = "";
     beach.traverse(beach.root, node => str = `${str} ${node.value}`);
     console.log(str)
