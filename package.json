@@ -27,6 +27,7 @@
     "webpack": "^1.12.2"
   },
   "dependencies": {
+    "eslint": "^3.4.0",
     "p5": "^0.5.1"
   }
 }

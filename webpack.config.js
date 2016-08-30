@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public/friends'),
+        path: path.resolve(__dirname, 'public/voronoi'),
         publicPath: '',
         filename: 'bundle.js'
     },
