@@ -16,6 +16,11 @@ export default class Voronoi{
     for(let i = 0; i < this.numSites; i++){
       this.sites[i] = this.util.randomPoint();
     }
+
+    // sort by y coordinate
+    this.sites.sort((a, b) => {
+      return a.y - b.y;
+    });
   }
 
   sweep() {
@@ -27,10 +32,34 @@ export default class Voronoi{
 
     // else, sweep one pixel down
     this.state.sweepLinePos.add(0, 1);
+
+    // is there a point on this line
+    const numIntersects = this.numSitesOnSweep();
+    if(numIntersects > 0){
+      console.log(numIntersects)
+      for(let i = 0; i < numIntersects; i++){
+        const s = this.sites.shift();
+      }
+    }
+  }
+
+  numSitesOnSweep() {
+    const sweepY = this.state.sweepLinePos.y;
+    let numIntersects = 0;
+    for(let i = 0; i < this.sites.length; i++) {
+      const s = this.sites[i];
+      if (s.y > sweepY){
+        return numIntersects;
+      }
+      else if(s.y == sweepY){
+        numIntersects++;
+      }
+    }
+    return numIntersects;
   }
 
   draw(){
-    this.p5.background(250);
+    // this.p5.background(250);
 
     // draw random points
     this.p5.fill(0);
@@ -39,7 +68,7 @@ export default class Voronoi{
     });
 
     const sweep = this.state.sweepLinePos;
-    this.p5.stroke(100);
+    this.p5.stroke(100, 10);
     this.p5.line(sweep.x, sweep.y, sweep.x + this.p5.width, sweep.y);
   }
  }

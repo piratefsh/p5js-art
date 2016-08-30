@@ -6,8 +6,8 @@ export default class Util {
   }
 
   randomPoint() {
-    const w = this.p5.random(this.p5.width)
-    const h = this.p5.random(this.p5.height)
+    const w = Math.trunc(this.p5.random(this.p5.width))
+    const h = Math.trunc(this.p5.random(this.p5.height))
     return this.p5.createVector(w, h)
   }
 }
