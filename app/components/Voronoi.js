@@ -1,4 +1,5 @@
 import Util from './Utils';
+import BinaryTree from './Tree';
 
 export default class Voronoi{
   constructor(p5){
@@ -7,7 +8,8 @@ export default class Voronoi{
 
     this.state = {
       sweepLinePos: p5.createVector(0,0),
-      done: false
+      beachLineTree: new BinaryTree(),
+      done: false,
     }
 
     // get random sites
@@ -36,11 +38,20 @@ export default class Voronoi{
     // is there a point on this line
     const numIntersects = this.numSitesOnSweep();
     if(numIntersects > 0){
-      console.log(numIntersects)
       for(let i = 0; i < numIntersects; i++){
         const s = this.sites.shift();
+        this.addArc(s);
       }
     }
+  }
+
+  addArc(site){
+    const beach = this.state.beachLineTree;
+    
+    beach.insert(site.x);
+    let str = "";
+    beach.traverse(beach.root, node => str = `${str} ${node.value}`);
+    console.log(str)
   }
 
   numSitesOnSweep() {
