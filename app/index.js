@@ -7,7 +7,7 @@ const sketch = p => {
     let voronoi;
 
     p.setup = () => {
-        p.createCanvas(500, 500);
+        p.createCanvas(100, 100);
         // p.noLoop();
         p.reset();
     };

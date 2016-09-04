@@ -1,21 +1,21 @@
 import Util from './Utils';
 import BinaryTree from './Tree';
 
-export default class Voronoi{
-  constructor(p5){
+export default class Voronoi {
+  constructor(p5) {
     this.p5 = p5;
     this.util = new Util(this.p5);
 
     this.state = {
-      sweepLinePos: p5.createVector(0,0),
+      sweepLinePos: p5.createVector(0, 0),
       beachLineTree: new BinaryTree(),
       done: false,
-    }
+    };
 
     // get random sites
-    this.numSites = 15;
+    this.numSites = 3;
     this.sites = new Array(this.numSites);
-    for(let i = 0; i < this.numSites; i++){
+    for (let i = 0; i < this.numSites; i++) {
       this.sites[i] = this.util.randomPoint();
     }
 
@@ -23,12 +23,21 @@ export default class Voronoi{
     this.sites.sort((a, b) => {
       return a.y - b.y;
     });
+
+    this.sites.forEach((s, i) => {
+      s.id = `p${i}`
+    })
   }
 
   sweep() {
     // if reached the end of canvas, stop sweeping
-    if(this.state.sweepLinePos.y > this.p5.height){
+    if (this.state.done) {
+      return;
+    }
+
+    if (this.state.sweepLinePos.y > this.p5.height) {
       this.state.done = true;
+      this.state.beachLineTree.print();
       return;
     }
 
@@ -37,49 +46,42 @@ export default class Voronoi{
 
     // is there a point on this line
     const numIntersects = this.numSitesOnSweep();
-    if(numIntersects > 0){
-      for(let i = 0; i < numIntersects; i++){
+    if (numIntersects > 0) {
+      for (let i = 0; i < numIntersects; i++) {
         const s = this.sites.shift();
         this.addArc(s);
       }
     }
   }
 
-  addArc(site){
+  addArc(site) {
     const beach = this.state.beachLineTree;
-    
-    beach.insert(site.x);
-  }
 
-  printBeachTree(){
-    const beach = this.state.beachLineTree;
-    let str = "";
-    beach.traverse(beach.root, node => str = `${str} ${node.value}`);
-    console.log(str)
+    beach.insertLeaf(site);
   }
 
   numSitesOnSweep() {
     const sweepY = this.state.sweepLinePos.y;
     let numIntersects = 0;
-    for(let i = 0; i < this.sites.length; i++) {
+    for (let i = 0; i < this.sites.length; i++) {
       const s = this.sites[i];
-      if (s.y > sweepY){
+      if (s.y > sweepY) {
         return numIntersects;
       }
-      else if(s.y == sweepY){
+      else if (s.y == sweepY) {
         numIntersects++;
       }
     }
     return numIntersects;
   }
 
-  draw(){
+  draw() {
     // this.p5.background(250);
 
     // draw random points
     this.p5.fill(0);
     this.sites.forEach((s) => {
-      this.p5.ellipse(s.x, s.y, 2, 2)
+      this.p5.ellipse(s.x, s.y, 2, 2);
     });
 
     const sweep = this.state.sweepLinePos;
