@@ -5,14 +5,14 @@ import Bubble from 'components/Bubble';
 import dat from 'dat.gui/build/dat.gui';
 
 const NUM_BUBBLES = 2;
-const ROWS = 5;
-const COLS = 5;
-const bubbles = new Array(ROWS * COLS);
 const gui = new dat.GUI();
+let bubbles;
 
 const sketch = p => {
   p.rows = 5;
   p.cols = 5;
+  bubbles = new Array(p.rows * p.cols);
+
   p.setupGUI = () => {
     const radius = gui.add(Bubble, 'radius').min(5).max(100).step(1);
     const numPoints = gui.add(Bubble, 'numPoints').min(5).max(12).step(1);
@@ -48,7 +48,7 @@ const sketch = p => {
   };
 
   p.draw = () => {
-    bubbles.forEach((bubble) => {
+    bubbles.forEach((bubble, i) => {
       if (bubble.isAlive()) {
         bubble.update();
         bubble.draw();

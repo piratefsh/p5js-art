@@ -34,17 +34,38 @@ export default class Bubble {
   checkLifespan() {
     // if nearing end of life, make smaller
     const now = new Date();
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    let minX = Infinity;
+    let minY = Infinity;
+
     if (now - this.startLifespan > Bubble.lifespan) {
       this.points.forEach((point) => {
-        const dir = this.pos.copy().sub(point);
+        const dir = point.copy();
         dir.normalize();
-        point.add(dir);
+        dir.mult(Bubble.step).mult(0.1);
+        point.sub(dir);
+        maxX = maxX < point.x ? point.x : maxX;
+        minX = minX > point.x ? point.x : minX;
+
+        maxY = maxY < point.y ? point.y : maxY;
+        minY = minY > point.y ? point.y : minY;
       });
+      // if bubble is too small, kill it
+      const minSize = 10;
+      if (maxX - minX < minSize || maxY - minY < minSize) {
+        this.dead = true;
+      }
     }
   }
 
   update() {
     this.checkLifespan();
+
+    if (!this.isAlive()) {
+      return;
+    }
+
     this.pos.add(this.velocity.copy().mult(Bubble.velocityMultiplier));
     this.points.forEach((point) => {
       const offset = this.p5.createVector(this.randStep(), this.randStep());
@@ -58,6 +79,8 @@ export default class Bubble {
   draw() {
     const p5 = this.p5;
     p5.push();
+
+    p5.stroke(60);
     p5.translate(this.pos.x, this.pos.y);
 
     p5.beginShape();
@@ -83,4 +106,4 @@ Bubble.numPoints = 7;
 Bubble.step = 1.2;
 Bubble.velocityRange = 0.8;
 Bubble.velocityMultiplier = 1.4;
-Bubble.lifespan = 1000;
+Bubble.lifespan = 4000;
