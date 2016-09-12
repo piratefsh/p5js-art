@@ -1,10 +1,8 @@
 import 'file?name=[name].[ext]!../public/index.html';
 import 'styles/style.scss';
 import p5 from 'p5';
-import Voronoi from './components/Voronoi'
 
 const sketch = p => {
-    let voronoi;
 
     p.setup = () => {
         p.createCanvas(100, 100);
@@ -13,12 +11,10 @@ const sketch = p => {
     };
 
     p.reset = () => {
-        voronoi = new Voronoi(p);
     }
 
     p.draw = () => {
-        voronoi.sweep();
-        voronoi.draw();
+        p.ellipse(p.width/2, p.height/2, 100, 100)
     }
 
     p.keyPressed = () => {
