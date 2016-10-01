@@ -1,12 +1,13 @@
 import 'file?name=[name].[ext]!../public/index.html';
 import 'styles/style.scss';
 import p5 from 'p5';
+import HexagonTesselation from './components/HexagonTesselation';
 
 const sketch = p => {
 
     p.setup = () => {
-        p.createCanvas(100, 100);
-        // p.noLoop();
+        p.createCanvas(window.innerWidth, window.innerHeight);
+        p.noLoop();
         p.reset();
     };
 
@@ -14,7 +15,8 @@ const sketch = p => {
     }
 
     p.draw = () => {
-        p.ellipse(p.width/2, p.height/2, 100, 100)
+        const hex = new HexagonTesselation(p);
+        hex.draw();
     }
 
     p.keyPressed = () => {
