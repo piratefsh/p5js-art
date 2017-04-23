@@ -14,6 +14,7 @@ class SelectablePoint {
     this.state = SelectablePoint.DEFAULT;
     this.color = this.DEFAULT_COLOR;
     this.shapes = [];
+    this.transforms = [];
     this.addShape(shape);
   }
 
@@ -28,10 +29,32 @@ class SelectablePoint {
     return usedAngle + angle <= 360;
   }
 
+  pointsFor(shape) {
+    const idx = this.shapes.indexOf(shape);
+
+    if (idx < 0) {
+      return false;
+    }
+
+    const trans = this.transforms[idx];
+    return [shape.p1, shape.p2, shape.p3].map((pt) => {
+      let t = pt.copy();
+      t.rotate(p.radians(trans.rotation))
+      t.add(trans.translation)
+
+      t.x = Math.round(t.x);
+      t.y = Math.round(t.y);
+      return t;
+    });
+  }
+
   addShape(shape) {
     if (shape && this.hasSpace(shape.angle) && this.shapes.indexOf(shape) < 0) {
-      shape.rotation = this.totalAngles();
-      shape.translation = p.createVector(this.x, this.y);
+      this.transforms.push({
+        rotation: this.totalAngles(),
+        translation: p.createVector(this.x, this.y),
+      });
+
       this.shapes.push(shape);
       return true;
     }
@@ -64,7 +87,7 @@ class SelectablePoint {
     this.color = color;
     this.size = size;
 
-    this.shapes.forEach(s => s.update())
+    this.shapes.forEach(s => s.update());
   }
 
   draw() {
@@ -73,10 +96,11 @@ class SelectablePoint {
     p.noStroke();
     p.translate(this.x, this.y);
     p.ellipse(0, 0, this.size, this.size);
-
+    let x= 200
     this.shapes.forEach((s) => {
+      p.fill(x-=20, 100)
       s.draw();
-      p.rotate(-p.radians(s.angle));
+      p.rotate(p.radians(s.angle));
     });
 
     p.pop();

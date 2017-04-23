@@ -12,9 +12,8 @@ class Triangle {
 
   draw() {
     if (this.drawn) {
-      return;
+      // return;
     }
-
     this.drawn = true;
     p.push();
     p.stroke(180);
@@ -33,14 +32,8 @@ class Triangle {
   blur(){
     this.color = p.color(0, 10);
   }
-
-  transformedPoints() {
-    return [this.p1, this.p2, this.p3].map((pt) => {
-      return pt
-      .copy()
-      .rotate(p.radians(this.rotation))
-      .add(this.translation)
-    });
+  points(){
+    return [this.p1, this.p2, this.p3]
   }
 }
 
