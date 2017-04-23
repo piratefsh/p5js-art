@@ -14,12 +14,12 @@ class TesselationDrawer {
       const sp = new SelectablePoint(s.x, s.y);
       const existingPoint = this.points[sp.toString()];
       if (existingPoint) {
-        existingPoint.addShape(shape);
+        // existingPoint.addShape(shape);
       }
       else{
         this.points[sp.toString()] = sp;
         console.log(sp)
-        sp.addShape(shape);
+        // sp.addShape(shape);
       }
     });
   }
