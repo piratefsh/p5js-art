@@ -6,12 +6,11 @@ class TesselationDrawer {
   constructor(length = 80) {
     this.points = {};
     this.length = length;
-    const tri = new EquilateralTriangle(this.length, p.width / 2, p.height / 2);
-    this.addPoints(tri);
+    this.addPoints([new SelectablePoint(p.width/2, p.height/2)]);
   }
 
-  addPoints(shape) {
-    const newPoints = shape
+  addShape(shape) {
+    shape
       .points()
       .forEach((s) => {
         const sp = new SelectablePoint(s.x, s.y, shape);
@@ -19,6 +18,15 @@ class TesselationDrawer {
           this.points[sp.toString()] = sp;
         }
       });
+  }
+
+  addPoints(points) {
+    points.forEach((s) => {
+      const sp = new SelectablePoint(s.x, s.y);
+      if (!this.points[sp.toString()]) {
+        this.points[sp.toString()] = sp;
+      }
+    });
   }
 
   pointsValues() {
@@ -34,11 +42,10 @@ class TesselationDrawer {
     this.pointsValues().forEach((pt) => {
       if (pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
-
-        if (pt.hasSpace(30)) {
-          const tri = new EquilateralTriangle(this.length, pt.x, pt.y);
+        while (pt.hasSpace(EquilateralTriangle.ANGLE)) {
+          const tri = new EquilateralTriangle(this.length, 0, 0);
           pt.addShape(tri);
-          this.addPoints(tri);
+          this.addShape(tri);
         }
       }
     });
@@ -47,7 +54,6 @@ class TesselationDrawer {
   draw() {
     this.pointsValues().forEach(pt => {
       pt.draw();
-      pt.shapes.forEach(sh => sh.draw());
     });
   }
 }

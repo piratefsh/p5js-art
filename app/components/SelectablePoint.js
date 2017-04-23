@@ -14,19 +14,18 @@ class SelectablePoint {
     this.state = SelectablePoint.DEFAULT;
     this.color = this.DEFAULT_COLOR;
     this.shapes = [];
-    if (shape) {
-      this.shapes.push(shape);
-    }
+    this.addShape(shape);
   }
 
   hasSpace(angle) {
-    return this.shapes.reduce((acc, s) => {
-      return acc + s.angle();
-    }, 0) + angle < 360;
+    const usedAngle = this.shapes.reduce((acc, s) => {
+      return acc + s.angle;
+    }, 0);
+    return usedAngle + angle <= 360;
   }
 
   addShape(shape) {
-    if (this.hasSpace(shape.angle())) {
+    if (shape && this.hasSpace(shape.angle)) {
       this.shapes.push(shape);
       return true;
     }
@@ -64,7 +63,12 @@ class SelectablePoint {
     p.push();
     p.fill(this.color);
     p.noStroke();
-    p.ellipse(this.x, this.y, this.size, this.size);
+    p.translate(this.x, this.y);
+    p.ellipse(0, 0, this.size, this.size);
+    this.shapes.forEach((s, i) => {
+      s.draw();
+      p.rotate(-p.radians(s.angle));
+    });
     p.pop();
   }
 
