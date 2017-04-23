@@ -12,11 +12,23 @@ class SelectablePoint {
     this.y = y;
     this.thresh = 5;
     this.state = SelectablePoint.DEFAULT;
+    this.color = this.DEFAULT_COLOR;
     this.shapes = [];
   }
 
+  hasSpace(angle) {
+    return this.shapes.reduce((acc, s) => {
+      return acc + s.angle();
+    }, 0) + angle < 360;
+  }
+
   addShape(shape) {
-    this.shapes.push(shape);
+    if (this.hasSpace(shape.angle())) {
+      this.shapes.push(shape);
+      return true;
+    }
+
+    return false;
   }
 
   hovered() {
@@ -43,11 +55,6 @@ class SelectablePoint {
 
     this.color = color;
     this.size = size;
-    this.shapes.forEach((s) => {
-      if (this.state === SelectablePoint.PRESSED_STATE) {
-        s.focus();
-      }
-    });
   }
 
   draw() {

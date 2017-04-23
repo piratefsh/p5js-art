@@ -7,23 +7,34 @@ class TesselationDrawer {
     this.points = [];
     this.length = length;
     const tri = new EquilateralTriangle(this.length, p.width / 2, p.height / 2);
-    this.shapes = [tri];
-    this.shapes.forEach((shape) => {
-      shape.points().forEach((pt) => {
-        const point = new SelectablePoint(pt.x, pt.y);
-        point.addShape(shape);
+    this.shapes = [];
+    this.addShape(tri);
+  }
+
+  addShape(shape) {
+    this.shapes.push(shape);
+    shape.points().forEach((pt) => {
+      const point = new SelectablePoint(pt.x, pt.y);
+      point.addShape(shape);
+      if(this.points.indexOf(point) < 0){
         this.points.push(point);
-      });
+      }
     });
   }
 
-  update(){
+  update() {
     this.shapes.forEach(sh => sh.blur());
     this.points.forEach((pt) => {
-      if(pt.state === SelectablePoint.PRESSED_STATE) {
+      pt.update();
+
+      if (pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
+
+        if (pt.hasSpace(30)) {
+          const tri = new EquilateralTriangle(this.length, pt.x, pt.y);
+          this.addShape(tri);
+        }
       }
-      pt.update()
     });
   }
 

@@ -5,7 +5,11 @@ class Triangle {
     this.p1 = p1;
     this.p2 = p2;
     this.p3 = p3;
-    this.color = p.color(220)
+    this.color = p.color(0, 20)
+  }
+
+  angle() {
+    return 30;
   }
 
   draw() {
@@ -24,7 +28,7 @@ class Triangle {
   }
 
   blur(){
-    this.color = p.color(220);
+    this.color = p.color(0, 20);
   }
 
   points() {

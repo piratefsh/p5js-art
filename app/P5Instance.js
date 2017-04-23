@@ -3,10 +3,13 @@ import TriangleTesselation from './components/TriangleTesselation';
 import TesselationDrawer from './components/TesselationDrawer';
 
 const sketch = p => {
+  let tess;
+  
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
     // p.noLoop();
     p.reset();
+    tess = new TesselationDrawer();
   };
 
   p.reset = () => {
@@ -15,7 +18,6 @@ const sketch = p => {
   p.draw = () => {
     p.background(255);
     // const tess = new TriangleTesselation();
-    const tess = new TesselationDrawer();
     tess.update();
     tess.draw();
   };
