@@ -18,11 +18,12 @@ class SelectablePoint {
     this.offset = offset;
   }
 
-  angleOffset(){
+  angleOffset() {
     return this.shapes.reduce((acc, s) => {
       return s.rotation > acc ? s.rotation : acc;
     }, 0);
   }
+
   totalAngles() {
     return this.shapes.reduce((acc, s) => {
       return acc + s.angle;
@@ -36,7 +37,6 @@ class SelectablePoint {
 
   addShape(shape) {
     if (shape && this.hasSpace(shape.angle) && this.shapes.indexOf(shape) < 0) {
-
       this.shapes.push(shape);
       return true;
     }
@@ -85,7 +85,6 @@ class SelectablePoint {
       s.draw();
     });
     p.pop();
-
   }
 
   toString() {
@@ -93,20 +92,8 @@ class SelectablePoint {
   }
 }
 
-SelectablePoint.transform = function(pt, {rotation, translation}){
-  const t = pt.copy();
-  t.rotate(p.radians(rotation));
-  t.add(translation);
-
-  t.x = Math.round(t.x);
-  t.y = Math.round(t.y);
-  console.log(pt, t)
-  return t;
-}
-
 SelectablePoint.DEFAULT_STATE = 'default';
 SelectablePoint.HOVER_STATE = 'hover';
 SelectablePoint.PRESSED_STATE = 'pressed';
-
 
 export default SelectablePoint;
