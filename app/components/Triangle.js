@@ -5,10 +5,26 @@ class Triangle {
     this.p1 = p1;
     this.p2 = p2;
     this.p3 = p3;
+    this.color = p.color(220)
   }
 
   draw() {
+    p.push();
+    p.fill(this.color);
+    p.stroke(180);
     p.triangle(this.p1.x, this.p1.y, this.p2.x, this.p2.y, this.p3.x, this.p3.y);
+    p.pop();
+  }
+
+  update(){
+  }
+
+  focus(){
+    this.color = p.color(0, 128, 128, 50);
+  }
+
+  blur(){
+    this.color = p.color(220);
   }
 
   points() {

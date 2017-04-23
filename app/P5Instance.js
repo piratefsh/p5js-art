@@ -1,5 +1,6 @@
 import p5 from 'p5';
 import TriangleTesselation from './components/TriangleTesselation';
+import TesselationDrawer from './components/TesselationDrawer';
 
 const sketch = p => {
   p.setup = () => {
@@ -13,7 +14,9 @@ const sketch = p => {
 
   p.draw = () => {
     p.background(255);
-    const tess = new TriangleTesselation();
+    // const tess = new TriangleTesselation();
+    const tess = new TesselationDrawer();
+    tess.update();
     tess.draw();
   };
 
