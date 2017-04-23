@@ -10,6 +10,10 @@ class Triangle {
   draw() {
     p.triangle(this.p1.x, this.p1.y, this.p2.x, this.p2.y, this.p3.x, this.p3.y);
   }
+
+  points() {
+    return [this.p1, this.p2, this.p3];
+  }
 }
 
 export default Triangle;
