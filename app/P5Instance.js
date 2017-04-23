@@ -4,7 +4,7 @@ import TriangleTesselation from './components/TriangleTesselation';
 const sketch = p => {
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
-    p.noLoop();
+    // p.noLoop();
     p.reset();
   };
 
@@ -12,6 +12,7 @@ const sketch = p => {
   };
 
   p.draw = () => {
+    p.background(255);
     const tess = new TriangleTesselation();
     tess.draw();
   };
@@ -25,6 +26,10 @@ const sketch = p => {
         p.reset();
     }
   };
+
+  p.mouseClicked = () => {
+
+  }
 };
 
 // set global functions for p5
