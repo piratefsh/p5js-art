@@ -4,43 +4,51 @@ import SelectablePoint from './SelectablePoint';
 
 class TesselationDrawer {
   constructor(length = 80) {
-    this.points = [];
+    this.points = {};
     this.length = length;
     const tri = new EquilateralTriangle(this.length, p.width / 2, p.height / 2);
-    this.shapes = [];
-    this.addShape(tri);
+    this.addPoints(tri);
   }
 
-  addShape(shape) {
-    this.shapes.push(shape);
-    shape.points().forEach((pt) => {
-      const point = new SelectablePoint(pt.x, pt.y);
-      point.addShape(shape);
-      if(this.points.indexOf(point) < 0){
-        this.points.push(point);
-      }
-    });
+  addPoints(shape) {
+    const newPoints = shape
+      .points()
+      .forEach((s) => {
+        const sp = new SelectablePoint(s.x, s.y, shape);
+        if (!this.points[sp.toString()]) {
+          this.points[sp.toString()] = sp;
+        }
+      });
+  }
+
+  pointsValues() {
+    return Object.keys(this.points).map(k => this.points[k]);
   }
 
   update() {
-    this.shapes.forEach(sh => sh.blur());
-    this.points.forEach((pt) => {
+    this.pointsValues().forEach((pt) => {
+      pt.shapes.forEach(ps => ps.blur());
       pt.update();
+    });
 
+    this.pointsValues().forEach((pt) => {
       if (pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
 
         if (pt.hasSpace(30)) {
           const tri = new EquilateralTriangle(this.length, pt.x, pt.y);
-          this.addShape(tri);
+          pt.addShape(tri);
+          this.addPoints(tri);
         }
       }
     });
   }
 
   draw() {
-    this.shapes.forEach(sh => sh.draw());
-    this.points.forEach(pt => pt.draw());
+    this.pointsValues().forEach(pt => {
+      pt.draw();
+      pt.shapes.forEach(sh => sh.draw());
+    });
   }
 }
 

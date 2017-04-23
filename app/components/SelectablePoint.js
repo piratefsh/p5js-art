@@ -1,7 +1,7 @@
 import { p } from '../P5Instance';
 
 class SelectablePoint {
-  constructor(x, y) {
+  constructor(x, y, shape) {
     this.DEFAULT_COLOR = p.color(0, 128, 128, 50);
     this.DEFAULT_SIZE = 8;
     this.HOVER_COLOR = p.color(0, 128, 128, 50);
@@ -14,6 +14,9 @@ class SelectablePoint {
     this.state = SelectablePoint.DEFAULT;
     this.color = this.DEFAULT_COLOR;
     this.shapes = [];
+    if (shape) {
+      this.shapes.push(shape);
+    }
   }
 
   hasSpace(angle) {
@@ -63,6 +66,10 @@ class SelectablePoint {
     p.noStroke();
     p.ellipse(this.x, this.y, this.size, this.size);
     p.pop();
+  }
+
+  toString() {
+    return `${this.x},${this.y}`;
   }
 }
 
