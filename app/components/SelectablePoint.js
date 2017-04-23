@@ -1,7 +1,7 @@
 import { p } from '../P5Instance';
 
 class SelectablePoint {
-  constructor(x, y, shape) {
+  constructor(x, y, offset) {
     this.DEFAULT_COLOR = p.color(0, 128, 128, 50);
     this.DEFAULT_SIZE = 8;
     this.HOVER_COLOR = p.color(0, 128, 128, 50);
@@ -15,8 +15,8 @@ class SelectablePoint {
     this.state = SelectablePoint.DEFAULT;
     this.color = this.DEFAULT_COLOR;
     this.shapes = [];
+    this.offset = offset;
     this.transforms = [];
-    this.addShape(shape);
   }
 
   totalAngles() {
@@ -79,11 +79,14 @@ class SelectablePoint {
     p.translate(this.x, this.y);
     p.ellipse(0, 0, this.size, this.size);
     p.pop();
+
+    p.push();
     let x= 200
     this.shapes.forEach((s) => {
       p.fill(x-=20, 100)
       s.draw();
     });
+    p.pop();
 
   }
 

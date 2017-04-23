@@ -11,7 +11,8 @@ class TesselationDrawer {
 
   addPoints(points, shape) {
     points.forEach((s) => {
-      const sp = new SelectablePoint(s.x, s.y);
+      const offset = shape ? 360 - shape.rotation : 0;
+      const sp = new SelectablePoint(s.x, s.y, offset);
       const existingPoint = this.points[sp.toString()];
       if (existingPoint) {
         existingPoint.addShape(shape);
