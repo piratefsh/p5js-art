@@ -16,9 +16,13 @@ class SelectablePoint {
     this.color = this.DEFAULT_COLOR;
     this.shapes = [];
     this.offset = offset;
-    this.transforms = [];
   }
 
+  angleOffset(){
+    return this.shapes.reduce((acc, s) => {
+      return s.rotation > acc ? s.rotation : acc;
+    }, 0);
+  }
   totalAngles() {
     return this.shapes.reduce((acc, s) => {
       return acc + s.angle;
@@ -32,10 +36,6 @@ class SelectablePoint {
 
   addShape(shape) {
     if (shape && this.hasSpace(shape.angle) && this.shapes.indexOf(shape) < 0) {
-      this.transforms.push({
-        rotation: this.totalAngles(),
-        translation: p.createVector(this.x, this.y),
-      });
 
       this.shapes.push(shape);
       return true;
@@ -81,9 +81,7 @@ class SelectablePoint {
     p.pop();
 
     p.push();
-    let x= 200
     this.shapes.forEach((s) => {
-      p.fill(x-=20, 100)
       s.draw();
     });
     p.pop();
@@ -91,7 +89,7 @@ class SelectablePoint {
   }
 
   toString() {
-    return `${this.x},${this.y}`;
+    return `${Math.round(this.x)},${Math.round(this.y)}`;
   }
 }
 

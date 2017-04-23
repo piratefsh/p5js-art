@@ -12,10 +12,11 @@ class Triangle {
 
   draw() {
     if (this.drawn) {
-      // return;
+      return;
     }
     this.drawn = true;
     p.push();
+    p.fill(this.color);
     p.stroke(180);
     p.triangle(this.p1.x, this.p1.y, this.p2.x, this.p2.y, this.p3.x, this.p3.y);
     p.pop();
