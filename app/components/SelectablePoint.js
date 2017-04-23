@@ -10,6 +10,7 @@ class SelectablePoint {
     this.PRESSED_COLOR = p.color(0, 128, 128);
     this.x = x;
     this.y = y;
+    this.point = p.createVector(x, y);
     this.thresh = 5;
     this.state = SelectablePoint.DEFAULT;
     this.color = this.DEFAULT_COLOR;
@@ -27,25 +28,6 @@ class SelectablePoint {
   hasSpace(angle) {
     const usedAngle = this.totalAngles();
     return usedAngle + angle <= 360;
-  }
-
-  pointsFor(shape) {
-    const idx = this.shapes.indexOf(shape);
-
-    if (idx < 0) {
-      return false;
-    }
-
-    const trans = this.transforms[idx];
-    return [shape.p1, shape.p2, shape.p3].map((pt) => {
-      let t = pt.copy();
-      t.rotate(p.radians(trans.rotation))
-      t.add(trans.translation)
-
-      t.x = Math.round(t.x);
-      t.y = Math.round(t.y);
-      return t;
-    });
   }
 
   addShape(shape) {
@@ -96,19 +78,29 @@ class SelectablePoint {
     p.noStroke();
     p.translate(this.x, this.y);
     p.ellipse(0, 0, this.size, this.size);
+    p.pop();
     let x= 200
     this.shapes.forEach((s) => {
       p.fill(x-=20, 100)
       s.draw();
-      p.rotate(p.radians(s.angle));
     });
 
-    p.pop();
   }
 
   toString() {
     return `${this.x},${this.y}`;
   }
+}
+
+SelectablePoint.transform = function(pt, {rotation, translation}){
+  const t = pt.copy();
+  t.rotate(p.radians(rotation));
+  t.add(translation);
+
+  t.x = Math.round(t.x);
+  t.y = Math.round(t.y);
+  console.log(pt, t)
+  return t;
 }
 
 SelectablePoint.DEFAULT_STATE = 'default';

@@ -8,10 +8,11 @@ class EquilateralTriangle extends Triangle {
     this.length = length;
     this.rotation = rotation;
     this.translation = translation;
+    this.point = p.createVector(x, y);
     const h = EquilateralTriangle.heightOf(length);
-    this.p1 = p.createVector(x + 0, y + 0)
-    this.p2 = p.createVector(x + length, y + 0)
-    this.p3 = p.createVector(x + length / 2, y - h)
+    this.p1 = p.createVector(0, 0).rotate(p.radians(rotation)).add(this.point)
+    this.p2 = p.createVector(length, 0).rotate(p.radians(rotation)).add(this.point)
+    this.p3 = p.createVector(length / 2, -h).rotate(p.radians(rotation)).add(this.point)
   }
 }
 

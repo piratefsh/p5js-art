@@ -4,7 +4,7 @@ import TesselationDrawer from './components/TesselationDrawer';
 
 const sketch = p => {
   let tess;
-  
+
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
     // p.noLoop();
@@ -39,5 +39,5 @@ const sketch = p => {
 
 // set global functions for p5
 const p = new p5(sketch);
-
+window.p = p
 export { p };

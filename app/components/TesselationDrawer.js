@@ -14,12 +14,11 @@ class TesselationDrawer {
       const sp = new SelectablePoint(s.x, s.y);
       const existingPoint = this.points[sp.toString()];
       if (existingPoint) {
-        // existingPoint.addShape(shape);
+        existingPoint.addShape(shape);
       }
       else{
         this.points[sp.toString()] = sp;
-        console.log(sp)
-        // sp.addShape(shape);
+        sp.addShape(shape);
       }
     });
   }
@@ -36,14 +35,14 @@ class TesselationDrawer {
 
     this.pointsValues().forEach((pt) => {
       if (pt.state === SelectablePoint.HOVER_STATE) {
-        console.log(pt.shapes.toString())
+        // console.log(pt, pt.shapes)
       }
       if (pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         while (pt.hasSpace(EquilateralTriangle.ANGLE)) {
-          const tri = new EquilateralTriangle(this.length);
+          const tri = new EquilateralTriangle(this.length, pt.x, pt.y, pt.totalAngles());
           pt.addShape(tri);
-          this.addPoints(pt.pointsFor(tri), tri);
+          this.addPoints(tri.points(), tri);
         }
       }
     });
