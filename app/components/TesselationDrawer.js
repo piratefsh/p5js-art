@@ -9,17 +9,6 @@ class TesselationDrawer {
     this.addPoints([new SelectablePoint(p.width/2, p.height/2)]);
   }
 
-  addShape(shape) {
-    shape
-      .points()
-      .forEach((s) => {
-        const sp = new SelectablePoint(s.x, s.y, shape);
-        if (!this.points[sp.toString()]) {
-          this.points[sp.toString()] = sp;
-        }
-      });
-  }
-
   addPoints(points) {
     points.forEach((s) => {
       const sp = new SelectablePoint(s.x, s.y);
@@ -43,9 +32,9 @@ class TesselationDrawer {
       if (pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         while (pt.hasSpace(EquilateralTriangle.ANGLE)) {
-          const tri = new EquilateralTriangle(this.length, 0, 0);
+          const tri = new EquilateralTriangle(this.length);
           pt.addShape(tri);
-          this.addShape(tri);
+          this.addPoints(tri.transformedPoints());
         }
       }
     });

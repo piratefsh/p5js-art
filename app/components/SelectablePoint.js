@@ -17,15 +17,21 @@ class SelectablePoint {
     this.addShape(shape);
   }
 
-  hasSpace(angle) {
-    const usedAngle = this.shapes.reduce((acc, s) => {
+  totalAngles() {
+    return this.shapes.reduce((acc, s) => {
       return acc + s.angle;
     }, 0);
+  }
+
+  hasSpace(angle) {
+    const usedAngle = this.totalAngles();
     return usedAngle + angle <= 360;
   }
 
   addShape(shape) {
     if (shape && this.hasSpace(shape.angle)) {
+      shape.rotation = this.totalAngles();
+      shape.translation = p.createVector(this.x, this.y);
       this.shapes.push(shape);
       return true;
     }
@@ -65,10 +71,12 @@ class SelectablePoint {
     p.noStroke();
     p.translate(this.x, this.y);
     p.ellipse(0, 0, this.size, this.size);
-    this.shapes.forEach((s, i) => {
+
+    this.shapes.forEach((s) => {
       s.draw();
       p.rotate(-p.radians(s.angle));
     });
+
     p.pop();
   }
 

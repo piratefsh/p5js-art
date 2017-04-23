@@ -2,16 +2,16 @@ import Triangle from './Triangle';
 import { p } from '../P5Instance';
 
 class EquilateralTriangle extends Triangle {
-  constructor(length = 50, x = 0, y = 0, rotation = 0) {
+  constructor(length = 50, x = 0, y = 0, rotation = 0, translation = p.createVector(0, 0)) {
     super();
     this.angle = EquilateralTriangle.ANGLE;
     this.length = length;
     this.rotation = rotation;
+    this.translation = translation;
     const h = EquilateralTriangle.heightOf(length);
-
-    this.p1 = p.createVector(x + 0, y + 0).rotate(this.rotation);
-    this.p2 = p.createVector(x + length, y + 0).rotate(this.rotation);
-    this.p3 = p.createVector(x + length / 2, y - h).rotate(this.rotation);
+    this.p1 = p.createVector(x + 0, y + 0)
+    this.p2 = p.createVector(x + length, y + 0)
+    this.p3 = p.createVector(x + length / 2, y - h)
   }
 }
 
