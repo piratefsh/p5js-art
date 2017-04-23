@@ -9,9 +9,9 @@ class TesselationDrawer {
     this.addPoints([new SelectablePoint(p.width/2, p.height/2)]);
   }
 
-  addPoints(points) {
+  addPoints(points, shape) {
     points.forEach((s) => {
-      const sp = new SelectablePoint(s.x, s.y);
+      const sp = new SelectablePoint(s.x, s.y, shape);
       if (!this.points[sp.toString()]) {
         this.points[sp.toString()] = sp;
       }

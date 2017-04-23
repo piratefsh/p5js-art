@@ -29,7 +29,7 @@ class SelectablePoint {
   }
 
   addShape(shape) {
-    if (shape && this.hasSpace(shape.angle)) {
+    if (shape && this.hasSpace(shape.angle) && this.shapes.indexOf(shape) < 0) {
       shape.rotation = this.totalAngles();
       shape.translation = p.createVector(this.x, this.y);
       this.shapes.push(shape);
@@ -63,6 +63,8 @@ class SelectablePoint {
 
     this.color = color;
     this.size = size;
+
+    this.shapes.forEach(s => s.update())
   }
 
   draw() {
