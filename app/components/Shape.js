@@ -20,7 +20,7 @@ class Shape {
     p.push();
     // set style
     p.fill(this.color);
-    p.stroke(180);
+    p.stroke(p.color(0, 128, 128, 70));
 
     // draw shape
     p.beginShape()

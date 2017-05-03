@@ -2,7 +2,7 @@ import Shape from './Shape';
 import { p } from '../P5Instance';
 
 class Hexagon extends Shape {
-  constructor(length=20, x=0, y=0, rotation=0, translation=p.createVector(0, 0)) {
+  constructor(length=10, x=0, y=0, rotation=0, translation=p.createVector(0, 0)) {
     const point = p.createVector(x, y);
     super(Hexagon.generatePoints(point, length, rotation));
     this.length = length;

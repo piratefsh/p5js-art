@@ -6,8 +6,8 @@ import SelectablePoint from './SelectablePoint';
 const Shape = Hexagon;
 
 class TesselationDrawer {
-  constructor(length = 80) {
-    this.debug = true;
+  constructor(length = 50) {
+    this.debug = false;
     this.points = {};
     this.length = length;
     this.addPoints([new SelectablePoint(p.width / 2, p.height / 2)]);
@@ -50,11 +50,9 @@ class TesselationDrawer {
       if (this.debug || pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
-        let i = 0;
         while (pt.hasSpace(Shape.ANGLE))
         {
           const angle = pt.totalAngles() - pt.offset;
-          console.log(++i, pt.totalAngles())
           const tri = new Shape(this.length, pt.x, pt.y, angle);
           pt.addShape(tri);
           this.addPoints(tri.points, tri);
