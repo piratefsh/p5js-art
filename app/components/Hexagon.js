@@ -12,8 +12,8 @@ class Hexagon extends Shape {
   }
 }
 
-Hexagon.generatePoints = (start, length) => {
-  const start = p.createVector(start.x, start.y + length);
+Hexagon.generatePoints = (pos, length) => {
+  const start = p.createVector(pos.x, pos.y + length);
   const points = [];
   for(let i = 0; i < Hexagon.SIDES; i++) {
     const newPoint = start.copy().rotate(Hexagon.ANGLE * i);

@@ -1,6 +1,9 @@
 import { p } from '../P5Instance';
+import Hexagon from './Hexagon';
 import EquilateralTriangle from './EquilateralTriangle';
 import SelectablePoint from './SelectablePoint';
+
+const Shape = EquilateralTriangle;
 
 class TesselationDrawer {
   constructor(length = 80) {
@@ -46,9 +49,9 @@ class TesselationDrawer {
       if (!pt.visited || pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
-        while (pt.hasSpace(EquilateralTriangle.ANGLE)) {
+        while (pt.hasSpace(Shape.ANGLE)) {
           const angle = pt.totalAngles() - pt.offset;
-          const tri = new EquilateralTriangle(this.length, pt.x, pt.y, angle);
+          const tri = new Shape(this.length, pt.x, pt.y, angle);
           pt.addShape(tri);
           this.addPoints(tri.points, tri);
         }
