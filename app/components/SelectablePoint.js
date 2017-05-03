@@ -2,18 +2,12 @@ import { p } from '../P5Instance';
 
 class SelectablePoint {
   constructor(x, y, offset) {
-    this.DEFAULT_COLOR = p.color(0, 128, 128, 50);
-    this.DEFAULT_SIZE = 8;
-    this.HOVER_COLOR = p.color(0, 128, 128, 50);
-    this.HOVER_SIZE = 12;
-    this.PRESSED_SIZE = 16;
-    this.PRESSED_COLOR = p.color(0, 128, 128);
     this.x = x;
     this.y = y;
     this.point = p.createVector(x, y);
     this.thresh = 5;
     this.state = SelectablePoint.DEFAULT;
-    this.color = this.DEFAULT_COLOR;
+    this.color = SelectablePoint.DEFAULT_COLOR;
     this.shapes = [];
     this.offset = offset;
   }
@@ -55,18 +49,18 @@ class SelectablePoint {
   }
 
   update() {
-    let color = this.DEFAULT_COLOR;
-    let size = this.DEFAULT_SIZE;
+    let color = SelectablePoint.DEFAULT_COLOR;
+    let size = SelectablePoint.DEFAULT_SIZE;
     this.state = SelectablePoint.DEFAULT_STATE;
 
     if (this.hovered()) {
-      color = this.HOVER_COLOR;
-      size = this.HOVER_SIZE;
+      color = SelectablePoint.HOVER_COLOR;
+      size = SelectablePoint.HOVER_SIZE;
       this.state = SelectablePoint.HOVER_STATE;
 
       if (p.mouseIsPressed) {
-        size = this.PRESSED_SIZE;
-        color = this.PRESSED_COLOR;
+        size = SelectablePoint.PRESSED_SIZE;
+        color = SelectablePoint.PRESSED_COLOR;
         this.state = SelectablePoint.PRESSED_STATE;
       }
     }
@@ -100,5 +94,11 @@ class SelectablePoint {
 SelectablePoint.DEFAULT_STATE = 'default';
 SelectablePoint.HOVER_STATE = 'hover';
 SelectablePoint.PRESSED_STATE = 'pressed';
+SelectablePoint.DEFAULT_COLOR = 'rgba(0, 128, 128, 0.5)';
+SelectablePoint.DEFAULT_SIZE = 8;
+SelectablePoint.HOVER_COLOR = 'rgba(0, 128, 128, 0.5)';
+SelectablePoint.HOVER_SIZE = 12;
+SelectablePoint.PRESSED_SIZE = 16;
+SelectablePoint.PRESSED_COLOR = 'rgba(0, 128, 128)';
 
 export default SelectablePoint;

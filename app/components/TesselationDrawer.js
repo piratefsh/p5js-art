@@ -1,9 +1,10 @@
 import { p } from '../P5Instance';
+import Square from './Square';
 import Hexagon from './Hexagon';
 import EquilateralTriangle from './EquilateralTriangle';
 import SelectablePoint from './SelectablePoint';
 
-const Shape = Hexagon;
+const Shape = Square;
 
 class TesselationDrawer {
   constructor(length = 50) {

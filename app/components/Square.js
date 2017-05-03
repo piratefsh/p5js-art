@@ -1,10 +1,10 @@
 import Shape from './Shape';
 import { p } from '../P5Instance';
 
-class Hexagon extends Shape {
+class Square extends Shape {
   constructor(length=10, x=0, y=0, rotation=0, translation=p.createVector(0, 0)) {
     const point = p.createVector(x, y);
-    const points = Shape.generate(Hexagon.SIDES, length);
+    const points = Shape.generate(Square.SIDES, length);
 
     // position shape
     points.forEach((pt) => {
@@ -18,11 +18,11 @@ class Hexagon extends Shape {
     this.rotation = rotation;
     this.translation = translation;
     this.point = point;
-    this.angle = Hexagon.ANGLE;
+    this.angle = Square.ANGLE;
   }
 }
 
-Hexagon.SIDES = 6;
-Hexagon.ANGLE = 120;
+Square.SIDES = 4;
+Square.ANGLE = 90;
 
-export default Hexagon;
+export default Square;
