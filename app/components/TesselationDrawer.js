@@ -50,7 +50,7 @@ class TesselationDrawer {
           const angle = pt.totalAngles() - pt.offset;
           const tri = new EquilateralTriangle(this.length, pt.x, pt.y, angle);
           pt.addShape(tri);
-          this.addPoints(tri.points(), tri);
+          this.addPoints(tri.points, tri);
         }
       }
     });
