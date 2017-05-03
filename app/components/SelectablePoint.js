@@ -18,6 +18,11 @@ class SelectablePoint {
     this.offset = offset;
   }
 
+  inCanvas(){
+    return this.x < p.width && this.x > 0
+      && this.y < p.height && this.y > 0
+  }
+
   angleOffset() {
     return this.shapes.reduce((acc, s) => {
       return s.rotation > acc ? s.rotation : acc;

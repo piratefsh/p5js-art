@@ -11,8 +11,13 @@ class TesselationDrawer {
 
   addPoints(points, shape) {
     points.forEach((s) => {
+
       const offset = shape ? 180 - shape.rotation : 0;
       const sp = new SelectablePoint(s.x, s.y, offset);
+      // ignore if point is outside of canvas
+      if(!sp.inCanvas()){
+        return;
+      }
       const existingPoint = this.points[sp.toString()];
       if (existingPoint) {
         existingPoint.addShape(shape);
@@ -38,7 +43,7 @@ class TesselationDrawer {
       if (pt.state === SelectablePoint.HOVER_STATE) {
         console.log(pt.x, pt.y, pt.shapes.length, pt.offset);
       }
-      if (pt.state === SelectablePoint.PRESSED_STATE) {
+      if (!pt.visited || pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
         while (pt.hasSpace(EquilateralTriangle.ANGLE)) {
