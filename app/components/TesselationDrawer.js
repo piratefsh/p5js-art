@@ -38,7 +38,7 @@ class TesselationDrawer {
       if (pt.state === SelectablePoint.HOVER_STATE) {
         console.log(pt.x, pt.y, pt.shapes.length, pt.offset);
       }
-      if (!pt.visited || pt.state === SelectablePoint.PRESSED_STATE) {
+      if (pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
         while (pt.hasSpace(EquilateralTriangle.ANGLE)) {

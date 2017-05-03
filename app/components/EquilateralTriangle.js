@@ -1,7 +1,7 @@
-import Triangle from './Triangle';
+import Shape from './Shape';
 import { p } from '../P5Instance';
 
-class EquilateralTriangle extends Triangle {
+class EquilateralTriangle extends Shape {
   constructor(length = 50, x = 0, y = 0, rotation = 0, translation = p.createVector(0, 0)) {
     super();
     this.angle = EquilateralTriangle.ANGLE;
