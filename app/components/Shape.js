@@ -9,6 +9,7 @@ class Shape {
   }
 
   draw() {
+    debugger;
     if (this.drawn) {
       return;
     }

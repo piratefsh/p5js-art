@@ -3,10 +3,11 @@ import Hexagon from './Hexagon';
 import EquilateralTriangle from './EquilateralTriangle';
 import SelectablePoint from './SelectablePoint';
 
-const Shape = EquilateralTriangle;
+const Shape = Hexagon;
 
 class TesselationDrawer {
   constructor(length = 80) {
+    this.debug = true;
     this.points = {};
     this.length = length;
     this.addPoints([new SelectablePoint(p.width / 2, p.height / 2)]);
@@ -46,11 +47,14 @@ class TesselationDrawer {
       if (pt.state === SelectablePoint.HOVER_STATE) {
         console.log(pt.x, pt.y, pt.shapes.length, pt.offset);
       }
-      if (!pt.visited || pt.state === SelectablePoint.PRESSED_STATE) {
+      if (this.debug || pt.state === SelectablePoint.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
-        while (pt.hasSpace(Shape.ANGLE)) {
+        let i = 0;
+        while (pt.hasSpace(Shape.ANGLE))
+        {
           const angle = pt.totalAngles() - pt.offset;
+          console.log(++i, pt.totalAngles())
           const tri = new Shape(this.length, pt.x, pt.y, angle);
           pt.addShape(tri);
           this.addPoints(tri.points, tri);
