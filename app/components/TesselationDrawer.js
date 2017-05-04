@@ -3,6 +3,7 @@ import Square from './Square';
 import Hexagon from './Hexagon';
 import EquilateralTriangle from './EquilateralTriangle';
 import Vertex from './Vertex';
+import Util from './Utils';
 
 const Shape = Square;
 
@@ -16,42 +17,43 @@ class TesselationDrawer {
 
   addPoints(points, shape) {
     points.forEach((s) => {
-
       const sp = new Vertex(s.x, s.y);
+
       // ignore if point is outside of canvas
-      if(!sp.inCanvas()){
+      if (!Util.inCanvas(sp.x, sp.y)) {
         return;
       }
+
       const existingPoint = this.points[sp.toString()];
       if (existingPoint) {
+        // add shape to point if it exists
         existingPoint.addShape(shape);
-      }
-      else {
+      } else {
+        // or create new point and add shape to it
         this.points[sp.toString()] = sp;
         sp.addShape(shape);
       }
     });
   }
 
-  pointsValues() {
+  getPoints() {
     return Object.keys(this.points).map(k => this.points[k]);
   }
 
   update() {
-    this.pointsValues().forEach((pt) => {
+    // update all
+    this.getPoints().forEach((pt) => {
       pt.shapes.forEach(ps => ps.blur());
       pt.update();
     });
 
-    this.pointsValues().forEach((pt) => {
-      if (pt.state === Vertex.HOVER_STATE) {
-        console.log(pt.x, pt.y, pt.shapes.length);
-      }
+    // add new shapes to point if point is clicked on
+    this.getPoints().forEach((pt) => {
       if (this.debug || pt.state === Vertex.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
-        while (pt.hasSpace(Shape.ANGLE))
-        {
+
+        while (pt.hasSpace(Shape.ANGLE)){
           const angle = pt.totalAngles();
           const tri = new Shape(this.length, pt.x, pt.y, angle);
           pt.addShape(tri);
@@ -62,8 +64,19 @@ class TesselationDrawer {
   }
 
   draw() {
-    this.pointsValues().forEach(pt => {
+    this.getPoints().forEach(pt => {
       pt.draw();
+    });
+
+    this.printDebug();
+  }
+
+  printDebug(){
+    // print debug info if point is hovered on
+    this.getPoints().forEach((pt) => {
+      if (pt.state === Vertex.HOVER_STATE) {
+        console.log(pt.x, pt.y, `has ${pt.shapes.length} shapes`);
+      }
     });
   }
 }

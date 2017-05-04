@@ -1,21 +1,11 @@
 import { p } from '../P5Instance';
 import SelectablePoint from './SelectablePoint';
+import Util from './Utils';
 
 class Vertex extends SelectablePoint {
   constructor(x, y) {
     super(x, y);
     this.shapes = [];
-  }
-
-  inCanvas() {
-    return this.x < p.width && this.x > 0
-      && this.y < p.height && this.y > 0
-  }
-
-  angleOffset() {
-    return this.shapes.reduce((acc, s) => {
-      return s.rotation > acc ? s.rotation : acc;
-    }, 0);
   }
 
   totalAngles() {

@@ -4,9 +4,11 @@ class SelectablePoint {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.thresh = 5;
     this.state = SelectablePoint.DEFAULT;
     this.color = SelectablePoint.DEFAULT_COLOR;
+
+    // hover hit area threshold
+    this.thresh = 5;
   }
 
   hovered() {

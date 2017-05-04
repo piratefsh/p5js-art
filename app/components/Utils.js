@@ -1,13 +1,17 @@
-export default class Util {
-  constructor(p5){
-    this.p5 = p5;
+import { p } from '../P5Instance';
 
-    this.p5.randomSeed(6);
-  }
-
+const Util = {
   randomPoint() {
-    const w = Math.trunc(this.p5.random(this.p5.width))
-    const h = Math.trunc(this.p5.random(this.p5.height))
-    return this.p5.createVector(w, h)
-  }
-}
+    const w = Math.trunc(p.random(p.width));
+    const h = Math.trunc(p.random(p.height));
+    return p.createVector(w, h);
+  },
+
+  // is point x, y on canvas?
+  inCanvas(x, y) {
+    return x < p.width && x > 0
+      && y < p.height && y > 0;
+  },
+};
+
+export default Util;
