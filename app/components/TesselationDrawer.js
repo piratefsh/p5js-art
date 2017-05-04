@@ -2,7 +2,7 @@ import { p } from '../P5Instance';
 import Square from './Square';
 import Hexagon from './Hexagon';
 import EquilateralTriangle from './EquilateralTriangle';
-import SelectablePoint from './SelectablePoint';
+import Vertex from './Vertex';
 
 const Shape = Square;
 
@@ -11,13 +11,13 @@ class TesselationDrawer {
     this.debug = false;
     this.points = {};
     this.length = length;
-    this.addPoints([new SelectablePoint(p.width / 2, p.height / 2)]);
+    this.addPoints([new Vertex(p.width / 2, p.height / 2)]);
   }
 
   addPoints(points, shape) {
     points.forEach((s) => {
 
-      const sp = new SelectablePoint(s.x, s.y);
+      const sp = new Vertex(s.x, s.y);
       // ignore if point is outside of canvas
       if(!sp.inCanvas()){
         return;
@@ -44,10 +44,10 @@ class TesselationDrawer {
     });
 
     this.pointsValues().forEach((pt) => {
-      if (pt.state === SelectablePoint.HOVER_STATE) {
+      if (pt.state === Vertex.HOVER_STATE) {
         console.log(pt.x, pt.y, pt.shapes.length);
       }
-      if (this.debug || pt.state === SelectablePoint.PRESSED_STATE) {
+      if (this.debug || pt.state === Vertex.PRESSED_STATE) {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
         while (pt.hasSpace(Shape.ANGLE))

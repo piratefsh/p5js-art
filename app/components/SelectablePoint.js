@@ -4,42 +4,9 @@ class SelectablePoint {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.point = p.createVector(x, y);
     this.thresh = 5;
     this.state = SelectablePoint.DEFAULT;
     this.color = SelectablePoint.DEFAULT_COLOR;
-    this.shapes = [];
-  }
-
-  inCanvas() {
-    return this.x < p.width && this.x > 0
-      && this.y < p.height && this.y > 0
-  }
-
-  angleOffset() {
-    return this.shapes.reduce((acc, s) => {
-      return s.rotation > acc ? s.rotation : acc;
-    }, 0);
-  }
-
-  totalAngles() {
-    return this.shapes.reduce((acc, s) => {
-      return acc + s.angle;
-    }, 0);
-  }
-
-  hasSpace(angle) {
-    const usedAngle = this.totalAngles();
-    return usedAngle + angle <= 360;
-  }
-
-  addShape(shape) {
-    if (shape && this.hasSpace(shape.angle) && this.shapes.indexOf(shape) < 0) {
-      this.shapes.push(shape);
-      return true;
-    }
-
-    return false;
   }
 
   hovered() {
@@ -66,8 +33,6 @@ class SelectablePoint {
 
     this.color = color;
     this.size = size;
-
-    this.shapes.forEach(s => s.update());
   }
 
   draw() {
@@ -76,12 +41,6 @@ class SelectablePoint {
     p.noStroke();
     p.translate(this.x, this.y);
     p.ellipse(0, 0, this.size, this.size);
-    p.pop();
-
-    p.push();
-    this.shapes.forEach((s) => {
-      s.draw();
-    });
     p.pop();
   }
 

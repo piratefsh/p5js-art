@@ -8,12 +8,12 @@ class Shape {
     this.state = 'default';
   }
 
-  getColor(){
-    switch(this.state) {
+  getColor() {
+    switch (this.state) {
       case 'focus':
-        return Shape.HIGHLIGHT_COLOR
+        return Shape.HIGHLIGHT_COLOR;
       default:
-        return Shape.FILL_COLOR
+        return Shape.FILL_COLOR;
     }
   }
 
@@ -21,7 +21,7 @@ class Shape {
     if (this.drawn) {
       return;
     }
-    else{
+    else {
       this.drawn = true;
     }
 
@@ -31,38 +31,38 @@ class Shape {
     p.stroke(Shape.STROKE_COLOR);
 
     // draw shape
-    p.beginShape()
-    this.points.forEach((pt)=> {
-      p.vertex(pt.x, pt.y)
-    })
-    p.endShape()
+    p.beginShape();
+    this.points.forEach((pt) => {
+      p.vertex(pt.x, pt.y);
+    });
+    p.endShape();
     p.pop();
   }
 
-  update(){
-    this.drawn = false
+  update() {
+    this.drawn = false;
   }
 
   // highlight color when focused
-  focus(){
-    this.state = 'focus'
+  focus() {
+    this.state = 'focus';
   }
 
   // default color
-  blur(){
-    this.state = 'default'
+  blur() {
+    this.state = 'default';
   }
 }
 
 Shape.generate = (sides, length) => {
   const start = p.createVector(0, length);
   const points = [];
-  for(let i = 0; i < sides + 1; i++) {
-    const newPoint = start.copy().rotate(p.radians(360/sides * i))
+  for (let i = 0; i < sides + 1; i++) {
+    const newPoint = start.copy().rotate(p.radians(360 / sides * i));
     points.push(newPoint);
   }
   return points;
-}
+};
 
 Shape.STROKE_COLOR = 'rgba(0, 128, 128, 0.5)';
 Shape.FILL_COLOR = 'rgba(0, 0, 0, 0.05)';
