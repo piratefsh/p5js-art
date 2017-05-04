@@ -3,12 +3,13 @@
 import { p } from 'P5Instance';
 import SelectablePoint from './SelectablePoint';
 import Util from 'components/utils/Utils';
+import Shape from 'components/shapes/Shape';
 
 class Vertex extends SelectablePoint {
   constructor(x, y, pattern) {
     super(x, y);
     this.pattern = pattern;
-    this.shapes = [];
+    this.shapes = new Array(this.pattern.length);
   }
 
   totalAngles() {
@@ -17,15 +18,33 @@ class Vertex extends SelectablePoint {
     }, 0);
   }
 
-  hasSpace(angle) {
-    const usedAngle = this.totalAngles();
-    return usedAngle + angle <= 360;
+  hasSpace(sides) {
+    for (let i = 0; i < this.pattern.length; i++) {
+      if(this.pattern[i] === sides && this.shapes[i] === undefined) {
+        return true;
+      }
+    }
+    return false;
   }
 
-  addShape(shape) {
-    if (shape && this.hasSpace(shape.angle) && this.shapes.indexOf(shape) < 0) {
-      this.shapes.push(shape);
-      return true;
+  addShape(ShapeConstructor, length) {
+    if (ShapeConstructor === undefined) {
+      return;
+    }
+
+    let angleSoFar = 0;
+    for (let i = 0; i < this.shapes.length; i++) {
+      const slot = this.shapes[i];
+      const numSides = this.pattern[i];
+      angleSoFar += Shape.internalAngleFor(numSides)
+      // if slot is unoccupied and num sides matches pattern
+      if (numSides === ShapeConstructor.SIDES
+        && slot === undefined) {
+        // fill up slot
+        const newShape = new ShapeConstructor(length, this.x, this.y, angleSoFar);
+        this.shapes[i] = newShape;
+        return newShape;
+      }
     }
 
     return false;

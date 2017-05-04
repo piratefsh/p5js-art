@@ -19,6 +19,7 @@ class Hexagon extends Shape {
     this.translation = translation;
     this.point = point;
     this.angle = Hexagon.ANGLE;
+    this.sides = Hexagon.SIDES
   }
 }
 

@@ -56,6 +56,10 @@ class Shape {
   }
 }
 
+Shape.internalAngleFor = (sides) => {
+  return (180 + (sides - 3) * 180) / sides;
+}
+
 Shape.generate = (sides, length) => {
   const start = p.createVector(0, length);
   const points = [];

@@ -13,7 +13,7 @@ class TesselationDrawer {
     this.length = length;
 
     // add starting point
-    const center = new Vertex(p.width / 2, p.height / 2);
+    const center = new Vertex(p.width / 2, p.height / 2, this.pattern);
     this.addPoints([center]);
 
     this.shape = TesselationDrawer.getShape(this.pattern[0]);
@@ -24,8 +24,7 @@ class TesselationDrawer {
 
   addPoints(points, shape) {
     points.forEach((s) => {
-      const sp = new Vertex(s.x, s.y);
-
+      const sp = new Vertex(s.x, s.y, this.pattern);
       // ignore if point is outside of canvas
       if (!Util.inCanvas(sp.x, sp.y)) {
         return;
@@ -60,11 +59,9 @@ class TesselationDrawer {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
 
-        while (pt.hasSpace(this.shape.ANGLE)) {
-          const angle = pt.totalAngles();
-          const tri = new this.shape(this.length, pt.x, pt.y, angle);
-          pt.addShape(tri);
-          this.addPoints(tri.points, tri);
+        while (pt.hasSpace(this.shape.SIDES)) {
+          const newShape = pt.addShape(this.shape, this.length);
+          this.addPoints(newShape.points, newShape);
         }
       }
     });
