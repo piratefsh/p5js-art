@@ -25,31 +25,26 @@ class TesselationDrawer {
     points.forEach((s, i) => {
 
       let orientation = 0;
-      if(shape){
+      if (shape) {
         const pointRelative = p.createVector(s.x, s.y)
           .sub(shape.center())
           .normalize();
         orientation = Math.atan2(pointRelative.x, pointRelative.y);
+        orientation = (i * shape.angle/2)
       }
-        debugger; 
+
       const sp = new Vertex(s.x, s.y, this.pattern, orientation);
       // ignore if point is outside of canvas
       if (!Util.inCanvas(sp.x, sp.y)) {
         return;
       }
-      let currPoint;
       const existingPoint = this.points[sp.toString()];
       if (existingPoint) {
         // add shape to point if it exists
-        currPoint = existingPoint;
+        // todo
       } else {
         // or create new point and add shape to it
         this.points[sp.toString()] = sp;
-        currPoint = sp;
-      }
-
-      if(shape){
-        // currPoint.addShape(this.shape, this.length);
       }
 
     });
@@ -67,14 +62,19 @@ class TesselationDrawer {
     });
 
     // add new shapes to point if point is clicked on
-    this.getPoints().forEach((pt) => {
-      if (this.debug || pt.state === Vertex.PRESSED_STATE) {
-        pt.shapes.forEach(ps => ps.focus());
-        pt.visited = true;
+    this.getPoints().forEach((vertex) => {
+      if (this.debug || vertex.state === Vertex.PRESSED_STATE) {
+        vertex.shapes.forEach(ps => ps.focus());
+        vertex.visited = true;
 
-        while (pt.hasSpace(this.shape.SIDES)) {
-          const newShape = pt.addShape(this.shape, this.length);
-          this.addPoints(newShape.points, newShape);
+        while (vertex.hasSpace(this.shape.SIDES)) {
+          const newShape = vertex.addShape(this.shape, this.length);
+          const offsetPoints = newShape.points.map((opt) => {
+            return opt
+              .rotate(p.radians(vertex.orientation))
+              .add(p.createVector(vertex.x, vertex.y))
+          });
+          this.addPoints(offsetPoints, newShape);
         }
       }
     });

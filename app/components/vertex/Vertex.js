@@ -6,7 +6,7 @@ import Util from 'components/utils/Utils';
 import Shape from 'components/shapes/Shape';
 
 class Vertex extends SelectablePoint {
-  constructor(x, y, pattern, orientation) {
+  constructor(x, y, pattern, orientation=0) {
     super(x, y);
     this.pattern = pattern;
     this.shapes = new Array(this.pattern.length);
@@ -37,7 +37,7 @@ class Vertex extends SelectablePoint {
       angleSoFar += Shape.internalAngleFor(this.pattern[i]);
     }
 
-    const newShape = new ShapeConstructor(length, this.x, this.y, angleSoFar);
+    const newShape = new ShapeConstructor(length, 0, 0, angleSoFar);
     this.shapes[i] = newShape;
     return newShape;
   }
@@ -93,15 +93,20 @@ class Vertex extends SelectablePoint {
   }
 
   draw() {
+    // super.draw();
     p.push();
-    p.rotate(this.orientation)
-    super.draw();
+    p.translate(this.x, this.y)
+    p.rotate(p.radians(this.orientation))
+    p.ellipse(0, 0, 5, 5)
+    p.pop();
 
     // draw shapes
+    p.push();
     this.shapes.forEach((s) => {
       s.draw();
     });
-    p.pop();
+    // p.rotate(this.orientation)
+    p.pop()
   }
 
   numUnoccupied() {

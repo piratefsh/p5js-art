@@ -5,12 +5,12 @@ class Hexagon extends Shape {
   constructor(length=10, x=0, y=0, rotation=0, translation=p.createVector(0, 0)) {
     const point = p.createVector(x, y);
     const points = Shape.generate(Hexagon.SIDES, length);
-
     // position shape
     points.forEach((pt) => {
       pt.y -= length;
-      pt.rotate(p.radians(rotation))
-        .add(point);
+      pt
+        // .add(point)
+        .rotate(p.radians(rotation))
     })
 
     super(points);
@@ -27,12 +27,6 @@ class Hexagon extends Shape {
       .add(this.point)
   }
 
-  draw() {
-    super.draw();
-    p.fill(0,0,0,0.5);
-    const c = this.center();
-    p.ellipse(c.x, c.y, 4, 4)
-  }
 }
 
 Hexagon.SIDES = 6;
