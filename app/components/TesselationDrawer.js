@@ -80,7 +80,7 @@ class TesselationDrawer {
     // print debug info if point is hovered on
     this.getPoints().forEach((pt) => {
       if (pt.state === Vertex.HOVER_STATE) {
-        console.info(pt.x, pt.y, `has ${pt.numUnoccupied()} shapes`);
+        console.info(pt.x, pt.y, `has ${pt.numUnoccupied()} shapes`, pt.shapes);
       }
     });
   }
