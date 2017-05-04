@@ -40,10 +40,10 @@ class Vertex extends SelectablePoint {
   }
 
   addShapeInstance(instance) {
-    if (instance === undefined) {
+    if (instance === undefined || this.shapes.indexOf(instance) > -1) {
       return;
     }
-    const emptySlot = this.emptySlot(instance.points.length);
+    const emptySlot = this.emptySlot(instance.points.length - 1);
     if (emptySlot !== false) {
       this.shapes[emptySlot] = instance;
       return instance;
@@ -55,6 +55,7 @@ class Vertex extends SelectablePoint {
     if (ShapeConstructor === undefined) {
       return;
     }
+    debugger;
     const emptySlot = this.emptySlot(ShapeConstructor.SIDES);
 
     if (emptySlot !== false) {
