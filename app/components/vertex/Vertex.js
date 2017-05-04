@@ -5,8 +5,9 @@ import SelectablePoint from './SelectablePoint';
 import Util from 'components/utils/Utils';
 
 class Vertex extends SelectablePoint {
-  constructor(x, y) {
+  constructor(x, y, pattern) {
     super(x, y);
+    this.pattern = pattern;
     this.shapes = [];
   }
 

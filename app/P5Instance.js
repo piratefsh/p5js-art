@@ -8,7 +8,7 @@ const sketch = p => {
     p.createCanvas(window.innerWidth, window.innerHeight);
     // p.noLoop();
     p.reset();
-    tess = new TesselationDrawer();
+    tess = new TesselationDrawer('6.6.6');
   };
 
   p.reset = () => {

@@ -5,14 +5,21 @@ import EquilateralTriangle from './shapes/EquilateralTriangle';
 import Vertex from './vertex/Vertex';
 import Util from './utils/Utils';
 
-const Shape = Square;
-
 class TesselationDrawer {
-  constructor(length = 50) {
+  constructor(pattern, length = 50) {
     this.debug = false;
+    this.pattern = TesselationDrawer.parsePattern(pattern);
     this.points = {};
     this.length = length;
-    this.addPoints([new Vertex(p.width / 2, p.height / 2)]);
+
+    // add starting point
+    const center = new Vertex(p.width / 2, p.height / 2);
+    this.addPoints([center]);
+
+    this.shape = TesselationDrawer.getShape(this.pattern[0]);
+
+    console.log('pattern', this.pattern);
+    console.log('shape', this.shape);
   }
 
   addPoints(points, shape) {
@@ -53,9 +60,9 @@ class TesselationDrawer {
         pt.shapes.forEach(ps => ps.focus());
         pt.visited = true;
 
-        while (pt.hasSpace(Shape.ANGLE)){
+        while (pt.hasSpace(this.shape.ANGLE)) {
           const angle = pt.totalAngles();
-          const tri = new Shape(this.length, pt.x, pt.y, angle);
+          const tri = new this.shape(this.length, pt.x, pt.y, angle);
           pt.addShape(tri);
           this.addPoints(tri.points, tri);
         }
@@ -80,5 +87,28 @@ class TesselationDrawer {
     });
   }
 }
+
+TesselationDrawer.parsePattern = (str) => {
+  if (str === undefined || str.length < 1) {
+    throw new Error(`TesselationDrawer: Invalid pattern ${str}`);
+  }
+  return str.split('.').map(num => parseInt(num, 10));
+};
+
+TesselationDrawer.getShape = (numEdges) => {
+  const key = `${numEdges}`;
+  if (Object.keys(TesselationDrawer.SHAPES).indexOf(key) > -1) {
+    return TesselationDrawer.SHAPES[key];
+  }
+
+  throw new Error(`TesselationDrawer: No shape for ${numEdges} edges`);
+};
+
+TesselationDrawer.SHAPES = {
+  '3': EquilateralTriangle,
+  '4': Square,
+  '6': Hexagon,
+};
+
 
 export default TesselationDrawer;
