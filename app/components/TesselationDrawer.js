@@ -12,14 +12,16 @@ class TesselationDrawer {
     this.points = {};
     this.shapes = {};
     this.length = length;
-    this.shape = TesselationDrawer.getShape(this.pattern[0]);
+    this.patternShapes = this.pattern.map((edges) => {
+      return TesselationDrawer.getShape(edges)
+    });
 
     // add starting point
     const center = new Vertex(p.width / 2, p.height / 2, this.pattern);
     this.addPoints([center]);
 
     console.log('pattern', this.pattern);
-    console.log('shape', this.shape);
+    console.log('shape', this.patternShapes);
   }
 
   addPoints(points, shape, vertex) {
@@ -68,15 +70,17 @@ class TesselationDrawer {
         vertex.shapes.forEach(ps => ps.focus());
         vertex.visited = true;
 
-        while (vertex.hasSpace(this.shape.SIDES)) {
-          const newShape = vertex.addShape(this.shape, this.length);
-          const offsetPoints = newShape.points.map((opt) => {
-            return opt
-              .rotate(p.radians(vertex.orientation))
-              .add(p.createVector(vertex.x, vertex.y))
-          });
-          this.addPoints(offsetPoints, newShape, vertex);
-        }
+        this.patternShapes.forEach((Shape) => {
+          if(vertex.hasSpace(Shape.SIDES)){
+            const newShape = vertex.addShape(Shape, this.length);
+            const offsetPoints = newShape.points.map((opt) => {
+              return opt
+                .rotate(p.radians(vertex.orientation))
+                .add(p.createVector(vertex.x, vertex.y))
+            });
+            this.addPoints(offsetPoints, newShape, vertex);
+          }
+        })
       }
     });
   }
