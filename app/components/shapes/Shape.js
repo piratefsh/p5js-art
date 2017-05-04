@@ -57,12 +57,6 @@ class Shape {
     this.state = 'default';
   }
 
-  center() {
-    return p.createVector(0, this.length)
-      .rotate(p.radians(this.rotation + this.angle/2))
-      .add(this.point)
-  }
-
 }
 
 Shape.internalAngleFor = (sides) => {

@@ -29,10 +29,6 @@ class TesselationDrawer {
 
       let orientation = 0;
       if (shape) {
-        const pointRelative = p.createVector(s.x, s.y)
-          .sub(shape.center())
-          .normalize();
-        orientation = Math.atan2(pointRelative.x, pointRelative.y);
         orientation = (i * 360/shape.sides - vertex.orientation)
       }
 
