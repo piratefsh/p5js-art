@@ -7,8 +7,10 @@ import Util from './utils/Utils';
 
 class TesselationDrawer {
   constructor(pattern, length = 50) {
+    this.debug = false;
     this.pattern = TesselationDrawer.parsePattern(pattern);
     this.points = {};
+    this.shapes = {};
     this.length = length;
     this.shape = TesselationDrawer.getShape(this.pattern[0]);
 
@@ -29,7 +31,7 @@ class TesselationDrawer {
           .sub(shape.center())
           .normalize();
         orientation = Math.atan2(pointRelative.x, pointRelative.y);
-        orientation = (i * shape.angle/2 - vertex.orientation)
+        orientation = (i * 360/shape.sides - vertex.orientation)
       }
 
       const sp = new Vertex(s.x, s.y, this.pattern, orientation);
@@ -62,7 +64,7 @@ class TesselationDrawer {
 
     // add new shapes to point if point is clicked on
     this.getPoints().forEach((vertex) => {
-      if (this.debug || vertex.state === Vertex.PRESSED_STATE) {
+      if ((this.debug && !vertex.visited)  || vertex.state === Vertex.PRESSED_STATE) {
         vertex.shapes.forEach(ps => ps.focus());
         vertex.visited = true;
 

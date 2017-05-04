@@ -8,7 +8,7 @@ class EquilateralTriangle extends Shape {
     const p1 = p.createVector(0, 0).rotate(p.radians(rotation)).add(point)
     const p2 = p.createVector(length, 0).rotate(p.radians(rotation)).add(point)
     const p3 = p.createVector(length / 2, -h).rotate(p.radians(rotation)).add(point)
-    super([p1, p2, p3]);
+    super([p1, p2, p3], EquilateralTriangle.SIDES);
 
     this.angle = EquilateralTriangle.ANGLE;
     this.length = length;

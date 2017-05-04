@@ -3,7 +3,8 @@
 import { p } from 'P5Instance';
 
 class Shape {
-  constructor(points) {
+  constructor(points, sides) {
+    this.sides = sides;
     this.points = points;
     this.rotation = 0;
     this.translation = p.createVector(0, 0);
@@ -54,6 +55,12 @@ class Shape {
   // default color
   blur() {
     this.state = 'default';
+  }
+
+  center() {
+    return p.createVector(0, this.length)
+      .rotate(p.radians(this.rotation + this.angle/2))
+      .add(this.point)
   }
 
 }

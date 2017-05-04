@@ -8,12 +8,10 @@ class Hexagon extends Shape {
     // position shape
     points.forEach((pt) => {
       pt.y -= length;
-      pt
-        // .add(point)
-        .rotate(p.radians(rotation))
+      pt.rotate(p.radians(rotation))
     })
 
-    super(points);
+    super(points, Hexagon.SIDES);
     this.length = length;
     this.rotation = rotation;
     this.translation = translation;
@@ -21,12 +19,6 @@ class Hexagon extends Shape {
     this.angle = Hexagon.ANGLE;
     this.sides = Hexagon.SIDES
   }
-  center() {
-    return p.createVector(0, this.length)
-      .rotate(p.radians(this.rotation + this.angle/2))
-      .add(this.point)
-  }
-
 }
 
 Hexagon.SIDES = 6;

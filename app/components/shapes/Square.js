@@ -13,7 +13,7 @@ class Square extends Shape {
         .add(point);
     })
 
-    super(points);
+    super(points, Square.SIDES);
     this.length = length;
     this.rotation = rotation;
     this.translation = translation;
