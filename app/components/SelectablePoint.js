@@ -1,7 +1,7 @@
 import { p } from '../P5Instance';
 
 class SelectablePoint {
-  constructor(x, y, offset) {
+  constructor(x, y) {
     this.x = x;
     this.y = y;
     this.point = p.createVector(x, y);
@@ -9,10 +9,9 @@ class SelectablePoint {
     this.state = SelectablePoint.DEFAULT;
     this.color = SelectablePoint.DEFAULT_COLOR;
     this.shapes = [];
-    this.offset = offset;
   }
 
-  inCanvas(){
+  inCanvas() {
     return this.x < p.width && this.x > 0
       && this.y < p.height && this.y > 0
   }
