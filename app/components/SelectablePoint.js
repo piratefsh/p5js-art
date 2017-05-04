@@ -1,3 +1,5 @@
+// Hoverable and clickable point
+
 import { p } from '../P5Instance';
 
 class SelectablePoint {

@@ -29,13 +29,8 @@ const sketch = p => {
         p.reset();
     }
   };
-
-  p.mouseClicked = () => {
-
-  }
 };
 
 // set global functions for p5
 const p = new p5(sketch);
-window.p = p
 export { p };

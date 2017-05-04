@@ -1,3 +1,5 @@
+// Tessellation vertex. Has shapes attached to it
+
 import { p } from '../P5Instance';
 import SelectablePoint from './SelectablePoint';
 import Util from './Utils';

@@ -1,3 +1,5 @@
+// Shape superclass. Draws shape given coordinates
+
 import { p } from '../P5Instance';
 
 class Shape {
