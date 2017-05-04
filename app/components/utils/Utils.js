@@ -1,4 +1,4 @@
-import { p } from '../P5Instance';
+import { p } from 'P5Instance';
 
 const Util = {
   randomPoint() {

@@ -1,9 +1,9 @@
 import { p } from '../P5Instance';
-import Square from './Square';
-import Hexagon from './Hexagon';
-import EquilateralTriangle from './EquilateralTriangle';
-import Vertex from './Vertex';
-import Util from './Utils';
+import Square from './shapes/Square';
+import Hexagon from './shapes/Hexagon';
+import EquilateralTriangle from './shapes/EquilateralTriangle';
+import Vertex from './vertex/Vertex';
+import Util from './utils/Utils';
 
 const Shape = Square;
 
@@ -71,11 +71,11 @@ class TesselationDrawer {
     this.printDebug();
   }
 
-  printDebug(){
+  printDebug() {
     // print debug info if point is hovered on
     this.getPoints().forEach((pt) => {
       if (pt.state === Vertex.HOVER_STATE) {
-        console.log(pt.x, pt.y, `has ${pt.shapes.length} shapes`);
+        console.info(pt.x, pt.y, `has ${pt.shapes.length} shapes`);
       }
     });
   }

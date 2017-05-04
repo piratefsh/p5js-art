@@ -1,5 +1,5 @@
 import Shape from './Shape';
-import { p } from '../P5Instance';
+import { p } from 'P5Instance';
 
 class Square extends Shape {
   constructor(length=10, x=0, y=0, rotation=0, translation=p.createVector(0, 0)) {
