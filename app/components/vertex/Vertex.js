@@ -20,9 +20,33 @@ class Vertex extends SelectablePoint {
 
   hasSpace(sides) {
     for (let i = 0; i < this.pattern.length; i++) {
-      if(this.pattern[i] === sides && this.shapes[i] === undefined) {
+      if (this.pattern[i] === sides && this.shapes[i] === undefined) {
         return true;
       }
+    }
+    return false;
+  }
+
+  addShapeAtPoint(ShapeConstructor, length, i) {
+    let angleSoFar = 0;
+
+    for (let j = 0; j < i; j++) {
+      angleSoFar += Shape.internalAngleFor(this.pattern[i]);
+    }
+
+    const newShape = new ShapeConstructor(length, this.x, this.y, angleSoFar);
+    this.shapes[i] = newShape;
+    return newShape;
+  }
+
+  addShapeInstance(instance) {
+    if (instance === undefined) {
+      return;
+    }
+    const emptySlot = this.emptySlot(instance.points.length);
+    if (emptySlot !== false) {
+      this.shapes[emptySlot] = instance;
+      return instance;
     }
     return false;
   }
@@ -31,19 +55,24 @@ class Vertex extends SelectablePoint {
     if (ShapeConstructor === undefined) {
       return;
     }
+    const emptySlot = this.emptySlot(ShapeConstructor.SIDES);
 
-    let angleSoFar = 0;
+    if (emptySlot !== false) {
+      return this.addShapeAtPoint(ShapeConstructor, length, emptySlot);
+    }
+
+    return false;
+  }
+
+  emptySlot(sides) {
     for (let i = 0; i < this.shapes.length; i++) {
       const slot = this.shapes[i];
       const numSides = this.pattern[i];
-      angleSoFar += Shape.internalAngleFor(numSides)
       // if slot is unoccupied and num sides matches pattern
-      if (numSides === ShapeConstructor.SIDES
+      if (numSides === sides
         && slot === undefined) {
-        // fill up slot
-        const newShape = new ShapeConstructor(length, this.x, this.y, angleSoFar);
-        this.shapes[i] = newShape;
-        return newShape;
+        // return slot
+        return i;
       }
     }
 
@@ -66,6 +95,10 @@ class Vertex extends SelectablePoint {
       s.draw();
     });
     p.pop();
+  }
+
+  numUnoccupied() {
+    return this.shapes.filter(s => s !== undefined).length;
   }
 }
 

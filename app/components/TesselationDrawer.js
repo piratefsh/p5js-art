@@ -11,34 +11,35 @@ class TesselationDrawer {
     this.pattern = TesselationDrawer.parsePattern(pattern);
     this.points = {};
     this.length = length;
+    this.shape = TesselationDrawer.getShape(this.pattern[0]);
 
     // add starting point
     const center = new Vertex(p.width / 2, p.height / 2, this.pattern);
     this.addPoints([center]);
-
-    this.shape = TesselationDrawer.getShape(this.pattern[0]);
 
     console.log('pattern', this.pattern);
     console.log('shape', this.shape);
   }
 
   addPoints(points, shape) {
-    points.forEach((s) => {
+    points.forEach((s, i) => {
       const sp = new Vertex(s.x, s.y, this.pattern);
       // ignore if point is outside of canvas
       if (!Util.inCanvas(sp.x, sp.y)) {
         return;
       }
-
+      let currPoint;
       const existingPoint = this.points[sp.toString()];
       if (existingPoint) {
         // add shape to point if it exists
-        existingPoint.addShape(shape);
+        currPoint = existingPoint;
       } else {
         // or create new point and add shape to it
         this.points[sp.toString()] = sp;
-        sp.addShape(shape);
+        currPoint = sp;
       }
+
+      currPoint.addShapeInstance(shape);
     });
   }
 
@@ -79,7 +80,7 @@ class TesselationDrawer {
     // print debug info if point is hovered on
     this.getPoints().forEach((pt) => {
       if (pt.state === Vertex.HOVER_STATE) {
-        console.info(pt.x, pt.y, `has ${pt.shapes.length} shapes`);
+        console.info(pt.x, pt.y, `has ${pt.numUnoccupied()} shapes`);
       }
     });
   }
