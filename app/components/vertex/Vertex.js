@@ -32,32 +32,34 @@ class Vertex extends SelectablePoint {
   addShapeAtPoint(ShapeConstructor, length, i) {
     this.hasFirstShape = true;
     let angleSoFar = 0;
-
     for (let j = 0; j < i; j++) {
-      angleSoFar += Shape.internalAngleFor(this.pattern[i]);
+      const currAngle = Shape.internalAngleFor(this.pattern[j])
+      angleSoFar += currAngle
     }
-
-    const newShape = new ShapeConstructor(length, 0, 0, angleSoFar);
+    console.log(angleSoFar)
+    // angleSoFar=0
+    const newShapeInternal = Shape.internalAngleFor(this.pattern[i])
+    const newShape = new ShapeConstructor(length, 0, 0, angleSoFar + newShapeInternal/2 );
     this.shapes[i] = newShape;
     return newShape;
   }
 
   // add existing shape to point
-  addShapeInstance(instance) {
-    if (instance === undefined || this.shapes.indexOf(instance) > -1) {
-      return;
-    }
+  // addShapeInstance(instance) {
+  //   if (instance === undefined || this.shapes.indexOf(instance) > -1) {
+  //     return;
+  //   }
 
-    this.hasFirstShape = true;
-    // todo figure this math out
-    const offset = this.orientation - instance.rotation;
-    const slot = Math.abs(offset / instance.angle);
-    if (slot >= 0 && slot < this.shapes.length) {
-      this.shapes[slot] = instance;
-      return instance;
-    }
-    return false;
-  }
+  //   this.hasFirstShape = true;
+  //   // todo figure this math out
+  //   const offset = this.orientation - instance.rotation;
+  //   const slot = Math.abs(offset / instance.angle);
+  //   if (slot >= 0 && slot < this.shapes.length) {
+  //     this.shapes[slot] = instance;
+  //     return instance;
+  //   }
+  //   return false;
+  // }
 
   addShape(ShapeConstructor, length) {
     if (ShapeConstructor === undefined) return;
