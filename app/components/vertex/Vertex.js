@@ -39,14 +39,15 @@ class Vertex extends SelectablePoint {
     return newShape;
   }
 
+  // add existing shape to point
   addShapeInstance(instance) {
     if (instance === undefined || this.shapes.indexOf(instance) > -1) {
       return;
     }
 
-    const emptySlot = this.emptySlot(instance.points.length - 1);
-    if (emptySlot !== false) {
-      this.shapes[emptySlot] = instance;
+    const slot = Math.floor(instance.rotation/instance.angle);
+    if (slot) {
+      this.shapes[slot] = instance;
       return instance;
     }
     return false;
