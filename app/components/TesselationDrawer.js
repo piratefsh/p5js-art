@@ -7,7 +7,6 @@ import Util from './utils/Utils';
 
 class TesselationDrawer {
   constructor(pattern, length = 50) {
-    this.debug = false;
     this.pattern = TesselationDrawer.parsePattern(pattern);
     this.points = {};
     this.length = length;
@@ -21,7 +20,7 @@ class TesselationDrawer {
     console.log('shape', this.shape);
   }
 
-  addPoints(points, shape) {
+  addPoints(points, shape, vertex) {
     points.forEach((s, i) => {
 
       let orientation = 0;
@@ -30,7 +29,7 @@ class TesselationDrawer {
           .sub(shape.center())
           .normalize();
         orientation = Math.atan2(pointRelative.x, pointRelative.y);
-        orientation = (i * shape.angle/2)
+        orientation = (i * shape.angle/2 - vertex.orientation)
       }
 
       const sp = new Vertex(s.x, s.y, this.pattern, orientation);
@@ -74,7 +73,7 @@ class TesselationDrawer {
               .rotate(p.radians(vertex.orientation))
               .add(p.createVector(vertex.x, vertex.y))
           });
-          this.addPoints(offsetPoints, newShape);
+          this.addPoints(offsetPoints, newShape, vertex);
         }
       }
     });
@@ -92,6 +91,7 @@ class TesselationDrawer {
     // print debug info if point is hovered on
     this.getPoints().forEach((pt) => {
       if (pt.state === Vertex.HOVER_STATE) {
+        document.getElementById('info').innerHTML = `orientation ${pt.orientation}`
         console.info(pt.x, pt.y, `has ${pt.numUnoccupied()} shapes`, pt.shapes, pt);
       }
     });
