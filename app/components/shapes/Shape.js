@@ -8,6 +8,7 @@ class Shape {
     this.rotation = 0;
     this.translation = p.createVector(0, 0);
     this.state = 'default';
+    this.id = Shape.idCounter++;
   }
 
   getColor() {
@@ -54,6 +55,7 @@ class Shape {
   blur() {
     this.state = 'default';
   }
+
 }
 
 Shape.internalAngleFor = (sides) => {
@@ -73,4 +75,5 @@ Shape.generate = (sides, length) => {
 Shape.STROKE_COLOR = 'rgba(0, 128, 128, 0.5)';
 Shape.FILL_COLOR = 'rgba(0, 0, 0, 0.05)';
 Shape.HIGHLIGHT_COLOR = 'rgba(0, 128, 128, 0.2)';
+Shape.idCounter = 0;
 export default Shape;

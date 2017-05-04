@@ -6,10 +6,12 @@ import Util from 'components/utils/Utils';
 import Shape from 'components/shapes/Shape';
 
 class Vertex extends SelectablePoint {
-  constructor(x, y, pattern) {
+  constructor(x, y, pattern, orientation) {
     super(x, y);
     this.pattern = pattern;
     this.shapes = new Array(this.pattern.length);
+    this.orientation = orientation;
+    this.hasFirstShape = false;
   }
 
   totalAngles() {
@@ -28,6 +30,7 @@ class Vertex extends SelectablePoint {
   }
 
   addShapeAtPoint(ShapeConstructor, length, i) {
+    this.hasFirstShape = true;
     let angleSoFar = 0;
 
     for (let j = 0; j < i; j++) {
@@ -45,8 +48,11 @@ class Vertex extends SelectablePoint {
       return;
     }
 
-    const slot = Math.floor(instance.rotation/instance.angle);
-    if (slot) {
+    this.hasFirstShape = true;
+    // todo figure this math out
+    const offset = this.orientation - instance.rotation;
+    const slot = Math.abs(offset / instance.angle);
+    if (slot >= 0 && slot < this.shapes.length) {
       this.shapes[slot] = instance;
       return instance;
     }
@@ -87,10 +93,11 @@ class Vertex extends SelectablePoint {
   }
 
   draw() {
+    p.push();
+    p.rotate(this.orientation)
     super.draw();
 
     // draw shapes
-    p.push();
     this.shapes.forEach((s) => {
       s.draw();
     });

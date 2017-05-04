@@ -23,7 +23,16 @@ class TesselationDrawer {
 
   addPoints(points, shape) {
     points.forEach((s, i) => {
-      const sp = new Vertex(s.x, s.y, this.pattern);
+
+      let orientation = 0;
+      if(shape){
+        const pointRelative = p.createVector(s.x, s.y)
+          .sub(shape.center())
+          .normalize();
+        orientation = Math.atan2(pointRelative.x, pointRelative.y);
+      }
+        debugger; 
+      const sp = new Vertex(s.x, s.y, this.pattern, orientation);
       // ignore if point is outside of canvas
       if (!Util.inCanvas(sp.x, sp.y)) {
         return;
@@ -39,7 +48,10 @@ class TesselationDrawer {
         currPoint = sp;
       }
 
-      currPoint.addShapeInstance(shape);
+      if(shape){
+        // currPoint.addShape(this.shape, this.length);
+      }
+
     });
   }
 
@@ -80,7 +92,7 @@ class TesselationDrawer {
     // print debug info if point is hovered on
     this.getPoints().forEach((pt) => {
       if (pt.state === Vertex.HOVER_STATE) {
-        console.info(pt.x, pt.y, `has ${pt.numUnoccupied()} shapes`, pt.shapes);
+        console.info(pt.x, pt.y, `has ${pt.numUnoccupied()} shapes`, pt.shapes, pt);
       }
     });
   }

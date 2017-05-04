@@ -21,6 +21,18 @@ class Hexagon extends Shape {
     this.angle = Hexagon.ANGLE;
     this.sides = Hexagon.SIDES
   }
+  center() {
+    return p.createVector(0, this.length)
+      .rotate(p.radians(this.rotation + this.angle/2))
+      .add(this.point)
+  }
+
+  draw() {
+    super.draw();
+    p.fill(0,0,0,0.5);
+    const c = this.center();
+    p.ellipse(c.x, c.y, 4, 4)
+  }
 }
 
 Hexagon.SIDES = 6;
