@@ -7,7 +7,7 @@ class EquilateralTriangle extends Shape {
     const points = Shape.generate(EquilateralTriangle.SIDES, length);
     // position shape
     points.forEach((pt) => {
-      pt.y -= length;
+      pt.y -= Shape.radius(EquilateralTriangle.SIDES, length);
       pt.rotate(p.radians(rotation));
     });
 

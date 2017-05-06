@@ -2,16 +2,16 @@ import Shape from './Shape';
 import { p } from 'P5Instance';
 
 class Square extends Shape {
-  constructor(length=10, x=0, y=0, rotation=0, translation=p.createVector(0, 0)) {
+  constructor(length = 10, x = 0, y = 0, rotation = 0, translation = p.createVector(0, 0)) {
     const point = p.createVector(x, y);
     const points = Shape.generate(Square.SIDES, length);
 
     // position shape
     points.forEach((pt) => {
-      pt.y -= length;
+      pt.y -= Shape.radius(Square.SIDES, length);
       pt.rotate(p.radians(rotation))
         .add(point);
-    })
+    });
 
     super(points, Square.SIDES);
     this.length = length;

@@ -9,6 +9,7 @@ const sketch = p => {
     // p.noLoop();
     p.reset();
     tess = new TesselationDrawer('4.3.4.6');
+    // tess = new TesselationDrawer('3.6.');
   };
 
   p.reset = () => {

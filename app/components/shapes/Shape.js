@@ -61,10 +61,15 @@ class Shape {
 
 Shape.internalAngleFor = (sides) => {
   return (180 + (sides - 3) * 180) / sides;
+};
+
+Shape.radius = (sides, length) => {
+  return (length / 2) / Math.sin(Math.PI / sides);
 }
 
 Shape.generate = (sides, length) => {
-  const start = p.createVector(0, length);
+  const radius = Shape.radius(sides, length);
+  const start = p.createVector(0, radius);
   const points = [];
   for (let i = 0; i < sides + 1; i++) {
     const newPoint = start.copy().rotate(p.radians(360 / sides * i));

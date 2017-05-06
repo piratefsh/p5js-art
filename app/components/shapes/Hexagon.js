@@ -7,7 +7,7 @@ class Hexagon extends Shape {
     const points = Shape.generate(Hexagon.SIDES, length);
     // position shape
     points.forEach((pt) => {
-      pt.y -= length;
+      pt.y -= Shape.radius(Hexagon.SIDES, length);
       pt.rotate(p.radians(rotation))
     })
 
