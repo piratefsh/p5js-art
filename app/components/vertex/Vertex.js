@@ -45,21 +45,18 @@ class Vertex extends SelectablePoint {
   }
 
   // add existing shape to point
-  // addShapeInstance(instance) {
-  //   if (instance === undefined || this.shapes.indexOf(instance) > -1) {
-  //     return;
-  //   }
-
-  //   this.hasFirstShape = true;
-  //   // todo figure this math out
-  //   const offset = this.orientation - instance.rotation;
-  //   const slot = Math.abs(offset / instance.angle);
-  //   if (slot >= 0 && slot < this.shapes.length) {
-  //     this.shapes[slot] = instance;
-  //     return instance;
-  //   }
-  //   return false;
-  // }
+  addShapeInstance(instance) {
+    if (instance === undefined || this.shapes.indexOf(instance) > -1) {
+      return;
+    }
+    const slot = this.emptySlot(instance.sides);
+    debugger;
+    if (slot !== false) {
+      this.shapes[slot] = instance;
+      return instance;
+    }
+    return false;
+  }
 
   addShape(ShapeConstructor, length) {
     if (ShapeConstructor === undefined) return;

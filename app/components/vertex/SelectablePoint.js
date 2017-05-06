@@ -49,7 +49,7 @@ class SelectablePoint {
   }
 
   toString() {
-    return `${Math.round(this.x)},${Math.round(this.y)}`;
+    return `${Math.floor(this.x)},${Math.floor(this.y)}`;
   }
 }
 

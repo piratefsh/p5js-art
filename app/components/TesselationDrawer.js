@@ -40,10 +40,12 @@ class TesselationDrawer {
       const existingPoint = this.points[sp.toString()];
       if (existingPoint) {
         // add shape to point if it exists
+        existingPoint.addShapeInstance(shape)
         // todo
       } else {
         // or create new point and add shape to it
         this.points[sp.toString()] = sp;
+        sp.addShapeInstance(shape)
       }
 
     });
@@ -94,9 +96,11 @@ class TesselationDrawer {
     this.getPoints().forEach((pt) => {
       if (pt.state === Vertex.HOVER_STATE) {
         document.getElementById('info').innerHTML = `orientation ${pt.orientation}`
-        console.info(pt.x, pt.y, `has ${pt.numUnoccupied()} shapes`, pt.shapes, pt);
+        console.info(pt.toString(), `has ${pt.numUnoccupied()} shapes`, pt.shapes, pt);
       }
     });
+
+    console.log('-')
   }
 }
 
