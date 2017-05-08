@@ -1,15 +1,15 @@
 import p5 from 'p5';
-import TesselationDrawer from './components/TesselationDrawer';
+import Graph from 'components/graph/Graph';
 
 const sketch = p => {
-  let tess;
+  let graph;
 
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
-    // p.noLoop();
+    p.noLoop();
     p.reset();
-    tess = new TesselationDrawer('3.4.6.4');
-    // tess = new TesselationDrawer('3.6.');
+    const pattern = '6.6.6';
+    graph = new Graph(pattern.split('.').map(num => parseInt(num, 10)));
   };
 
   p.reset = () => {
@@ -17,8 +17,8 @@ const sketch = p => {
 
   p.draw = () => {
     p.background(255);
-    tess.update();
-    tess.draw();
+    p.translate(p.width/2, p.height/2);
+    graph.draw();
   };
 
   p.keyPressed = () => {

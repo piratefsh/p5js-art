@@ -63,6 +63,10 @@ Shape.internalAngleFor = (sides) => {
   return (180 + (sides - 3) * 180) / sides;
 };
 
+Shape.internalAngle = (sides) => {
+  return (Math.PI + (sides - 3) * Math.PI) / sides;
+};
+ 
 Shape.radius = (sides, length) => {
   return (length / 2) / Math.sin(Math.PI / sides);
 }
