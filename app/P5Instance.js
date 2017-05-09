@@ -11,6 +11,7 @@ const sketch = p => {
     // const pattern = '3.4.6.4';
     // const pattern = '3.6.3.6';
     // const pattern = '4.8.8';
+    // const pattern = '4.4.4.4';
     const pattern = '6.6.6';
     graph = new Graph(pattern.split('.').map(num => parseInt(num, 10)));
   };

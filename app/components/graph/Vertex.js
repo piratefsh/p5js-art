@@ -11,25 +11,18 @@ class Vertex {
     this.neighbours = new Array(pattern.length);
     this.visited = false;
     this.length = 30;
-    // this.offsets = [120, 240, 60, 300].map((e) => p.radians(e));
     this.offsets = new Array(pattern.length);
 
     let prev = Shape.internalAngle(this.pattern[0]) * 2;
+
+    // calculate offset orientation for each neighboring point
     this.offsets[0] = prev;
     for (let i = 1; i < this.pattern.length; i++) {
       const internalAngle = Shape.internalAngle(this.pattern[i - 1]);
       const curr = prev + (2 * internalAngle);
       this.offsets[i] = curr;
-      // console.log(p.degrees(internalAngle), p.degrees(prev), p.degrees(curr));
       prev = curr;
     }
-    // debugger;
-    // this.pattern.map((sides, i) => {
-    //   if (i == 0) return 0;
-    //   const prevInternalAngle = Shape.internalAngle(this.pattern[i-1]);
-    //   return prevInternalAngle * 2;
-    // });
-    // console.log(this.offsets.map((o) => p.degrees(o)));
 
     // keep track of rotation
     this.offset = 0;
@@ -54,16 +47,6 @@ class Vertex {
     }
 
     if (!this.oriented) {
-      // // add ok
-      // const shape = this.pattern[Math.abs((patternIndex + patternIndexOffset) % this.pattern.length)];
-      // const offset = Shape.slice(shape);
-      // this.offset = v.offset + offset;
-      // // Math.atan2(v.x - this.x, v.y - this.y);
-      // if (this.id === Vertex.DEBUG_ID) {
-      //   console.log('first neighbour', v);
-      //   console.log('orientation', shape, v.offset, offset);
-      // }
-
       this.offset = this.offsets[patternIndexOffset] + v.offset;
       this.oriented = true;
     }
