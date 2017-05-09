@@ -11,7 +11,25 @@ class Vertex {
     this.neighbours = new Array(pattern.length);
     this.visited = false;
     this.length = 30;
-    this.offsets = [120, 240, 60, 300].map((e) => p.radians(e));
+    // this.offsets = [120, 240, 60, 300].map((e) => p.radians(e));
+    this.offsets = new Array(pattern.length);
+
+    let prev = Shape.internalAngle(this.pattern[0]) * 2;
+    this.offsets[0] = prev;
+    for (let i = 1; i < this.pattern.length; i++) {
+      const internalAngle = Shape.internalAngle(this.pattern[i - 1]);
+      const curr = prev + (2 * internalAngle);
+      this.offsets[i] = curr;
+      // console.log(p.degrees(internalAngle), p.degrees(prev), p.degrees(curr));
+      prev = curr;
+    }
+    // debugger;
+    // this.pattern.map((sides, i) => {
+    //   if (i == 0) return 0;
+    //   const prevInternalAngle = Shape.internalAngle(this.pattern[i-1]);
+    //   return prevInternalAngle * 2;
+    // });
+    // console.log(this.offsets.map((o) => p.degrees(o)));
 
     // keep track of rotation
     this.offset = 0;
@@ -126,7 +144,7 @@ class Vertex {
 
 Vertex.all = {};
 Vertex.ID = 0;
-Vertex.RANGE = 400;
+Vertex.RANGE = 150;
 Vertex.DEBUG_ID = 2;
 Vertex.get = (x, y, pattern) => {
   const key = `${Math.round(x)},${Math.round(y)}`;
