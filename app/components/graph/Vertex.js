@@ -10,7 +10,7 @@ class Vertex {
     this.pattern = pattern;
     this.neighbours = new Array(pattern.length);
     this.visited = false;
-    this.length = 30;
+    this.length = 40;
 
     // keep track of rotation
     this.offset = 0;
@@ -36,7 +36,7 @@ class Vertex {
 
     if (!this.oriented) {
       // add ok
-      this.offset = Math.atan2(v.x - this.x, v.y - this.y);
+      this.offset = Math.PI * 2 / this.pattern[patternIndex]// Math.atan2(v.x - this.x, v.y - this.y);
       this.oriented = true;
     }
 
@@ -110,8 +110,8 @@ class Vertex {
 
 Vertex.all = {};
 Vertex.ID = 0;
-Vertex.RANGE = 150;
-Vertex.DEBUG_ID = 2;
+Vertex.RANGE = 180;
+Vertex.DEBUG_ID = 1;
 Vertex.get = (x, y, pattern) => {
   const key = `${Math.round(x)},${Math.round(y)}`;
   // make new key if exists

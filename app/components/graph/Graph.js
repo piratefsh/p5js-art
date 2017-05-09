@@ -52,6 +52,6 @@ class Graph {
   }
 }
 
-Graph.MAX_DEPTH = 4;
+Graph.MAX_DEPTH = 1;
 
 export default Graph;
