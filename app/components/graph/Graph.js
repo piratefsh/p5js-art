@@ -4,6 +4,7 @@ class Graph {
   constructor(pattern) {
     this.pattern = pattern;
     this.root = Vertex.get(0, 0, pattern);
+    this.root.oriented = true;
     this.vertices = [this.root];
   }
 
@@ -52,6 +53,6 @@ class Graph {
   }
 }
 
-Graph.MAX_DEPTH = Infinity;
+Graph.MAX_DEPTH = 1;
 
 export default Graph;
