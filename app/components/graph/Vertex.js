@@ -39,12 +39,14 @@ class Vertex {
   }
 
   draw() {
+    p.push()
     p.translate(this.x, this.y);
     p.ellipse(0, 0, 5, 5);
     p.text(this.id, 0, 0)
     this.neighbours.forEach((n) => {
       p.line(this.x, this.y, n.x, n.y);
     })
+    p.pop()
   }
 
   // add neighbours with pattern
@@ -76,7 +78,7 @@ class Vertex {
 }
 
 Vertex.ID = 0;
-Vertex.RANGE = 100;
+Vertex.RANGE = 500;
 Vertex.inRange = (n) => {
   return n.x < Vertex.RANGE && n.x > -Vertex.RANGE && n.y < Vertex.RANGE && n.y > -Vertex.RANGE
 }

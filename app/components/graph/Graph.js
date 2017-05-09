@@ -8,7 +8,7 @@ class Graph {
   }
 
   dfs(callback, curr = this.root, depth=0) {
-    if (curr.visited || depth > 3) {
+    if (curr.visited || depth > 1) {
       return;
     }
 
@@ -16,17 +16,17 @@ class Graph {
 
     // do thing with node
     callback(curr);
-    // dfs on neighbours
+    // visit neighbours
     curr.neighbours.forEach((v) => {
-      console.log('neigh', v)
       this.dfs(callback, v, depth + 1);
     });
   }
 
   bfs(callback, curr = this.root, depth=0) {
-    if (curr.visited || depth > 5) {
+    if (curr.visited) {
       return;
     }
+
     // visit on neighbours
     curr.neighbours.forEach((v) => {
       console.log('neigh', v)
@@ -44,7 +44,7 @@ class Graph {
   }
 
   draw() {
-    this.bfs(v => {
+    this.dfs(v => {
       const newVertices = v.expand();
       Array.prototype.push.apply(this.vertices, newVertices);
     });
