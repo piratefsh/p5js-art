@@ -10,7 +10,8 @@ class Vertex {
     this.pattern = pattern;
     this.neighbours = new Array(pattern.length);
     this.visited = false;
-    this.length = 50;
+    this.length = 30;
+    this.offsets = [120, 240, 60, 300].map((e) => p.radians(e));
 
     // keep track of rotation
     this.offset = 0;
@@ -35,16 +36,18 @@ class Vertex {
     }
 
     if (!this.oriented) {
-      // add ok
-      const shape = this.pattern[Math.abs((patternIndex + patternIndexOffset) % this.pattern.length)];
-      const offset = Shape.slice(shape);
-      this.offset = v.offset + offset;
-      // Math.atan2(v.x - this.x, v.y - this.y);
+      // // add ok
+      // const shape = this.pattern[Math.abs((patternIndex + patternIndexOffset) % this.pattern.length)];
+      // const offset = Shape.slice(shape);
+      // this.offset = v.offset + offset;
+      // // Math.atan2(v.x - this.x, v.y - this.y);
+      // if (this.id === Vertex.DEBUG_ID) {
+      //   console.log('first neighbour', v);
+      //   console.log('orientation', shape, v.offset, offset);
+      // }
+
+      this.offset = this.offsets[patternIndexOffset] + v.offset;
       this.oriented = true;
-      if (this.id === Vertex.DEBUG_ID) {
-        console.log('first neighbour', v);
-        console.log('orientation', shape, v.offset, offset);
-      }
     }
 
     if (this.neighbours.indexOf(v) < 0) {
@@ -102,7 +105,7 @@ class Vertex {
       if (Vertex.inRange(n)) {
         const newVertex = Vertex.get(n.x, n.y, this.pattern);
         this.addNeighbour(newVertex, i);
-        newVertex.addNeighbour(this, i);
+        newVertex.addNeighbour(this, i, i);
         newNodes.push(newVertex);
         if (this.id == Vertex.DEBUG_ID) {
           console.log(i, newVertex, currAngle);
@@ -124,7 +127,7 @@ class Vertex {
 Vertex.all = {};
 Vertex.ID = 0;
 Vertex.RANGE = 400;
-Vertex.DEBUG_ID = 1;
+Vertex.DEBUG_ID = 2;
 Vertex.get = (x, y, pattern) => {
   const key = `${Math.round(x)},${Math.round(y)}`;
   // make new key if exists
