@@ -8,7 +8,7 @@ class Graph {
   }
 
   dfs(callback, curr = this.root, depth=0) {
-    if (curr.visited) {
+    if (curr.visited || depth > Graph.MAX_DEPTH) {
       return;
     }
 
@@ -51,5 +51,7 @@ class Graph {
     Object.keys(Vertex.all).forEach(k => Vertex.all[k].draw());
   }
 }
+
+Graph.MAX_DEPTH = 4;
 
 export default Graph;

@@ -59,7 +59,8 @@ class Vertex {
     p.ellipse(0, 0, 5, 5);
     p.fill(0, 0, 0, 100);
     p.stroke(0, 0, 0, 100);
-    p.text(this.id, 5, 5);
+    p.textSize(8);
+    p.text(this.id, 3, 8);
     this.neighbours.forEach((n) => {
       p.pop();
       p.line(this.x, this.y, n.x, n.y);
@@ -68,6 +69,10 @@ class Vertex {
 
   // add neighbours with pattern
   expand() {
+    if(this.id == Vertex.DEBUG_ID) {
+      console.log(this)
+      this.neighbours.forEach((n, i) => console.log('neighbour', i , n))
+    }
     const newNodes = [];
     let currAngle = this.offset;
     this.pattern.forEach((pat, i) => {
@@ -106,7 +111,7 @@ class Vertex {
 Vertex.all = {};
 Vertex.ID = 0;
 Vertex.RANGE = 150;
-Vertex.DEBUG_ID = -1;
+Vertex.DEBUG_ID = 2;
 Vertex.get = (x, y, pattern) => {
   const key = `${Math.round(x)},${Math.round(y)}`;
   // make new key if exists
