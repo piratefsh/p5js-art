@@ -18,8 +18,8 @@ class Vertex {
   }
 
   addNeighbour(v, patternIndex) {
-    if(this.id == 3){
-      debugger;
+    if (this.id == 1) {
+      // debugger;
     }
     if (!(v instanceof Vertex)) {
       throw new Error('Vertex: adding bad neighbour');
@@ -31,16 +31,16 @@ class Vertex {
 
     if (this.neighbours[patternIndex] !== undefined) {
       // return
-      //throw new Error('Vertex: patternIndex is occupied');
+      // throw new Error('Vertex: patternIndex is occupied');
     }
 
-    if(!this.oriented){
+    if (!this.oriented) {
       // add ok
       this.offset = Math.atan2(v.x - this.x, v.y - this.y);
       this.oriented = true;
     }
 
-    if(this.neighbours.indexOf(v) < 0){
+    if (this.neighbours.indexOf(v) < 0) {
       this.neighbours[patternIndex] = v;
     }
   }
@@ -61,7 +61,7 @@ class Vertex {
     p.stroke(0, 0, 0, 100);
     p.text(this.id, 5, 5);
     this.neighbours.forEach((n) => {
-    p.pop();
+      p.pop();
       p.line(this.x, this.y, n.x, n.y);
     });
   }
@@ -71,20 +71,24 @@ class Vertex {
     const newNodes = [];
     let currAngle = this.offset;
     this.pattern.forEach((pat, i) => {
-      if (this.neighbours[i] !== undefined) {
-        return;
-      }
-
       const n = p
         .createVector(0, this.length)
         .rotate(currAngle);
       n.add(this.x, this.y);
+
+      if (this.id == Vertex.DEBUG_ID) {
+        console.log('----');
+        console.log(i, n);
+      }
 
       if (Vertex.inRange(n)) {
         const newVertex = Vertex.get(n.x, n.y, this.pattern);
         newVertex.addNeighbour(this, i);
         this.addNeighbour(newVertex, i);
         newNodes.push(newVertex);
+        if (this.id == Vertex.DEBUG_ID) {
+          console.log(i, newVertex, currAngle);
+        }
       }
 
       currAngle += Shape.internalAngle(pat, this.length);
@@ -102,6 +106,7 @@ class Vertex {
 Vertex.all = {};
 Vertex.ID = 0;
 Vertex.RANGE = 150;
+Vertex.DEBUG_ID = -1;
 Vertex.get = (x, y, pattern) => {
   const key = `${Math.round(x)},${Math.round(y)}`;
   // make new key if exists
@@ -109,7 +114,7 @@ Vertex.get = (x, y, pattern) => {
     Vertex.all[key] = new Vertex(x, y, pattern);
   }
 
-  return Vertex.all[key]
+  return Vertex.all[key];
 };
 
 Vertex.inRange = (n) => {
