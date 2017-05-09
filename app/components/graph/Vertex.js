@@ -7,12 +7,14 @@ class Vertex {
     this.id = Vertex.ID++;
     this.x = x;
     this.y = y;
-    const t = this.toString();
-    debugger;
     this.pattern = pattern;
     this.neighbours = new Array(pattern.length);
     this.visited = false;
-    this.length = 20;
+    this.length = 30;
+
+    // keep track of rotation
+    this.offset = 0;
+    this.oriented = false;
   }
 
   addNeighbour(v, patternIndex) {
@@ -26,10 +28,13 @@ class Vertex {
 
     if (this.neighbours[patternIndex] !== undefined) {
       return
-      throw new Error('Vertex: patternIndex is occupied');
+      //throw new Error('Vertex: patternIndex is occupied');
     }
 
     // add ok
+    this.offset = Math.atan2(v.x - this.x, v.y - this.y);
+
+    this.oriented = true;
     this.neighbours[patternIndex] = v;
   }
 
@@ -47,7 +52,7 @@ class Vertex {
     p.ellipse(0, 0, 5, 5);
     p.fill(0, 0, 0, 100);
     p.stroke(0, 0, 0, 100);
-    p.text(this.id, 2, 2);
+    p.text(this.id, this.id, this.id);
     this.neighbours.forEach((n) => {
     p.pop();
       p.line(this.x, this.y, n.x, n.y);
@@ -57,7 +62,7 @@ class Vertex {
   // add neighbours with pattern
   expand() {
     const newNodes = [];
-    let currAngle = 0;
+    let currAngle = -this.offset;
     this.pattern.forEach((pat, i) => {
       if (this.neighbours[i] !== undefined) {
         return;
@@ -89,7 +94,7 @@ class Vertex {
 
 Vertex.all = {};
 Vertex.ID = 0;
-Vertex.RANGE = 500;
+Vertex.RANGE = 150;
 Vertex.get = (x, y, pattern) => {
   const key = `${Math.floor(x)},${Math.floor(y)}`;
   // make new key if exists
