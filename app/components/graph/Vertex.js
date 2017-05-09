@@ -17,7 +17,7 @@ class Vertex {
     this.oriented = false;
   }
 
-  addNeighbour(v, patternIndex) {
+  addNeighbour(v, patternIndex, patternIndexOffset=0) {
     if (this.id == 1) {
       // debugger;
     }
@@ -36,7 +36,8 @@ class Vertex {
 
     if (!this.oriented) {
       // add ok
-      this.offset = Math.PI * 2 / this.pattern[patternIndex]// Math.atan2(v.x - this.x, v.y - this.y);
+      const shape = Math.abs((patternIndex + patternIndexOffset) % this.pattern.length)
+      this.offset = v.offset + Shape.slice(this.pattern[shape]);// Math.atan2(v.x - this.x, v.y - this.y);
       this.oriented = true;
     }
 
@@ -54,13 +55,19 @@ class Vertex {
   }
 
   draw() {
+    p.stroke(0, 0, 0, 120);
     p.push();
     p.translate(this.x, this.y);
-    p.ellipse(0, 0, 5, 5);
-    p.fill(0, 0, 0, 100);
-    p.stroke(0, 0, 0, 100);
     p.textSize(8);
     p.text(this.id, 3, 8);
+    p.pop();
+
+    p.push();
+    p.stroke(0, 0, 0, 120);
+    p.fill(0, 0, 0, 120);
+    p.translate(this.x, this.y);
+    p.rotate(this.offset);
+    p.triangle(-3, -3, 0, 5, 3, -3);
     this.neighbours.forEach((n) => {
       p.pop();
       p.line(this.x, this.y, n.x, n.y);
@@ -69,9 +76,9 @@ class Vertex {
 
   // add neighbours with pattern
   expand() {
-    if(this.id == Vertex.DEBUG_ID) {
-      console.log(this)
-      this.neighbours.forEach((n, i) => console.log('neighbour', i , n))
+    if (this.id == Vertex.DEBUG_ID) {
+      console.log(this);
+      this.neighbours.forEach((n, i) => console.log('neighbour', i, n));
     }
     const newNodes = [];
     let currAngle = this.offset;
@@ -88,7 +95,7 @@ class Vertex {
 
       if (Vertex.inRange(n)) {
         const newVertex = Vertex.get(n.x, n.y, this.pattern);
-        newVertex.addNeighbour(this, i);
+        newVertex.addNeighbour(this, i, -1);
         this.addNeighbour(newVertex, i);
         newNodes.push(newVertex);
         if (this.id == Vertex.DEBUG_ID) {

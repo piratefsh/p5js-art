@@ -69,6 +69,10 @@ Shape.internalAngle = (sides) => {
  
 Shape.radius = (sides, length) => {
   return (length / 2) / Math.sin(Math.PI / sides);
+};
+
+Shape.slice = (sides) => {
+  return (Math.PI * 2) / sides
 }
 
 Shape.generate = (sides, length) => {

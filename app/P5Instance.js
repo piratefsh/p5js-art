@@ -8,7 +8,8 @@ const sketch = p => {
     p.createCanvas(window.innerWidth, window.innerHeight);
     p.noLoop();
     p.reset();
-    const pattern = '3.4.6.4';
+    // const pattern = '3.4.6.4';
+    const pattern = '6.6.6';
     graph = new Graph(pattern.split('.').map(num => parseInt(num, 10)));
   };
 
