@@ -82,21 +82,23 @@ class Vertex {
   }
 
   draw() {
-    p.stroke(0, 0, 0, 120);
-    p.push();
-    p.translate(this.x, this.y);
-    p.textSize(8);
-    p.text(this.id, 3, 8);
-    p.pop();
-
-    p.push();
-    p.stroke(0, 0, 0, 120);
-    p.fill(0, 0, 0, 120);
-    p.translate(this.x, this.y);
-    p.rotate(this.offset);
-    p.triangle(-3, -3, 0, 5, 3, -3);
-    this.neighbours.forEach((n) => {
+    if(Vertex.DEBUG_MODE){
+      p.stroke(0, 0, 0, 120);
+      p.push();
+      p.translate(this.x, this.y);
+      p.textSize(8);
+      p.text(this.id, 3, 8);
       p.pop();
+      p.push();
+      p.stroke(0, 0, 0, 120);
+      p.fill(0, 0, 0, 120);
+      p.translate(this.x, this.y);
+      p.rotate(this.offset);
+      p.triangle(-3, -3, 0, 5, 3, -3);
+      p.pop();
+    }
+
+    this.neighbours.forEach((n) => {
       p.line(this.x, this.y, n.x, n.y);
     });
   }
@@ -145,7 +147,8 @@ class Vertex {
 Vertex.all = {};
 Vertex.ID = 0;
 Vertex.RANGE = 150;
-Vertex.DEBUG_ID = 2;
+Vertex.DEBUG_MODE = true;
+Vertex.DEBUG_ID = 0;
 Vertex.get = (x, y, pattern) => {
   const key = `${Math.round(x)},${Math.round(y)}`;
   // make new key if exists
@@ -159,5 +162,7 @@ Vertex.get = (x, y, pattern) => {
 Vertex.inRange = (n) => {
   return n.x < Vertex.RANGE && n.x > -Vertex.RANGE && n.y < Vertex.RANGE && n.y > -Vertex.RANGE;
 };
+
+
 window.Vertex = Vertex;
 export default Vertex;
