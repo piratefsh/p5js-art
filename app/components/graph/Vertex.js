@@ -7,6 +7,8 @@ class Vertex {
     this.id = Vertex.ID++;
     this.x = x;
     this.y = y;
+    const t = this.toString();
+    debugger;
     this.pattern = pattern;
     this.neighbours = new Array(pattern.length);
     this.visited = false;
@@ -23,6 +25,7 @@ class Vertex {
     }
 
     if (this.neighbours[patternIndex] !== undefined) {
+      return
       throw new Error('Vertex: patternIndex is occupied');
     }
 
@@ -39,14 +42,16 @@ class Vertex {
   }
 
   draw() {
-    p.push()
+    p.push();
     p.translate(this.x, this.y);
     p.ellipse(0, 0, 5, 5);
-    p.text(this.id, 0, 0)
+    p.fill(0, 0, 0, 100);
+    p.stroke(0, 0, 0, 100);
+    p.text(this.id, 2, 2);
     this.neighbours.forEach((n) => {
+    p.pop();
       p.line(this.x, this.y, n.x, n.y);
-    })
-    p.pop()
+    });
   }
 
   // add neighbours with pattern
@@ -64,7 +69,7 @@ class Vertex {
       n.add(this.x, this.y);
 
       if (Vertex.inRange(n)) {
-        const newVertex = new Vertex(n.x, n.y, this.pattern);
+        const newVertex = Vertex.get(n.x, n.y, this.pattern);
         newVertex.addNeighbour(this, i);
         this.addNeighbour(newVertex, i);
         newNodes.push(newVertex);
@@ -75,12 +80,28 @@ class Vertex {
 
     return newNodes;
   }
+
+
+  toString() {
+    return `${Math.round(this.x)},${Math.round(this.y)}`;
+  }
 }
 
+Vertex.all = {};
 Vertex.ID = 0;
 Vertex.RANGE = 500;
-Vertex.inRange = (n) => {
-  return n.x < Vertex.RANGE && n.x > -Vertex.RANGE && n.y < Vertex.RANGE && n.y > -Vertex.RANGE
-}
+Vertex.get = (x, y, pattern) => {
+  const key = `${Math.floor(x)},${Math.floor(y)}`;
+  // make new key if exists
+  if (!Vertex.all[key]) {
+    Vertex.all[key] = new Vertex(x, y, pattern);
+  }
 
+  return Vertex.all[key]
+};
+
+Vertex.inRange = (n) => {
+  return n.x < Vertex.RANGE && n.x > -Vertex.RANGE && n.y < Vertex.RANGE && n.y > -Vertex.RANGE;
+};
+window.Vertex = Vertex;
 export default Vertex;

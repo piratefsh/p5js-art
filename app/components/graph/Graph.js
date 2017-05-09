@@ -3,7 +3,7 @@ import Vertex from './Vertex';
 class Graph {
   constructor(pattern) {
     this.pattern = pattern;
-    this.root = new Vertex(0, 0, pattern);
+    this.root = Vertex.get(0, 0, pattern);
     this.vertices = [this.root];
   }
 
@@ -49,7 +49,7 @@ class Graph {
       Array.prototype.push.apply(this.vertices, newVertices);
     });
     this.reset();
-    this.vertices.forEach(v => v.draw());
+    Object.keys(Vertex.all).forEach(k => Vertex.all[k].draw());
   }
 }
 
