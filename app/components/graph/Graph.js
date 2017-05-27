@@ -53,6 +53,6 @@ class Graph {
   }
 }
 
-Graph.MAX_DEPTH = Infinity;
+Graph.MAX_DEPTH = 1;
 
 export default Graph;

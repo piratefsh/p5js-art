@@ -10,6 +10,8 @@ const sketch = p => {
     p.reset();
     // const pattern = '3.4.6.4';
     // const pattern = '3.6.3.6';
+    // const pattern = '3.3.3.3.6';
+    // const pattern = '3.3.3.4.4';
     // const pattern = '4.8.8';
     // const pattern = '4.4.4.4';
     const pattern = '6.6.6';

@@ -42,7 +42,7 @@ class Vertex {
     }
 
     if (this.neighbours[patternIndex] !== undefined) {
-      // return
+      return
       // throw new Error('Vertex: patternIndex is occupied');
     }
 
