@@ -1,21 +1,10 @@
 import p5 from 'p5';
-import Graph from 'components/graph/Graph';
 
 const sketch = p => {
-  let graph;
-
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
     p.noLoop();
     p.reset();
-    // const pattern = '3.4.6.4';
-    // const pattern = '3.6.3.6';
-    // const pattern = '3.3.3.3.6';
-    // const pattern = '3.3.3.4.4';
-    // const pattern = '4.8.8';
-    // const pattern = '4.4.4.4';
-    const pattern = '6.6.6';
-    graph = new Graph(pattern.split('.').map(num => parseInt(num, 10)));
   };
 
   p.reset = () => {
@@ -24,7 +13,6 @@ const sketch = p => {
   p.draw = () => {
     p.background(255);
     p.translate(p.width/2, p.height/2);
-    graph.draw();
   };
 
   p.keyPressed = () => {
