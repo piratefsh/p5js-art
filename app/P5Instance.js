@@ -1,10 +1,12 @@
 import p5 from 'p5';
-
+import Hexagon from 'components/hexagon/Hexagon'
 const sketch = p => {
+  let hex;
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
     p.noLoop();
     p.reset();
+    hex = new Hexagon({x: p.width/2, y: p.height/2}, 100)
   };
 
   p.reset = () => {
@@ -12,7 +14,7 @@ const sketch = p => {
 
   p.draw = () => {
     p.background(255);
-    p.translate(p.width/2, p.height/2);
+    hex.draw();
   };
 
   p.keyPressed = () => {
