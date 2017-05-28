@@ -2,7 +2,7 @@ import p5 from 'p5';
 import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
   let hexes;
-  const pattern = 't3636';
+  const pattern = 't33336';
   const len = 80;
   p.setup = () => {
     p.createCanvas(500, 500);
