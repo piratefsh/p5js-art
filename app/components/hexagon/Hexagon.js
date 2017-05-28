@@ -1,7 +1,8 @@
 import { p } from 'P5Instance';
 
 export default class Hexagon {
-  constructor(centerPos, edgeLen, minLen = 10) {
+  constructor(pattern, centerPos, edgeLen, minLen = 10) {
+    this.pattern = pattern;
     this.minLen = minLen < 0 ? 5 : minLen;
     this.id = Hexagon.ID++;
     this.vertices = [];
@@ -36,13 +37,14 @@ export default class Hexagon {
     }
 
     // draw recursive hexes
-    const children = Hexagon.t3636(this.edgeLen, this.centerPos, this.minLen);
+    // console.log(Hexagon[this.pattern])
+    const children = Hexagon[this.pattern](this.pattern, this.edgeLen, this.centerPos, this.minLen);
     children.forEach((ch) => ch.draw());
     return;
   }
 }
 
-Hexagon.t3636 = (parentEdgeLen, centerPos, minLen) => {
+Hexagon.t3636 = (pattern, parentEdgeLen, centerPos, minLen) => {
   const children = [];
   const childLen = parentEdgeLen / 3;
   const center = new Hexagon(centerPos, childLen, minLen);
@@ -53,17 +55,30 @@ Hexagon.t3636 = (parentEdgeLen, centerPos, minLen) => {
     const currCenter = p.createVector(0, childLen * 2)
         .rotate(Hexagon.ANGLE * i)
         .add(centerPos);
-    const hex = new Hexagon(currCenter, childLen, minLen);
+    const hex = new Hexagon(pattern, currCenter, childLen, minLen);
     children.push(hex);
   }
 
   return children;
 };
 
-Hexagon.t33336 = (parentEdgeLen, i, centerPos) => {
-  return p.createVector(0, len * 2)
-    .rotate(Hexagon.ANGLE * i + Hexagon.ANGLE / 2)
-    .add(centerPos);
+Hexagon.t33336 = (pattern, parentEdgeLen, centerPos, minLen) => {
+  const children = [];
+  const childLen = parentEdgeLen / 3;
+  const radius = Math.sqrt((parentEdgeLen * parentEdgeLen) - Math.pow(parentEdgeLen / 2, 2));
+  const center = new Hexagon(pattern, centerPos, childLen, minLen);
+  children.push(center);
+
+  // draw surrounding hexagons
+  for (let i = 0; i < 6; i++) {
+    const currCenter = p.createVector(0, radius)
+        .rotate(Hexagon.ANGLE * i + Hexagon.ANGLE / 2)
+        .add(centerPos);
+    const hex = new Hexagon(pattern, currCenter, childLen, minLen);
+    children.push(hex);
+  }
+
+  return children;
 };
 
 Hexagon.ANGLE = Math.PI * 2 / 6;
