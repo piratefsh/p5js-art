@@ -1,20 +1,40 @@
 import p5 from 'p5';
-import Hexagon from 'components/hexagon/Hexagon'
+import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
-  let hex;
+  const hexes = [];
+  const len = 100;
   p.setup = () => {
-    p.createCanvas(window.innerWidth, window.innerHeight);
+    p.createCanvas(500, 500);
     p.noLoop();
     p.reset();
-    hex = new Hexagon({x: p.width/2, y: p.height/2}, 100)
+    p.frameRate(24);
+
+    const center = p.createVector(0, 0);
+    const rad = Math.sqrt((len * len) - Math.pow(len/2, 2))
+    for (let i = 0; i < p.width/len; i++) {
+      const offset = i % 2 == 1 ? rad : 0;
+      for (let j = 0; j < p.height/len; j++) {
+        const currCenter = center.copy()
+        currCenter.x += rad*2 * j + offset;
+        currCenter.y += (len + Math.sqrt(len * len - rad * rad)) * i
+        const hex = new Hexagon(currCenter, len, 10);
+        hexes.push(hex);
+      }
+    }
   };
 
   p.reset = () => {
   };
 
   p.draw = () => {
-    p.background(255);
-    hex.draw();
+    p.background('skyblue');
+    hexes.forEach((hex) => {
+      hex.draw();
+      // if (hex.minLen >= 10) {
+      //   hex.update(hex.minLen - 2);
+      // }
+      // console.log(hex.minLen)
+    });
   };
 
   p.keyPressed = () => {
