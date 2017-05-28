@@ -7,7 +7,7 @@ export default class Hexagon {
     this.id = Hexagon.ID++;
     this.vertices = [];
     this.edgeLen = edgeLen;
-    this.opacity = p.map(this.edgeLen, 1, 30, 200, 50);
+    this.opacity = 220;//p.map(this.edgeLen, 1, 33, 200, 50);
     this.centerPos = p.createVector(centerPos.x, centerPos.y);
 
     const curr = p.createVector(0, edgeLen);
@@ -21,6 +21,7 @@ export default class Hexagon {
   }
 
   draw() {
+    if (this.edgeLen <= this.minLen || Hexagon.randomise(this.opacity)) {
       p.push();
       p.translate(this.centerPos.x, this.centerPos.y);
     // p.text(this.id, 0, 0)
@@ -32,7 +33,6 @@ export default class Hexagon {
       });
       p.endShape(p.CLOSE);
       p.pop();
-    if (this.edgeLen <= this.minLen || Hexagon.randomise()) {
       // draw a hex
       return;
     }
@@ -82,8 +82,8 @@ Hexagon.t33336 = (pattern, parentEdgeLen, centerPos, minLen) => {
   return children;
 };
 
-Hexagon.randomise = () => {
-  return p.random(0, 2) < 0.2;
+Hexagon.randomise = (opacity) => {
+  return p.random(0, 2) < 0.4;
 }
 
 Hexagon.ANGLE = Math.PI * 2 / 6;

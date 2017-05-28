@@ -3,9 +3,9 @@ import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
   let hexes;
   const pattern = 't33336';
-  const len = 100;
+  const len = 80;
   p.setup = () => {
-    p.createCanvas(700, 700);
+    p.createCanvas(500, 500);
     p.reset();
     p.noLoop();
     p.frameRate(60);
