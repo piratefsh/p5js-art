@@ -5,9 +5,9 @@ const sketch = p => {
   const len = 100;
   p.setup = () => {
     p.createCanvas(500, 500);
-    p.noLoop();
     p.reset();
-    p.frameRate(24);
+    p.noLoop();
+    p.frameRate(60);
 
     const center = p.createVector(0, 0);
     const rad = Math.sqrt((len * len) - Math.pow(len/2, 2))
@@ -24,15 +24,17 @@ const sketch = p => {
   };
 
   p.reset = () => {
+
   };
 
   p.draw = () => {
     p.background('skyblue');
     hexes.forEach((hex) => {
+      // const hex = hexes[6]
       hex.draw();
-      // if (hex.minLen >= 10) {
-      //   hex.update(hex.minLen - 2);
-      // }
+      if (hex.minLen >= 10) {
+        hex.update(hex.minLen - 2);
+      }
       // console.log(hex.minLen)
     });
   };

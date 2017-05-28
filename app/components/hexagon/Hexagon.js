@@ -36,27 +36,33 @@ export default class Hexagon {
     }
 
     // draw recursive hexes
-    const children = [];
-    const childLen = this.edgeLen / 3;
-
-    const center = new Hexagon(this.centerPos, childLen, this.minLen);
-    children.push(center);
-
-    // draw surrounding hexagons
-    for (let i = 0; i < 6; i++) {
-      const currCenter = Hexagon.t3636(childLen, i, this.centerPos);
-      const hex = new Hexagon(currCenter, childLen, this.minLen);
-      children.push(hex);
-    }
-
+    const children = Hexagon.t3636(this.edgeLen, this.centerPos, this.minLen);
     children.forEach((ch) => ch.draw());
     return;
   }
 }
 
-Hexagon.t3636 = (len, i, centerPos) => {
+Hexagon.t3636 = (parentEdgeLen, centerPos, minLen) => {
+  const children = [];
+  const childLen = parentEdgeLen / 3;
+  const center = new Hexagon(centerPos, childLen, minLen);
+  children.push(center);
+
+  // draw surrounding hexagons
+  for (let i = 0; i < 6; i++) {
+    const currCenter = p.createVector(0, childLen * 2)
+        .rotate(Hexagon.ANGLE * i)
+        .add(centerPos);
+    const hex = new Hexagon(currCenter, childLen, minLen);
+    children.push(hex);
+  }
+
+  return children;
+};
+
+Hexagon.t33336 = (parentEdgeLen, i, centerPos) => {
   return p.createVector(0, len * 2)
-    .rotate(Hexagon.ANGLE * i)
+    .rotate(Hexagon.ANGLE * i + Hexagon.ANGLE / 2)
     .add(centerPos);
 };
 
