@@ -1,15 +1,19 @@
 import p5 from 'p5';
 import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
-  const hexes = [];
+  let hexes;
   const pattern = 't33336';
   const len = 100;
   p.setup = () => {
-    p.createCanvas(500, 500);
+    p.createCanvas(700, 700);
     p.reset();
     p.noLoop();
     p.frameRate(60);
 
+  };
+
+  p.reset = () => {
+    hexes = [];
     const center = p.createVector(0, 0);
     const rad = Math.sqrt((len * len) - Math.pow(len / 2, 2));
     for (let i = 0; i < p.width / len; i++) {
@@ -18,14 +22,10 @@ const sketch = p => {
         const currCenter = center.copy();
         currCenter.x += rad * 2 * j + offset;
         currCenter.y += (len + Math.sqrt(len * len - rad * rad)) * i;
-        const hex = new Hexagon(pattern, currCenter, len, 3);
+        const hex = new Hexagon(pattern, currCenter, len);
         hexes.push(hex);
       }
     }
-  };
-
-  p.reset = () => {
-
   };
 
   p.draw = () => {

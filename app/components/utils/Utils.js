@@ -12,6 +12,10 @@ const Util = {
     return x < p.width && x > 0
       && y < p.height && y > 0;
   },
+
+  trigHeight(width, hypotenuse){
+    return Math.sqrt((hypotenuse * hypotenuse) - (width * width))
+  }
 };
 
 export default Util;
