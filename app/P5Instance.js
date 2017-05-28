@@ -2,7 +2,7 @@ import p5 from 'p5';
 import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
   let hexes;
-  const pattern = 't33336';
+  const pattern = 't3636';
   const len = 80;
   p.setup = () => {
     p.createCanvas(500, 500);
@@ -32,10 +32,8 @@ const sketch = p => {
     p.background(p.color(p.random(200, 245), p.random(50, 100), 100));
     hexes.forEach((hex) => {
       // const hex = hexes[6]
+      hex.update();
       hex.draw();
-      if (hex.minLen >= 10) {
-        hex.update(hex.minLen - 2);
-      }
     });
   };
 
