@@ -7,7 +7,7 @@ export default class Hexagon {
     this.id = Hexagon.ID++;
     this.vertices = [];
     this.edgeLen = edgeLen;
-    this.opacity = 180;// p.map(this.edgeLen, 1, 33, 200, 50);
+    this.opacity = 80;// p.map(this.edgeLen, 1, 33, 200, 50);
     this.centerPos = p.createVector(centerPos.x, centerPos.y);
     this.children = [];
     const curr = p.createVector(0, edgeLen);
