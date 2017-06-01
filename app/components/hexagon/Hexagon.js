@@ -28,6 +28,7 @@ export default class Hexagon {
 
   draw() {
     // if this is leaf
+    if (this.children.length === 0) {
       p.push();
       p.translate(this.centerPos.x, this.centerPos.y);
       p.beginShape();
@@ -39,7 +40,6 @@ export default class Hexagon {
       });
       p.endShape(p.CLOSE);
       p.pop();
-    if (this.children.length === 0) {
       return;
     }
 

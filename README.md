@@ -1,6 +1,9 @@
-# Spaceship friends
+# Recursive Hexagons
 
-Bunch of points on a circle perimeter. Each point has a friend type. Friends of similar types seek each other out. They coast at similar velocities, forming spaceship things. 
+Hexagons made out of hexagons
+![hexagons tesselations](http://i.imgur.com/paWQIxO.png)
+
+![hexagons tesselations](http://i.imgur.com/gq3CzJi.png)
 
 ## Development 
 ### Install

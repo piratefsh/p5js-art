@@ -2,7 +2,7 @@ import p5 from 'p5';
 import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
   let hexes;
-  const pattern = 't33336';
+  const pattern = 't3636';
   const gridX = 4;
   const gridY = 1;
   const canvasSize = 1200;
@@ -45,7 +45,8 @@ const sketch = p => {
       for (let j = 0; j < gridY; j++) {
         const x = cellSize * i;
         const y = cellSize * j;
-        const color = p.color(40, p.random(120, 180), p.random(120, 190));
+        const color = p.color(p.random(120, 180), 40, p.random(120, 190));
+        // const color = p.color(40, p.random(120, 180), p.random(120, 190));
         p.fill(color);
         p.stroke(0, 0, 0, 0);
         p.rect(x, y, x + cellSize, y + cellSize);
