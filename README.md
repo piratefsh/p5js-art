@@ -3,7 +3,7 @@
 Hexagons made out of hexagons
 ![hexagons tesselations](http://i.imgur.com/paWQIxO.png)
 
-![hexagons tesselations](http://i.imgur.com/gq3CzJi.png)
+![hexagons tesselations](http://i.imgur.com/SxzgN2e.png)
 
 ## Development 
 ### Install
