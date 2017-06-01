@@ -3,11 +3,13 @@ import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
   let hexes;
   const pattern = 't33336';
-  const grid = 3;
-  const canvasSize = 800;
-  const cellSize = canvasSize / grid;
+  const gridX = 4;
+  const gridY = 1;
+  const canvasSize = 1200;
+  const cellSize = Math.ceil(canvasSize / gridX);
+  const len = cellSize / 2 - 20;
   p.setup = () => {
-    p.createCanvas(canvasSize, canvasSize);
+    p.createCanvas(canvasSize, canvasSize/gridX * gridY);
     p.reset();
     p.noLoop();
     p.frameRate(60);
@@ -16,10 +18,10 @@ const sketch = p => {
   p.reset = () => {
     hexes = [];
 
-    for (let i = 0; i < grid; i++) {
-      for (let j = 0; j < grid; j++) {
+    for (let i = 0; i < gridX; i++) {
+      for (let j = 0; j < gridY; j++) {
         const center = p.createVector(cellSize / 2 + cellSize * i, cellSize / 2 + cellSize * j);
-        const hex = new Hexagon(pattern, center, cellSize / 2 - 20);
+        const hex = new Hexagon(pattern, center, len, 0, hexes.length);
         hexes.push(hex);
       }
     }
@@ -39,8 +41,8 @@ const sketch = p => {
 
   p.draw = () => {
     p.background(0)
-    for (let i = 0; i < grid; i++) {
-      for (let j = 0; j < grid; j++) {
+    for (let i = 0; i < gridX; i++) {
+      for (let j = 0; j < gridY; j++) {
         const x = cellSize * i;
         const y = cellSize * j;
         const color = p.color(40, p.random(120, 180), p.random(120, 190));

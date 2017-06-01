@@ -1,9 +1,10 @@
 import { p } from 'P5Instance';
 import Util from 'components/utils/Utils';
 export default class Hexagon {
-  constructor(pattern, centerPos, edgeLen, minLen = 3) {
+  constructor(pattern, centerPos, edgeLen, depth, maxDepth = Infinity) {
+    this.depth = depth;
     this.pattern = pattern;
-    this.minLen = minLen;
+    this.maxDepth = maxDepth;
     this.id = Hexagon.ID++;
     this.vertices = [];
     this.edgeLen = edgeLen;
@@ -18,27 +19,27 @@ export default class Hexagon {
   }
 
   update() {
-    if (this.edgeLen <= this.minLen || Hexagon.randomise(this.opacity)) {
+    if (this.depth >= this.maxDepth) {
       return;
     }
-    this.children = Hexagon[this.pattern](this.pattern, this.edgeLen, this.centerPos, this.minLen);
+    this.children = Hexagon[this.pattern](this.pattern, this.edgeLen, this.centerPos, this.depth + 1, this.maxDepth);
     this.children.forEach(ch => ch.update());
   }
 
   draw() {
     // if this is leaf
-    if (this.children.length === 0) {
       p.push();
       p.translate(this.centerPos.x, this.centerPos.y);
       p.beginShape();
       p.stroke(255, 255, 255, this.opacity + 10);
-      p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
+      // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
       p.fill(255, 255, 255, this.opacity);
       this.vertices.forEach((v) => {
         p.vertex(v.x, v.y);
       });
       p.endShape(p.CLOSE);
       p.pop();
+    if (this.children.length === 0) {
       return;
     }
 
@@ -50,10 +51,10 @@ export default class Hexagon {
   }
 }
 
-Hexagon.t3636 = (pattern, parentEdgeLen, centerPos, minLen) => {
+Hexagon.t3636 = (pattern, parentEdgeLen, centerPos, depth, maxDepth) => {
   const children = [];
-  const childLen = parentEdgeLen / 3;
-  const center = new Hexagon(pattern, centerPos, childLen, minLen);
+  const childLen = Math.trunc(parentEdgeLen / 3);
+  const center = new Hexagon(pattern, centerPos, childLen, depth, maxDepth);
   children.push(center);
 
   // draw surrounding hexagons
@@ -61,18 +62,18 @@ Hexagon.t3636 = (pattern, parentEdgeLen, centerPos, minLen) => {
     const currCenter = p.createVector(0, childLen * 2)
         .rotate(Hexagon.ANGLE * i)
         .add(centerPos);
-    const hex = new Hexagon(pattern, currCenter, childLen, minLen);
+    const hex = new Hexagon(pattern, currCenter, childLen, depth, maxDepth);
     children.push(hex);
   }
 
   return children;
 };
 
-Hexagon.t33336 = (pattern, parentEdgeLen, centerPos, minLen) => {
+Hexagon.t33336 = (pattern, parentEdgeLen, centerPos, depth, maxDepth) => {
   const children = [];
   const childLen = parentEdgeLen / 3;
   const radius = Util.trigHeight(childLen / 2, childLen);
-  const center = new Hexagon(pattern, centerPos, childLen, minLen);
+  const center = new Hexagon(pattern, centerPos, childLen, depth, maxDepth);
   children.push(center);
 
   // draw surrounding hexagons
@@ -80,7 +81,7 @@ Hexagon.t33336 = (pattern, parentEdgeLen, centerPos, minLen) => {
     const currCenter = p.createVector(0, radius * 2)
         .rotate(Hexagon.ANGLE * i + Hexagon.ANGLE / 2)
         .add(centerPos);
-    const hex = new Hexagon(pattern, currCenter, childLen, minLen);
+    const hex = new Hexagon(pattern, currCenter, childLen, depth, maxDepth);
     children.push(hex);
   }
 
