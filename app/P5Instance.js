@@ -1,13 +1,14 @@
 import p5 from 'p5';
 import Hexagon from 'components/hexagon/Hexagon';
+import Patterns from 'components/hexagon/Patterns';
 const sketch = p => {
   let hexes;
-  const pattern = 't666';
+  const patternFunc = Patterns.t666;
   const gridX = 1;
   const gridY = 1;
   const canvasSize = 600;
   const cellSize = Math.ceil(canvasSize / gridX);
-  const len = cellSize / 2;
+  const edgeLen = cellSize / 2;
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize/gridX * gridY);
     p.reset();
@@ -17,11 +18,18 @@ const sketch = p => {
 
   p.reset = () => {
     hexes = [];
+    const depth = 0;
+    const maxDepth = 3;
 
     for (let i = 0; i < gridX; i++) {
       for (let j = 0; j < gridY; j++) {
-        const center = p.createVector(cellSize / 2 + cellSize * i, cellSize / 2 + cellSize * j);
-        const hex = new Hexagon(pattern, center, len, 0, 1);
+        const centerPos = p.createVector(cellSize / 2 + cellSize * i, cellSize / 2 + cellSize * j);
+        const hex = new Hexagon({
+          patternFunc,
+          centerPos,
+          edgeLen,
+          depth,
+          maxDepth});
         hexes.push(hex);
       }
     }
