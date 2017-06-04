@@ -22,12 +22,15 @@ export default class Shape {
     p.push();
     p.translate(this.centerPos.x, this.centerPos.y);
     p.beginShape();
-    p.stroke(255, 255, 255, this.opacity + 10);
-    p.strokeWeight(2);
-    p.text(this.id, 0,0)
     // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
     p.fill(255, p.random(100,255), 255, this.opacity);
-    p.ellipse(this.vertices[0].x, this.vertices[0].y, 5, 5)
+
+    if(Shape.DEBUG){
+      p.text(this.id, 0,0)
+      p.stroke(255, 255, 255, this.opacity + 10);
+      p.strokeWeight(2);
+      p.ellipse(this.vertices[0].x, this.vertices[0].y, 5, 5)
+    }
     this.vertices.forEach((v) => {
       p.vertex(v.x, v.y);
     });
@@ -37,3 +40,4 @@ export default class Shape {
 }
 
 Shape.ID = 0;
+Shape.DEBUG = false;
