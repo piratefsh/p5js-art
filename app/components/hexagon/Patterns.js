@@ -22,20 +22,15 @@ Patterns.t3636 = (patternFunc, parentEdgeLen, centerPos, depth, maxDepth) => {
   return children;
 };
 
-Patterns.t666 = ({ patternFunc, edgeLen, centerPos, depth, maxDepth }) => {
+Patterns.t666 = (options) => {
   const children = [];
-  const childLen = edgeLen / 3;
+  const childLen = options.edgeLen / 3;
   const radius = Util.trigHeight(childLen / 2, childLen);
-  const childOpts = {
-    edgeLen: childLen,
-    patternFunc,
-    centerPos,
-    depth,
-    maxDepth,
-  };
+  const childOpts = Object.assign(options, { edgeLen: childLen });
 
-  const center = new Hexagon(childOpts);
-  children.push(center);
+  const centerPos = options.centerPos;
+  const centerHex = new Hexagon(childOpts);
+  children.push(centerHex);
 
   // draw surrounding hexagons
   for (let i = 0; i < 6; i++) {

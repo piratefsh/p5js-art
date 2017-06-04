@@ -15,6 +15,10 @@ const Util = {
 
   trigHeight(width, hypotenuse){
     return Math.sqrt((hypotenuse * hypotenuse) - (width * width))
+  },
+
+  randomise(opacity){
+    return p.random(0, 2) < 0.4;
   }
 };
 
