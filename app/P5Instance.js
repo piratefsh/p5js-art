@@ -19,7 +19,7 @@ const sketch = p => {
   p.reset = () => {
     hexes = [];
     const depth = 0;
-    const maxDepth = 3;
+    const maxDepth = 2;
 
     for (let i = 0; i < gridX; i++) {
       for (let j = 0; j < gridY; j++) {

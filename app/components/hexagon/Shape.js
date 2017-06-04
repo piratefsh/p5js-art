@@ -1,7 +1,7 @@
 import { p } from 'P5Instance';
-
+import Util from 'components/utils/Utils';
 export default class Shape {
-  constructor({sides, centerPos, edgeLen}) {
+  constructor({sides, centerPos, edgeLen, rotation=0}) {
     this.id = Shape.ID++;
 
     this.sides = sides;
@@ -11,10 +11,10 @@ export default class Shape {
     this.opacity = 80;
     this.centerPos = p.createVector(centerPos.x, centerPos.y);
 
-    const curr = p.createVector(0, edgeLen);
-    for (let i = 0; i < 6; i++) {
+    const curr = p.createVector(0, Util.trigHeight(edgeLen / 2, edgeLen));
+    for (let i = 0; i < sides; i++) {
       curr.rotate(Math.PI * 2 / sides);
-      this.vertices.push(curr.copy());
+      this.vertices.push(curr.copy().rotate(rotation));
     }
   }
 
@@ -23,8 +23,9 @@ export default class Shape {
     p.translate(this.centerPos.x, this.centerPos.y);
     p.beginShape();
     p.stroke(255, 255, 255, this.opacity + 10);
-    p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
-    p.fill(255, 255, 255, this.opacity);
+    p.strokeWeight(2);
+    // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
+    p.fill(255, p.random(100,255), 255, this.opacity);
     this.vertices.forEach((v) => {
       p.vertex(v.x, v.y);
     });

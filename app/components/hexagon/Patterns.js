@@ -52,19 +52,23 @@ Patterns.t33336 = (options) => {
   const radius = Util.trigHeight(childLen / 2, childLen);
   const centerPos = options.centerPos;
 
-  const childOpts = Object.assign(options, {edgeLen: childLen});
+  const childOpts = Object.assign(options, { edgeLen: childLen });
   const centerHex = new Hexagon(childOpts);
   children.push(centerHex);
 
   // draw surrounding hexagons
   for (let i = 0; i < 6; i++) {
     const currCenter = p.createVector(0, radius * 2)
-        .rotate((Hexagon.ANGLE * i) + Hexagon.ANGLE / 2)
+        .rotate((Hexagon.ANGLE * i - Hexagon.ANGLE))
         .add(centerPos);
-    const tri = new Triangle(Object.assign(childOpts, {centerPos: currCenter}));
+    const tri = new Triangle(Object.assign(childOpts, {
+      centerPos: currCenter,
+      rotation: Hexagon.ANGLE*i,
+      depth: 0,
+      maxDepth: 0
+    }));
     children.push(tri);
   }
-
   return children;
 };
 
