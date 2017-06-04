@@ -2,10 +2,10 @@ import p5 from 'p5';
 import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
   let hexes;
-  const pattern = 't33336';
-  const gridX = 4;
+  const pattern = 't666';
+  const gridX = 1;
   const gridY = 1;
-  const canvasSize = 1200;
+  const canvasSize = 600;
   const cellSize = Math.ceil(canvasSize / gridX);
   const len = cellSize / 2;
   p.setup = () => {
@@ -21,7 +21,7 @@ const sketch = p => {
     for (let i = 0; i < gridX; i++) {
       for (let j = 0; j < gridY; j++) {
         const center = p.createVector(cellSize / 2 + cellSize * i, cellSize / 2 + cellSize * j);
-        const hex = new Hexagon(pattern, center, len, 0, 4);
+        const hex = new Hexagon(pattern, center, len, 0, 1);
         hexes.push(hex);
       }
     }

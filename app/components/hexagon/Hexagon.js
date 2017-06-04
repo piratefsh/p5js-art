@@ -19,7 +19,7 @@ export default class Hexagon {
   }
 
   update() {
-    if (this.depth >= this.maxDepth || Hexagon.randomise()) {
+    if (this.depth >= this.maxDepth) {
       return;
     }
     this.children = Hexagon[this.pattern](this.pattern, this.edgeLen, this.centerPos, this.depth + 1, this.maxDepth);
@@ -69,7 +69,7 @@ Hexagon.t3636 = (pattern, parentEdgeLen, centerPos, depth, maxDepth) => {
   return children;
 };
 
-Hexagon.t33336 = (pattern, parentEdgeLen, centerPos, depth, maxDepth) => {
+Hexagon.t666 = (pattern, parentEdgeLen, centerPos, depth, maxDepth) => {
   const children = [];
   const childLen = parentEdgeLen / 3;
   const radius = Util.trigHeight(childLen / 2, childLen);
