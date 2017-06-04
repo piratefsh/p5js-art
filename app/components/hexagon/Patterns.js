@@ -54,7 +54,7 @@ Patterns.t33336 = (options) => {
   const centerPos = options.centerPos;
 
   const childOpts = Object.assign(options, { edgeLen: options.edgeLen / 2 });
-  const centerHex = new Hexagon(Object.assign(childOpts, { maxDepth: (Util.randomise() ? options.depth-1 : options.maxDepth)}));
+  const centerHex = new Hexagon(childOpts);
   children.push(centerHex);
 
   const triRadius = Util.rotationRadius(childLen, 3);

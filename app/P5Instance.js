@@ -6,8 +6,8 @@ const sketch = p => {
   let hexes;
   let tile = true;
   const patternFunc = Patterns.t33336;
-  const gridX = 3;
-  const gridY = 3;
+  const gridX = 2;
+  const gridY = 2;
   const canvasSize = 600;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
@@ -21,7 +21,7 @@ const sketch = p => {
   p.reset = () => {
     hexes = [];
     const depth = 0;
-    const maxDepth = 3;
+    const maxDepth = 2;
 
     if(!tile){
       for (let i = 0; i < gridX; i++) {
@@ -59,14 +59,14 @@ const sketch = p => {
   };
 
   p.draw = () => {
-    p.background(0);
-    const color = p.color(p.random(120, 180), 50, p.random(100, 200));
-    // const color = p.color(40, p.random(120, 180), p.random(120, 190));
+    p.background(200);
+    // const color = p.color(p.random(120, 180), 50, p.random(100, 200));
+    const color = p.color(40, p.random(120, 180), p.random(120, 190));
     for (let i = 0; i < gridX; i++) {
       for (let j = 0; j < gridY; j++) {
         const x = cellSize * i;
         const y = cellSize * j;
-        p.fill(color);
+        // p.fill(color);
         p.stroke(0, 0, 0, 0);
         p.rect(x, y, x + cellSize, y + cellSize);
       }
