@@ -3,7 +3,7 @@ import Hexagon from 'components/hexagon/Hexagon';
 import Patterns from 'components/hexagon/Patterns';
 const sketch = p => {
   let hexes;
-  const patternFunc = Patterns.t666;
+  const patternFunc = Patterns.t33336;
   const gridX = 1;
   const gridY = 1;
   const canvasSize = 600;
