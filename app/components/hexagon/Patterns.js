@@ -59,13 +59,14 @@ Patterns.t33336 = (options) => {
   const triRadius = Util.rotationRadius(childLen, 3)
   // draw surrounding hexagons
   for (let i = 0; i < 6; i++) {
-    const currCenter = p.createVector(0, centerHex.radius + triRadius)
+    const currCenter = p.createVector(0, centerHex.radius)
         .rotate((Hexagon.ANGLE * i - Hexagon.ANGLE))
-        .add(centerPos);
-    for(let j = 0; j < 1; j++){
+    const c = p.createVector(0, triRadius).add(currCenter).add(centerPos);
+    for(let j = 0; j < 4; j++){
+      const r = Math.PI/3 * j + Math.PI/3 * 3.5 + Math.PI/3*i;
       const tri = new Triangle(Object.assign(childOpts, {
-        centerPos: p.createVector(0, 0).rotate(0).add(currCenter),
-        rotation: Hexagon.ANGLE*i,
+        centerPos: p.createVector(0, triRadius).rotate(r).add(currCenter).add(centerPos),
+        rotation: Math.PI/3 + r,
         edgeLen: childLen,
         depth: 0,
         maxDepth: 0

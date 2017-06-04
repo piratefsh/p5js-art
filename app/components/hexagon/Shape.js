@@ -27,6 +27,7 @@ export default class Shape {
     p.text(this.id, 0,0)
     // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
     p.fill(255, p.random(100,255), 255, this.opacity);
+    p.ellipse(this.vertices[0].x, this.vertices[0].y, 5, 5)
     this.vertices.forEach((v) => {
       p.vertex(v.x, v.y);
     });
