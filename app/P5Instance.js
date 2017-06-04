@@ -4,7 +4,7 @@ import Patterns from 'components/hexagon/Patterns';
 import Util from 'components/utils/Utils';
 const sketch = p => {
   let hexes;
-  const patternFunc = Patterns.t33336;
+  const patternFunc = Patterns.t666;
   const gridX = 2;
   const gridY = 2;
   const canvasSize = 600;
@@ -20,7 +20,7 @@ const sketch = p => {
   p.reset = () => {
     hexes = [];
     const depth = 0;
-    const maxDepth = 3;
+    const maxDepth = 2;
 
     // for (let i = 0; i < gridX; i++) {
     //   for (let j = 0; j < gridY; j++) {

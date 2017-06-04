@@ -23,7 +23,7 @@ export default class Shape {
     p.translate(this.centerPos.x, this.centerPos.y);
     p.beginShape();
     // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
-    p.fill(255, p.random(100,255), 255, this.opacity);
+    p.fill(255, p.map(p.noise(this.centerPos.x, this.centerPos.y), 0, 1, 10, 90));
 
     if(Shape.DEBUG){
       p.text(this.id, 0,0)

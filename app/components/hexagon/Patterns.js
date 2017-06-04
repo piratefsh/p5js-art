@@ -35,7 +35,7 @@ Patterns.t666 = (options) => {
 
   // draw surrounding hexagons
   for (let i = 0; i < 6; i++) {
-    const currCenter = p.createVector(0, radius * 2)
+    const currCenter = p.createVector(0, childLen)
         .rotate(Hexagon.ANGLE * i + Hexagon.ANGLE / 2)
         .add(centerPos);
     const opts = Object.assign(childOpts, { centerPos: currCenter });
@@ -49,7 +49,6 @@ Patterns.t666 = (options) => {
 Patterns.t33336 = (options) => {
   const children = [];
   const childLen = options.edgeLen / 6;
-  const radius = Util.trigHeight(childLen / 2, childLen);
   const centerPos = options.centerPos;
 
   const childOpts = Object.assign(options, { edgeLen: options.edgeLen/2 });
