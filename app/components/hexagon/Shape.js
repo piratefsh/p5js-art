@@ -26,8 +26,8 @@ export default class Shape {
     p.fill(255, p.map(p.noise(this.centerPos.x, this.centerPos.y), 0, 1, 10, 90));
 
     if(Shape.DEBUG){
+    p.stroke(255, 255, 255, 20);
       p.text(this.id, 0,0)
-      p.stroke(255, 255, 255, this.opacity + 10);
       p.strokeWeight(2);
       p.ellipse(this.vertices[0].x, this.vertices[0].y, 5, 5)
     }

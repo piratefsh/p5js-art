@@ -26,9 +26,9 @@ export default class RecursiveShape extends Shape {
   }
 
   draw() {
-      super.draw();
     // if this is leaf
     if (this.children.length === 0) {
+      super.draw();
       return;
     }
 
