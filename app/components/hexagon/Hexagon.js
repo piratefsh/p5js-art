@@ -19,7 +19,7 @@ export default class Hexagon {
   }
 
   update() {
-    if (this.depth >= this.maxDepth) {
+    if (this.depth >= this.maxDepth || Hexagon.randomise()) {
       return;
     }
     this.children = Hexagon[this.pattern](this.pattern, this.edgeLen, this.centerPos, this.depth + 1, this.maxDepth);
@@ -33,7 +33,7 @@ export default class Hexagon {
       p.translate(this.centerPos.x, this.centerPos.y);
       p.beginShape();
       p.stroke(255, 255, 255, this.opacity + 10);
-      // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
+      p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
       p.fill(255, 255, 255, this.opacity);
       this.vertices.forEach((v) => {
         p.vertex(v.x, v.y);

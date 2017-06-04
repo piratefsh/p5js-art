@@ -2,12 +2,12 @@ import p5 from 'p5';
 import Hexagon from 'components/hexagon/Hexagon';
 const sketch = p => {
   let hexes;
-  const pattern = 't3636';
+  const pattern = 't33336';
   const gridX = 4;
   const gridY = 1;
   const canvasSize = 1200;
   const cellSize = Math.ceil(canvasSize / gridX);
-  const len = cellSize / 2 - 20;
+  const len = cellSize / 2;
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize/gridX * gridY);
     p.reset();
@@ -21,7 +21,7 @@ const sketch = p => {
     for (let i = 0; i < gridX; i++) {
       for (let j = 0; j < gridY; j++) {
         const center = p.createVector(cellSize / 2 + cellSize * i, cellSize / 2 + cellSize * j);
-        const hex = new Hexagon(pattern, center, len, 0, hexes.length);
+        const hex = new Hexagon(pattern, center, len, 0, 4);
         hexes.push(hex);
       }
     }
@@ -45,8 +45,8 @@ const sketch = p => {
       for (let j = 0; j < gridY; j++) {
         const x = cellSize * i;
         const y = cellSize * j;
-        const color = p.color(p.random(120, 180), 40, p.random(120, 190));
-        // const color = p.color(40, p.random(120, 180), p.random(120, 190));
+        // const color = p.color(p.random(120, 180), 40, p.random(120, 190));
+        const color = p.color(40, p.random(120, 180), p.random(120, 190));
         p.fill(color);
         p.stroke(0, 0, 0, 0);
         p.rect(x, y, x + cellSize, y + cellSize);
