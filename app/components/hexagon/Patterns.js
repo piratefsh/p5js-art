@@ -48,26 +48,30 @@ Patterns.t666 = (options) => {
 
 Patterns.t33336 = (options) => {
   const children = [];
-  const childLen = options.edgeLen / 3;
+  const childLen = options.edgeLen / 6;
   const radius = Util.trigHeight(childLen / 2, childLen);
   const centerPos = options.centerPos;
 
-  const childOpts = Object.assign(options, { edgeLen: childLen });
+  const childOpts = Object.assign(options, { edgeLen: options.edgeLen/2 });
   const centerHex = new Hexagon(childOpts);
   children.push(centerHex);
 
+  const triRadius = Util.rotationRadius(childLen, 3)
   // draw surrounding hexagons
   for (let i = 0; i < 6; i++) {
-    const currCenter = p.createVector(0, radius * 2)
+    const currCenter = p.createVector(0, centerHex.radius + triRadius)
         .rotate((Hexagon.ANGLE * i - Hexagon.ANGLE))
         .add(centerPos);
-    const tri = new Triangle(Object.assign(childOpts, {
-      centerPos: currCenter,
-      rotation: Hexagon.ANGLE*i,
-      depth: 0,
-      maxDepth: 0
-    }));
-    children.push(tri);
+    for(let j = 0; j < 1; j++){
+      const tri = new Triangle(Object.assign(childOpts, {
+        centerPos: p.createVector(0, 0).rotate(0).add(currCenter),
+        rotation: Hexagon.ANGLE*i,
+        edgeLen: childLen,
+        depth: 0,
+        maxDepth: 0
+      }));
+      children.push(tri);
+    }
   }
   return children;
 };

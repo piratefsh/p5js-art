@@ -19,6 +19,12 @@ const Util = {
 
   randomise(opacity){
     return p.random(0, 2) < 0.4;
+  },
+
+  // given len of edge, what radius to rotate at to draw shape? 
+  rotationRadius(edgeLen, sides){
+    const angle = Math.PI * 2 / sides;
+    return edgeLen/Math.sin(angle) * Math.sin((p.TWO_PI - angle) / 2)
   }
 };
 

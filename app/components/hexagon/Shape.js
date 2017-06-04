@@ -10,8 +10,8 @@ export default class Shape {
 
     this.opacity = 80;
     this.centerPos = p.createVector(centerPos.x, centerPos.y);
-
-    const curr = p.createVector(0, Util.trigHeight(edgeLen / 2, edgeLen));
+    this.radius = Util.rotationRadius(edgeLen, sides);
+    const curr = p.createVector(0, this.radius);
     for (let i = 0; i < sides; i++) {
       curr.rotate(Math.PI * 2 / sides);
       this.vertices.push(curr.copy().rotate(rotation));
@@ -24,6 +24,7 @@ export default class Shape {
     p.beginShape();
     p.stroke(255, 255, 255, this.opacity + 10);
     p.strokeWeight(2);
+    p.text(this.id, 0,0)
     // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
     p.fill(255, p.random(100,255), 255, this.opacity);
     this.vertices.forEach((v) => {
