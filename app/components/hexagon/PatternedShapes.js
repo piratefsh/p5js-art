@@ -29,18 +29,22 @@ class PatternedShape extends Shape {
   }
 
   draw() {
-    // super.draw();
+    super.draw();
     p.push();
     p.translate(this.centerPos.x, this.centerPos.y);
     p.rotate(this.rotation);
-    p.fill(0, 0);
+    p.fill(255);
     this.curves.forEach((c) => {
       // p.stroke('red');
       // p.strokeWeight(0);
-      // p.line(c[0], c[1], c[2], c[3])
-      // p.line(c[4], c[5], c[6], c[7])
       p.stroke('teal');
-      p.strokeWeight(2);
+      p.strokeWeight(3);
+      // p.beginShape()
+      // p.vertex(c[0], c[1])
+      // p.vertex(c[2], c[3])
+      // p.vertex(c[4], c[5])
+      // p.vertex(c[6], c[7])
+      // p.endShape(p.CLOSE)
       p.bezier(...c);
     });
     p.pop();

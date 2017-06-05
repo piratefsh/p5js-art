@@ -6,8 +6,8 @@ const sketch = p => {
   let hexes;
   const tile = true;
   const patternFunc = Patterns.t33336;
-  const gridX = 3;
-  const gridY = 3;
+  const gridX = 2;
+  const gridY = 2;
   const canvasSize = 600;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
