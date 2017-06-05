@@ -33,6 +33,10 @@ const Util = {
     v.x += p.map(p.noise(v.x + Util.x++), 0, 1, -2, 2)
     v.y += p.map(p.noise(v.y + Util.x++), 0, 1, -2, 2)
     return v
+  },
+
+  midpoint(a, b) {
+    return p.createVector((a.x+b.x)/2, (a.y+b.y)/2)
   }
 };
 

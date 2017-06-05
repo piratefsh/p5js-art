@@ -7,7 +7,7 @@ export default class Shape {
     this.sides = sides;
     this.vertices = [];
     this.edgeLen = edgeLen;
-
+    this.rotation = rotation;
     this.opacity = 80;
     this.centerPos = p.createVector(centerPos.x, centerPos.y);
     this.radius = Util.rotationRadius(edgeLen, sides);
@@ -18,12 +18,16 @@ export default class Shape {
     }
   }
 
+  update(){
+
+  }
+
   draw() {
     p.push();
     p.translate(this.centerPos.x, this.centerPos.y);
     // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
     // p.fill(255, p.map(p.noise(this.centerPos.x, this.centerPos.y), 0, 1, 10, 90));
-    p.stroke(22, 100);
+    p.stroke(22, 60);
 
     if(Shape.DEBUG){
       p.text(this.id, 0,0)

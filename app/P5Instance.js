@@ -1,13 +1,13 @@
 import p5 from 'p5';
-import Hexagon from 'components/hexagon/Hexagon';
+import PatternedShapes from 'components/hexagon/PatternedShapes';
 import Patterns from 'components/hexagon/Patterns';
 import Util from 'components/utils/Utils';
 const sketch = p => {
   let hexes;
-  let tile = true;
+  const tile = true;
   const patternFunc = Patterns.t33336;
-  const gridX = 2;
-  const gridY = 2;
+  const gridX = 3;
+  const gridY = 3;
   const canvasSize = 600;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
@@ -21,9 +21,9 @@ const sketch = p => {
   p.reset = () => {
     hexes = [];
     const depth = 0;
-    const maxDepth = 2;
+    const maxDepth = 0;
 
-    if(!tile){
+    if (!tile) {
       for (let i = 0; i < gridX; i++) {
         for (let j = 0; j < gridY; j++) {
           const centerPos = p.createVector(cellSize / 2 + cellSize * i, cellSize / 2 + cellSize * j);
@@ -32,21 +32,21 @@ const sketch = p => {
             centerPos,
             edgeLen,
             depth,
-            maxDepth});
+            maxDepth });
           hexes.push(hex);
         }
       }
     }
-    else{
+    else {
       const center = p.createVector(0, 0);
-      const rad = Util.trigHeight(edgeLen/2, edgeLen);
+      const rad = Util.trigHeight(edgeLen / 2, edgeLen);
       for (let i = 0; i < p.width / edgeLen + 2; i++) {
-        const offset = i % 2 == 1 ? edgeLen/2 : 0;
-        for (let j = 0; j < p.height / edgeLen + 1; j++) {
+        const offset = i % 2 == 1 ? edgeLen / 2 : 0;
+        for (let j = 0; j < p.height / edgeLen + 2; j++) {
           const centerPos = center.copy();
-          centerPos.x += (edgeLen  * j + offset);
+          centerPos.x += (edgeLen * j + offset);
           centerPos.y += (rad * i);
-          const hex = new Hexagon({
+          const hex = new PatternedShapes.PatternedHexagon({
             patternFunc,
             centerPos,
             edgeLen,
