@@ -1,11 +1,14 @@
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
+import Radial from 'components/Radial';
+
 const sketch = p => {
+  let radial;
   const gridX = 1;
   const gridY = 1;
   const canvasSize = 600;
   const cellSize = Math.ceil(canvasSize / gridX);
-  const edgeLen = cellSize / 2;
+
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
@@ -14,10 +17,14 @@ const sketch = p => {
   };
 
   p.reset = () => {
+    radial = new Radial({
+      color: p.color(229, 240, 108),
+    })
   };
 
   p.draw = () => {
-    p.background(200);
+    p.background(4, 165, 201);
+    radial.draw();
   };
 
   p.keyPressed = () => {
