@@ -1,29 +1,30 @@
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
-import Radial from 'components/Radial';
+import RadialDrawer from 'components/RadialDrawer';
 
 const sketch = p => {
   let radial;
   const gridX = 1;
   const gridY = 1;
-  const canvasSize = 600;
+  const canvasSize = 800;
   const cellSize = Math.ceil(canvasSize / gridX);
 
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
-    p.noLoop();
+    // p.noLoop();
     p.frameRate(60);
   };
 
   p.reset = () => {
-    radial = new Radial({
-      color: p.color(229, 240, 108),
+    p.background(4, 165, 201);
+    radial = new RadialDrawer({
+      color: p.color(229, 240, 108, 80),
     })
   };
 
   p.draw = () => {
-    p.background(4, 165, 201);
+    radial.update();
     radial.draw();
   };
 
