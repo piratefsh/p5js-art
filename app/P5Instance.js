@@ -4,7 +4,7 @@ import RadialDrawer from 'components/RadialDrawer';
 
 const sketch = p => {
   let radial;
-  const gridX = 1;
+  const gridX = 2;
   const gridY = 1;
   const canvasSize = 800;
   const cellSize = Math.ceil(canvasSize / gridX);
@@ -17,9 +17,9 @@ const sketch = p => {
   };
 
   p.reset = () => {
-    p.background(4, 165, 201);
+    p.background(138, 1, 196);
     radial = new RadialDrawer({
-      color: p.color(229, 240, 108, 80),
+      color: p.color(188, 244, 66, 80),
     })
   };
 
