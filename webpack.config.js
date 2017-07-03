@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public/base'),
+        path: path.resolve(__dirname, 'public/radial'),
         publicPath: '',
         filename: 'bundle.js'
     },
