@@ -6,9 +6,9 @@ const sketch = p => {
   let hexes;
   let tile = true;
   const patternFunc = Patterns.t33336;
-  const gridX = 3;
-  const gridY = 3;
-  const canvasSize = 600;
+  const gridX = 5;
+  const gridY = 5;
+  const canvasSize = window.innerWidth;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   p.setup = () => {
@@ -60,8 +60,8 @@ const sketch = p => {
 
   p.draw = () => {
     p.background(0);
-    const color = p.color(p.random(120, 180), 50, p.random(100, 200));
-    // const color = p.color(40, p.random(120, 180), p.random(120, 190));
+    // const color = p.color(p.random(120, 180), 50, p.random(100, 200));
+    const color = p.color(40, p.random(120, 180), p.random(120, 190));
     for (let i = 0; i < gridX; i++) {
       for (let j = 0; j < gridY; j++) {
         const x = cellSize * i;
