@@ -5,23 +5,23 @@ import Util from 'components/utils/Utils';
 const sketch = p => {
   let hexes;
   let tile = true;
+  let maxDepth = 0;
   const patternFunc = Patterns.t33336;
-  const gridX = 5;
-  const gridY = 5;
+  const gridX = 3;
+  const gridY = 3;
   const canvasSize = window.innerWidth;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
-    p.noLoop();
-    p.frameRate(60);
+    // p.noLoop();
+    p.frameRate(0.8);
   };
 
   p.reset = () => {
     hexes = [];
     const depth = 0;
-    const maxDepth = 3;
 
     if(!tile){
       for (let i = 0; i < gridX; i++) {
@@ -59,6 +59,7 @@ const sketch = p => {
   };
 
   p.draw = () => {
+    
     p.background(0);
     // const color = p.color(p.random(120, 180), 50, p.random(100, 200));
     const color = p.color(40, p.random(120, 180), p.random(120, 190));
@@ -75,6 +76,11 @@ const sketch = p => {
       hex.update();
       hex.draw();
     });
+    maxDepth++;
+    if(maxDepth > 4){
+      maxDepth = 0;
+    }
+    p.reset();
   };
 
   p.keyPressed = () => {

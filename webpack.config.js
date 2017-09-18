@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public/base/frosted-hex'),
+        path: path.resolve(__dirname, 'public/frosted-hex'),
         publicPath: '',
         filename: 'bundle.js'
     },
