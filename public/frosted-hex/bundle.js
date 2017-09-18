@@ -105,23 +105,23 @@
 	var sketch = function sketch(p) {
 	  var hexes = undefined;
 	  var tile = true;
+	  var maxDepth = 0;
 	  var patternFunc = _componentsHexagonPatterns2['default'].t33336;
 	  var gridX = 3;
 	  var gridY = 3;
-	  var canvasSize = 600;
+	  var canvasSize = window.innerWidth;
 	  var cellSize = Math.ceil(canvasSize / gridX);
 	  var edgeLen = cellSize / 2;
 	  p.setup = function () {
 	    p.createCanvas(canvasSize, canvasSize / gridX * gridY);
 	    p.reset();
-	    p.noLoop();
-	    p.frameRate(60);
+	    // p.noLoop();
+	    p.frameRate(0.8);
 	  };
 
 	  p.reset = function () {
 	    hexes = [];
 	    var depth = 0;
-	    var maxDepth = 3;
 
 	    if (!tile) {
 	      for (var i = 0; i < gridX; i++) {
@@ -158,9 +158,10 @@
 	  };
 
 	  p.draw = function () {
+
 	    p.background(0);
-	    var color = p.color(p.random(120, 180), 50, p.random(100, 200));
-	    // const color = p.color(40, p.random(120, 180), p.random(120, 190));
+	    // const color = p.color(p.random(120, 180), 50, p.random(100, 200));
+	    var color = p.color(40, p.random(120, 180), p.random(120, 190));
 	    for (var i = 0; i < gridX; i++) {
 	      for (var j = 0; j < gridY; j++) {
 	        var x = cellSize * i;
@@ -174,6 +175,11 @@
 	      hex.update();
 	      hex.draw();
 	    });
+	    maxDepth++;
+	    if (maxDepth > 4) {
+	      maxDepth = 0;
+	    }
+	    p.reset();
 	  };
 
 	  p.keyPressed = function () {
@@ -32609,7 +32615,8 @@
 	      _P5Instance.p.translate(this.centerPos.x, this.centerPos.y);
 	      _P5Instance.p.beginShape();
 	      // p.strokeWeight(p.map(this.edgeLen, 5, 30, 1, 8));
-	      _P5Instance.p.fill(255, _P5Instance.p.map(_P5Instance.p.noise(this.centerPos.x, this.centerPos.y), 0, 1, 10, 90));
+	      _P5Instance.p.fill(255, _P5Instance.p.random(100, 255), 255, this.opacity);
+	      // p.fill(255, p.map(p.noise(this.centerPos.x, this.centerPos.y), 0, 1, 10, 90));
 
 	      if (Shape.DEBUG) {
 	        _P5Instance.p.stroke(255, 255, 255, 20);
