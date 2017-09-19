@@ -14,7 +14,7 @@ let currPos;
 const p5functions = {
     preload: function(){
     },
-    
+
     setup: function() {
         p5functions.reset()
         frameRate(24);
@@ -39,7 +39,7 @@ const p5functions = {
         startRadius = random(30, 90);
         pVectorArr = [];
         // for loop to save positions of circles in an array
-        
+
         // what is the angle of where 1 of the object would be placed at?
         const angle = radians(360/formResolution);
 
@@ -51,16 +51,16 @@ const p5functions = {
             const pv = createVector(tmpX,tmpY);
             pVectorArr.push(pv);
         };
-        
+
     },
 
     draw: () => {
         push();
-        
+
         // bg color
         // blendMode(BLEND);
         // background(2, 20);
-        
+
         //
         // Start Drawing
         //
@@ -80,9 +80,9 @@ const p5functions = {
             randomness[i] = pVectorArr[i].copy();
             randomness[i].add(createVector(random(-randRange, randRange), random(-randRange, randRange)));
         }
-        
+
         // include '9' so we can draw '0' > '1'
-        const pLast = randomness[pVectorArr.length-1]; 
+        const pLast = randomness[pVectorArr.length-1];
         curveVertex(pLast.x , pLast.y); // draw
 
         for (let i=0; i < formResolution; i++){
@@ -92,7 +92,7 @@ const p5functions = {
             // connect a line through the dots
             curveVertex(p.x,p.y);
         };
-        
+
 
         // include '0' so we can draw '8' > '9'
         curveVertex( randomness[0].x , randomness[0].y ); // draw
@@ -110,9 +110,9 @@ const p5functions = {
         }
 
 
-        fill(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity), opacity)
-        stroke(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity), opacity)
-        
+        // fill(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity), opacity)
+        // stroke(minColor, random(minColor,colorIntensity), random(minColor,colorIntensity), opacity)
+
         //fill(255,255,100,100);
         endShape();
 

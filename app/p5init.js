@@ -1,5 +1,5 @@
 import p5Src from 'file!p5';
-import p5Sound from 'file!p5/lib/p5.sound';
+import p5Sound from 'file!p5/lib/addons/p5.sound';
 
 export default function init() {
     addScript(p5Src).onload = function(){
