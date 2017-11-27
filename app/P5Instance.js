@@ -1,23 +1,30 @@
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
+import Sparkle from './Sparkle';
+
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
-  const canvasSize = 600;
+  const canvasSize = window.innerHeight;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
+  let s;
+
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
-    p.noLoop();
-    p.frameRate(60);
+    // p.noLoop();
+    // p.frameRate(60);
+    s = new Sparkle();
   };
 
   p.reset = () => {
   };
 
   p.draw = () => {
-    p.background(200);
+    p.background(0, 200);
+    s.update();
+    s.draw()
   };
 
   p.keyPressed = () => {
