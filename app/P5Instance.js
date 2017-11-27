@@ -14,7 +14,6 @@ const sketch = p => {
     p.createCanvas(canvasSize, window.innerHeight);
     p.reset();
     // p.noLoop();
-    p.frameRate(24);
     s = new Sparkle();
   };
 
@@ -22,7 +21,7 @@ const sketch = p => {
   };
 
   p.draw = () => {
-    p.background(0);
+    p.background(0, 50);
     s.update();
     s.draw()
   };
