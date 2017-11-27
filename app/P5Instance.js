@@ -5,16 +5,16 @@ import Sparkle from './Sparkle';
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
-  const canvasSize = window.innerHeight;
+  const canvasSize = window.innerWidth;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   let s;
 
   p.setup = () => {
-    p.createCanvas(canvasSize, canvasSize / gridX * gridY);
+    p.createCanvas(canvasSize, window.innerHeight);
     p.reset();
     // p.noLoop();
-    // p.frameRate(60);
+    p.frameRate(24);
     s = new Sparkle();
   };
 
@@ -22,7 +22,7 @@ const sketch = p => {
   };
 
   p.draw = () => {
-    p.background(0, 200);
+    p.background(0);
     s.update();
     s.draw()
   };

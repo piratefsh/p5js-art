@@ -39,17 +39,10 @@ export default class Sparkle {
 class Ring {
   constructor(props) {
     this.radius = props.minRadius;
-    this.glowRadius = 8;
+    this.glowRadius = 6;
     this.numSteps = 36;
     this.size = 6;
-
     this.points = [];
-    const step = p.TWO_PI / this.numSteps;
-    for (let i = 0; i < p.TWO_PI; i += step) {
-      const x = this.radius * Math.cos(i);
-      const y = this.radius * Math.sin(i);
-      this.points.push({ x, y, angle: i });
-    }
   }
 
   draw() {
@@ -62,15 +55,24 @@ class Ring {
       p.push();
       p.translate(point.x, point.y);
       p.rotate(point.angle);
-      p.translate(this.glowRadius / 2, 0);
-      p.fill(255, 30);
+      p.fill(255, 20);
+      p.translate(this.glowRadius / 4, 0);
+      p.ellipse(0, 0, this.size + (this.glowRadius), this.size + this.glowRadius/2);
+      p.translate(this.glowRadius / 4, 0);
       p.ellipse(0, 0, this.size + (this.glowRadius * 2), this.size + this.glowRadius);
       p.pop();
     });
   }
 
   update() {
-    this.radius = p.map(p.mouseY, 0, p.width, 150, p.width);
+    this.radius = p.map(p.mouseY, 0, p.height, 150, p.height);
+    this.points = [];
+    const step = p.TWO_PI / this.numSteps;
+    for (let i = 0; i < p.TWO_PI; i += step) {
+      const x = this.radius * Math.cos(i);
+      const y = this.radius * Math.sin(i);
+      this.points.push({ x, y, angle: i });
+    }
   }
 
 }
