@@ -116,9 +116,7 @@
 	  p.reset = function () {};
 
 	  p.draw = function () {
-	    p.background(18, 170, 161);
-
-	    p.blendMode(p.BLEND);
+	    p.background(0, 50);
 	    s.update();
 	    s.draw();
 	  };
@@ -71353,8 +71351,6 @@
 	    this.radius = 100;
 	    this.minRadius = 100;
 	    this.maxRadius = 200;
-	    this.color = _P5Instance.p.color(252, 100);
-	    this.echoColor = _P5Instance.p.color(252, 10);
 	  }
 
 	  _createClass(Sparkle, [{
@@ -71364,11 +71360,11 @@
 	      _P5Instance.p.translate(_P5Instance.p.width / 2, _P5Instance.p.height / 2);
 	      _P5Instance.p.rotate(this.angle);
 	      _P5Instance.p.translate(-this.radius / 2, -this.radius / 2);
-	      _P5Instance.p.fill(this.color);
+	      _P5Instance.p.fill(255, 190);
 	      this.drawRings();
 
 	      _P5Instance.p.push();
-	      _P5Instance.p.fill(this.echoColor);
+	      _P5Instance.p.fill(255, 10);
 	      _P5Instance.p.scale(1.5);
 	      this.drawRings();
 	      _P5Instance.p.pop();
