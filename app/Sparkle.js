@@ -12,6 +12,8 @@ export default class Sparkle {
     this.radius = 100;
     this.minRadius = 100;
     this.maxRadius = 200;
+    this.color = p.color(252, 100)
+    this.echoColor = p.color(252, 10)
   }
 
   draw() {
@@ -19,11 +21,11 @@ export default class Sparkle {
     p.translate(p.width / 2, p.height / 2);
     p.rotate(this.angle);
     p.translate(-this.radius / 2, -this.radius / 2);
-    p.fill(255, 190);
+    p.fill(this.color);
     this.drawRings();
 
     p.push();
-    p.fill(255, 10);
+    p.fill(this.echoColor);
     p.scale(1.5);
     this.drawRings();
     p.pop();
