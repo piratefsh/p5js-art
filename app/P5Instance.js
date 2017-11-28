@@ -17,6 +17,8 @@ const sketch = p => {
   const COLORS = [[41, 93, 150]]//, [110, 195, 149], [243, 211, 76], [251, 142, 79], [255, 255, 255]];
   const NUM_LAYERS = MULTI_COLORS.length;
   p.setup = () => {
+
+
     p.createCanvas(window.innerWidth, window.innerHeight);
     p.reset();
     // p.noLoop();
@@ -64,15 +66,22 @@ const sketch = p => {
     });
   };
 
+  p.saveImg = () => {
+    p.save(`tadaaa-${Date.now()}.png`);
+  }
+
   p.keyPressed = () => {
     switch (p.key) {
       case 'S':
-        p.save(`tadaaa-${Date.now()}.png`);
+        p.saveImg()
         break;
       case 'R':
         p.reset();
     }
   };
+
+  gui.add(p, 'saveImg')
+  gui.add(p, 'reset')
 };
 
 // set global functions for p5
