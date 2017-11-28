@@ -21,6 +21,10 @@ const sketch = p => {
     // p.noLoop();
     p.frameRate(60);
     for (let n = 0; n < NUM_LAYERS; n++) {
+      const folder = gui.addFolder('Color ' + n);
+      if(n == 0){
+        folder.open();
+      }
       for (let i = 0; i < gridX; i++) {
         for (let j = 0; j < gridY; j++) {
           const pp = new ParametricPatterns({
@@ -32,11 +36,11 @@ const sketch = p => {
             color: COLORS[n],
             amp: (COLORS.length - n) / 2,
           });
-          gui.add(pp, 'fillOpacity').min(0).max(20);
-          gui.add(pp, 'strokeWeight').min(0.5).max(5);
-          gui.add(pp, 'strokeOpacity').min(0).max(255);
-          gui.add(pp, 'amp').min(0).max(COLORS.length);
-          gui.addColor(pp, 'color');
+          folder.add(pp, 'fillOpacity').min(0).max(20);
+          folder.add(pp, 'strokeWeight').min(0.5).max(5);
+          folder.add(pp, 'strokeOpacity').min(0).max(255);
+          folder.add(pp, 'amp').min(0).max(COLORS.length);
+          folder.addColor(pp, 'color');
           patterns[n] = pp;
         }
       }
