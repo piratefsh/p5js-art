@@ -12,8 +12,9 @@ export default class ParametricPatterns {
     const debug = false;
     p.push();
     p.strokeWeight(0.9);
-    p.fill(255, 20);
+    p.fill(255, p.map(p.mouseY, 0, p.height, 0, 8));
     p.translate(p.width / 2, p.height / 2);
+    p.curveTightness(p.map(p.mouseX, 0, p.width, -4, 4))
     for (let i = 0; i < this.numLines; i += 0.1) {
       const t = this.t + i;
       p.stroke(255, p.map(i, 0, this.numLines, 0, 200));
