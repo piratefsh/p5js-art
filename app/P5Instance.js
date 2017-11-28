@@ -6,8 +6,8 @@ import dat from 'dat.gui/build/dat.gui';
 const gui = new dat.GUI();
 
 const sketch = p => {
-  const gridX = 2;
-  const gridY = 2;
+  const gridX = 1;
+  const gridY = 1;
   const canvasSize = 600;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
@@ -17,14 +17,18 @@ const sketch = p => {
     p.reset();
     // p.noLoop();
     p.frameRate(60);
-    for(let i = 0; i < gridX; i++){
-      for(let j = 0; j < gridY; j++){
+    for (let i = 0; i < gridX; i++) {
+      for (let j = 0; j < gridY; j++) {
         const pp = new ParametricPatterns({
           x: i * cellSize,
           y: j * cellSize,
           width: cellSize,
           height: cellSize,
         });
+        gui.add(pp, 'fillOpacity').min(0).max(20);
+        gui.add(pp, 'strokeWeight').min(0.5).max(5);
+        gui.add(pp, 'strokeOpacity').min(0).max(255);
+        gui.addColor(pp, 'generalColor');
         patterns.push(pp);
       }
     }
@@ -39,7 +43,7 @@ const sketch = p => {
     patterns.forEach((pp) => {
       pp.update();
       pp.draw();
-    })
+    });
   };
 
   p.keyPressed = () => {

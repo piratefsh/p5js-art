@@ -3,28 +3,33 @@ import { p } from 'P5Instance';
 export default class ParametricPatterns {
 
   constructor(props) {
+    this.fillOpacity = 10
     this.props = props;
-    this.padding = 20;
+    this.padding = 100;
+    this.strokeWeight = 1;
+    this.strokeOpacity = 200;
     this.width = (props.width || p.width) - this.padding;
     this.height = (props.height || p.height) - this.padding;
     this.step = 0.03;
     this.t = 0;
     this.numLines = 60;
+    this.generalColor = [100, 100, 100];
   }
 
   draw() {
     const debug = false;
+    console.log(this.generalColor)
     p.push();
     p.translate(this.props.x + this.padding/2, this.props.y + this.padding/2)
-    p.strokeWeight(0.9);
+    p.strokeWeight(this.strokeWeight);
     const count = this.numLines * 0.1;
     // p.fill(255, p.map(p.mouseY, 0, this.height, 0, 8));
-    p.fill(255, 10);
+    p.fill(...this.generalColor, this.fillOpacity);
     p.translate(this.width / 2, this.height / 2);
-    p.curveTightness(2);
+    p.curveTightness(4);
     for (let i = 0; i < count; i += 0.1) {
       const t = this.t + i;
-      p.stroke(255, p.map(i, 0, count, 0, 200));
+      p.stroke(...this.generalColor, p.map(i, 0, count, 0, this.strokeOpacity));
       // p.stroke(255, 100);
       p.curve(this.cx1(t), this.cy1(t), this.x1(t), this.y1(t), this.x2(t), this.y2(t), this.cx2(t), this.cy2(t));
 
@@ -55,7 +60,7 @@ export default class ParametricPatterns {
   }
 
   y2(t) {
-    return this.height/2 * p.sin(t / 2);
+    return this.height/3 * p.sin(t / 2);
   }
 
   cx1(t) {
