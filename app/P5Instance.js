@@ -12,7 +12,8 @@ const sketch = p => {
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   const patterns = [];
-  const COLORS = [[110, 195, 149], [41, 93, 150], [251, 142, 79], [243, 211, 76]]
+  const BG_COLOR = [41, 93, 150];
+  const COLORS = [[41, 93, 150], [110, 195, 149], [251, 142, 79], [243, 211, 76], [255, 255, 255]];
   const NUM_LAYERS = COLORS.length;
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
@@ -28,23 +29,34 @@ const sketch = p => {
             width: cellSize,
             height: cellSize,
             seed: n,
-            color: COLORS[n]
+            color: COLORS[n],
+            amp: (COLORS.length - n) / 2,
           });
           gui.add(pp, 'fillOpacity').min(0).max(20);
           gui.add(pp, 'strokeWeight').min(0.5).max(5);
           gui.add(pp, 'strokeOpacity').min(0).max(255);
+          gui.add(pp, 'amp').min(0).max(COLORS.length);
           gui.addColor(pp, 'color');
-          patterns.push(pp);
+          patterns[n] = pp;
         }
       }
     }
   };
 
   p.reset = () => {
+
+    patterns.forEach((pt) => {
+      pt.reset();
+    })
   };
 
   p.draw = () => {
-    p.background(0);
+    p.background(50);
+    p.fill(...BG_COLOR);
+    p.push();
+    p.translate(p.width / 2, p.height / 2);
+    // p.ellipse(0, 0, p.width - 100, p.height - 100);
+    p.pop();
 
     patterns.forEach((pp) => {
       pp.update();

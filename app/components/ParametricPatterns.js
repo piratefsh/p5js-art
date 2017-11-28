@@ -17,6 +17,13 @@ export default class ParametricPatterns {
     this.color = props.color || [100, 100, 100];
     this.randVar = p.random(0, this.seed);
     this.spacing = 0.03;
+    this.amp = props.amp || 1;
+    this.dir = Math.pow(-1, props.amp * 10)
+  }
+
+  reset(){
+    this.t = p.random(0, p.TWO_PI);
+    this.randVar = p.random(0, this.seed);
   }
 
   draw() {
@@ -50,19 +57,19 @@ export default class ParametricPatterns {
   }
 
   x1(t) {
-    return Math.pow(-1, Math.floor(this.randVar)) * this.width/2 * p.sin(t / 2);
+    return this.dir * this.amp * Math.pow(-1, Math.floor(this.randVar)) * this.width/2 * p.sin(t / 2);
   }
 
   y1(t) {
-    return this.height/2 * p.cos(t / 2);
+    return this.amp * this.height/2 * p.cos(t / 2);
   }
 
   x2(t) {
-    return Math.pow(-1, Math.floor(this.randVar)) * this.width/3 * p.cos(t / 4);
+    return this.amp * Math.pow(-1, Math.floor(this.randVar)) * this.width/3 * p.cos(t / 4);
   }
 
   y2(t) {
-    return this.randVar * this.height/3 * p.sin(t / 2);
+    return this.dir * this.amp * this.randVar * this.height/3 * p.sin(t / 2);
   }
 
   cx1(t) {
