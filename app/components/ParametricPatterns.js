@@ -13,8 +13,9 @@ export default class ParametricPatterns {
     this.height = (props.height || p.height) - this.padding;
     this.speed = 0.01;
     this.t = 0;
-    this.numLines = 100;
+    this.numLines = 80;
     this.color = props.color || [100, 100, 100];
+    this.color2 = props.color2 || props.color;
     this.randVar = p.random(0, this.seed);
     this.spacing = 0.02;
     this.amp = props.amp || 1;
@@ -29,17 +30,22 @@ export default class ParametricPatterns {
   draw() {
     const debug = false;
     p.push();
-    p.translate(this.props.x + this.padding/2, this.props.y + this.padding/2)
     p.strokeWeight(this.strokeWeight);
-    const count = this.numLines * this.spacing;
-    // p.fill(255, p.map(p.mouseY, 0, this.height, 0, 8));
-    p.fill(...this.color, this.fillOpacity);
-    p.translate(this.width / 2, this.height / 2);
     p.curveTightness(4);
+
+    p.translate(this.props.x + this.padding/2, this.props.y + this.padding/2)
+    p.translate(this.width / 2, this.height / 2);
+    const count = this.numLines * this.spacing;
     for (let i = 0; i < count; i += this.spacing) {
       const t = this.t + i;
-      p.stroke(...this.color, p.map(i, 0, count, 0, this.strokeOpacity));
-      // p.stroke(255, 100);
+      const col = [
+        p.map(i, 0, count, this.color2[0], this.color[0]),
+        p.map(i, 0, count, this.color2[1], this.color[1]),
+        p.map(i, 0, count, this.color2[2], this.color[2]),
+      ];
+
+      p.fill(...col, this.fillOpacity);
+      p.stroke(...col, p.map(i, 0, count, 0, this.strokeOpacity));
       p.curve(this.cx1(t), this.cy1(t), this.x1(t), this.y1(t), this.x2(t), this.y2(t), this.cx2(t), this.cy2(t));
 
       if (debug) {

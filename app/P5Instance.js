@@ -13,8 +13,9 @@ const sketch = p => {
   const edgeLen = cellSize / 2;
   const patterns = [];
   const BG_COLOR = [4, 31, 61];
-  const COLORS = [[41, 93, 150], [110, 195, 149], [243, 211, 76], [251, 142, 79], [255, 255, 255]];
-  const NUM_LAYERS = COLORS.length;
+  const MULTI_COLORS = [[[41, 93, 150]], [[110, 195, 149]], [[243, 211, 76], [251, 142, 79]], [[255, 255, 255]]];
+  const COLORS = [[41, 93, 150]]//, [110, 195, 149], [243, 211, 76], [251, 142, 79], [255, 255, 255]];
+  const NUM_LAYERS = MULTI_COLORS.length;
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
     p.reset();
@@ -33,13 +34,14 @@ const sketch = p => {
             width: cellSize,
             height: cellSize,
             seed: n,
-            color: COLORS[n],
-            amp: (COLORS.length - n) / 2,
+            color: MULTI_COLORS[n][0],
+            color2: MULTI_COLORS[n][1],
+            amp: (MULTI_COLORS.length - n) / 2,
           });
           folder.add(pp, 'fillOpacity').min(0).max(20);
           folder.add(pp, 'strokeWeight').min(0.5).max(5);
           folder.add(pp, 'strokeOpacity').min(0).max(255);
-          folder.add(pp, 'amp').min(0).max(COLORS.length);
+          folder.add(pp, 'amp').min(0).max(MULTI_COLORS.length);
           folder.addColor(pp, 'color');
           patterns[n] = pp;
         }
