@@ -3,21 +3,24 @@ import { p } from 'P5Instance';
 export default class ParametricPatterns {
 
   constructor() {
-    this.step = 0.02;
+    this.step = 0.03;
     this.t = 0;
-    this.numLines = 10;
+    this.numLines = 60;
   }
 
   draw() {
     const debug = false;
     p.push();
     p.strokeWeight(0.9);
-    p.fill(255, p.map(p.mouseY, 0, p.height, 0, 8));
+    const count = this.numLines * 0.1
+    // p.fill(255, p.map(p.mouseY, 0, p.height, 0, 8));
+    p.fill(255, 10);
     p.translate(p.width / 2, p.height / 2);
     p.curveTightness(p.map(p.mouseX, 0, p.width, -4, 4))
-    for (let i = 0; i < this.numLines; i += 0.1) {
+    for (let i = 0; i < count; i += 0.1) {
       const t = this.t + i;
-      p.stroke(255, p.map(i, 0, this.numLines, 0, 200));
+      p.stroke(255, p.map(i, 0, count, 0, 200));
+      // p.stroke(255, 100);
       p.curve(this.cx1(t), this.cy1(t), this.x1(t), this.y1(t), this.x2(t), this.y2(t), this.cx2(t), this.cy2(t));
 
       if (debug) {
