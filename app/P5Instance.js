@@ -8,15 +8,15 @@ const gui = new dat.GUI();
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
-  const canvasSize = 600;
+  const canvasSize = window.innerHeight;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   const patterns = [];
-  const BG_COLOR = [41, 93, 150];
-  const COLORS = [[41, 93, 150], [110, 195, 149], [251, 142, 79], [243, 211, 76], [255, 255, 255]];
+  const BG_COLOR = [4, 31, 61];
+  const COLORS = [[41, 93, 150], [110, 195, 149], [243, 211, 76], [251, 142, 79], [255, 255, 255]];
   const NUM_LAYERS = COLORS.length;
   p.setup = () => {
-    p.createCanvas(canvasSize, canvasSize / gridX * gridY);
+    p.createCanvas(window.innerWidth, window.innerHeight);
     p.reset();
     // p.noLoop();
     p.frameRate(60);
@@ -51,13 +51,7 @@ const sketch = p => {
   };
 
   p.draw = () => {
-    p.background(50);
-    p.fill(...BG_COLOR);
-    p.push();
-    p.translate(p.width / 2, p.height / 2);
-    // p.ellipse(0, 0, p.width - 100, p.height - 100);
-    p.pop();
-
+    p.background(...BG_COLOR);
     patterns.forEach((pp) => {
       pp.update();
       pp.draw();

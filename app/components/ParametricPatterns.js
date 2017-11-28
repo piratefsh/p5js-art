@@ -11,18 +11,18 @@ export default class ParametricPatterns {
     this.strokeOpacity = 0;
     this.width = (props.width || p.width) - this.padding;
     this.height = (props.height || p.height) - this.padding;
-    this.step = 0.01;
+    this.speed = 0.01;
     this.t = 0;
     this.numLines = 100;
     this.color = props.color || [100, 100, 100];
     this.randVar = p.random(0, this.seed);
-    this.spacing = 0.03;
+    this.spacing = 0.02;
     this.amp = props.amp || 1;
     this.dir = Math.pow(-1, props.amp * 10)
   }
 
   reset(){
-    this.t = p.random(0, p.TWO_PI);
+    this.t = Math.floor(p.random(8)) * p.PI/4;
     this.randVar = p.random(0, this.seed);
   }
 
@@ -53,7 +53,7 @@ export default class ParametricPatterns {
   }
 
   update() {
-    this.t = (this.t + this.step);
+    this.t = (this.t + this.speed);
   }
 
   x1(t) {
@@ -65,7 +65,7 @@ export default class ParametricPatterns {
   }
 
   x2(t) {
-    return this.amp * Math.pow(-1, Math.floor(this.randVar)) * this.width/3 * p.cos(t / 4);
+    return this.amp * Math.pow(-1, Math.floor(this.randVar)) * this.width/3 * p.cos(t / 3);
   }
 
   y2(t) {
