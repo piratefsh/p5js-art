@@ -3,33 +3,35 @@ import { p } from 'P5Instance';
 export default class ParametricPatterns {
 
   constructor(props) {
-    this.fillOpacity = 10
+    this.fillOpacity = 15
     this.props = props;
     this.padding = 100;
+    this.seed = props.seed;
     this.strokeWeight = 1;
-    this.strokeOpacity = 200;
+    this.strokeOpacity = 0;
     this.width = (props.width || p.width) - this.padding;
     this.height = (props.height || p.height) - this.padding;
-    this.step = 0.03;
+    this.step = 0.01;
     this.t = 0;
-    this.numLines = 60;
-    this.generalColor = [100, 100, 100];
+    this.numLines = 100;
+    this.color = props.color || [100, 100, 100];
+    this.randVar = p.random(0, this.seed);
+    this.spacing = 0.03;
   }
 
   draw() {
     const debug = false;
-    console.log(this.generalColor)
     p.push();
     p.translate(this.props.x + this.padding/2, this.props.y + this.padding/2)
     p.strokeWeight(this.strokeWeight);
-    const count = this.numLines * 0.1;
+    const count = this.numLines * this.spacing;
     // p.fill(255, p.map(p.mouseY, 0, this.height, 0, 8));
-    p.fill(...this.generalColor, this.fillOpacity);
+    p.fill(...this.color, this.fillOpacity);
     p.translate(this.width / 2, this.height / 2);
     p.curveTightness(4);
-    for (let i = 0; i < count; i += 0.1) {
+    for (let i = 0; i < count; i += this.spacing) {
       const t = this.t + i;
-      p.stroke(...this.generalColor, p.map(i, 0, count, 0, this.strokeOpacity));
+      p.stroke(...this.color, p.map(i, 0, count, 0, this.strokeOpacity));
       // p.stroke(255, 100);
       p.curve(this.cx1(t), this.cy1(t), this.x1(t), this.y1(t), this.x2(t), this.y2(t), this.cx2(t), this.cy2(t));
 
@@ -48,7 +50,7 @@ export default class ParametricPatterns {
   }
 
   x1(t) {
-    return this.width/2 * p.sin(t / 2);
+    return Math.pow(-1, Math.floor(this.randVar)) * this.width/2 * p.sin(t / 2);
   }
 
   y1(t) {
@@ -56,11 +58,11 @@ export default class ParametricPatterns {
   }
 
   x2(t) {
-    return this.width/3 * p.cos(t / 4);
+    return Math.pow(-1, Math.floor(this.randVar)) * this.width/3 * p.cos(t / 4);
   }
 
   y2(t) {
-    return this.height/3 * p.sin(t / 2);
+    return this.randVar * this.height/3 * p.sin(t / 2);
   }
 
   cx1(t) {
