@@ -11,7 +11,7 @@ const sketch = p => {
   let sz;
 
   p.setup = () => {
-    p.createCanvas(canvasSize, canvasSize / gridX * gridY);
+    p.createCanvas(window.innerWidth, window.innerHeight);
     p.reset();
     p.noLoop();
     p.frameRate(60);
