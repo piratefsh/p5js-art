@@ -1,6 +1,7 @@
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
 import SnezntUnit from 'components/SnezntUnit';
+import SnezntCell from 'components/SnezntCell';
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
@@ -18,7 +19,7 @@ const sketch = p => {
   };
 
   p.reset = () => {
-    sz = new SnezntUnit();
+    sz = new SnezntCell();
   };
 
   p.draw = () => {

@@ -1,10 +1,9 @@
 import { p } from 'P5Instance';
 
 export default class SnezntUnit {
-  constructor() {
-    this.numRings = 5;
-    this.radius = 100;
-    this.center = { x: p.width/2, y: p.height/2 };
+  constructor(props = {radius: 100, center: null}) {
+    this.radius = props.radius || 100;
+    this.center = props.center || { x: p.width/2, y: p.height/2 };
 
     this.points = [];
 
