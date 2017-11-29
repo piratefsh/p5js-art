@@ -1,9 +1,9 @@
-# Recursive Hexagons
+# Parametric Equations 'Gradient'
 
-Hexagons made out of hexagons
-![hexagons tesselations](http://i.imgur.com/paWQIxO.png)
+![parametric equation gradients](http://piratefsh.github.io/assets/images/genart/02-parametric/iphonexsimulation.png)
 
-![hexagons tesselations](http://i.imgur.com/SxzgN2e.png)
+## Writeup
+[http://piratefsh.github.io/2017/11/28/rc-computer-art-pop-up-day-2.html](http://piratefsh.github.io/2017/11/28/rc-computer-art-pop-up-day-2.html)
 
 ## Development 
 ### Install
