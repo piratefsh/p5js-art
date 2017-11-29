@@ -4,7 +4,7 @@ import Util from 'components/utils/Utils';
 export default class ParametricPatterns {
 
   constructor(props) {
-    this.fillOpacity = 15
+    this.fillOpacity = 15;
     this.props = props;
     this.padding = 100;
     this.seed = props.seed;
@@ -20,37 +20,53 @@ export default class ParametricPatterns {
     this.randVar = p.random(0, this.seed);
     this.spacing = 0.02;
     this.amp = props.amp || 1;
-    this.dir = Math.pow(-1, props.amp * 10)
+    this.dir = Math.pow(-1, props.amp * 10);
+
+    this.fillColors = [];
 
     this.reset();
   }
 
-  reset(){
-    this.t = Math.floor(p.random(8)) * p.PI/2;
+  genFillColors() {
+    for (let i = 0; i < this.numLines; i++) {
+      const col = [
+        p.map(i, 0, this.numLines, this.color2[0], this.color[0]),
+        p.map(i, 0, this.numLines, this.color2[1], this.color[1]),
+        p.map(i, 0, this.numLines, this.color2[2], this.color[2]),
+      ];
+      this.fillColors.push(p.color(...col, this.fillOpacity));
+    }
+  }
+
+  reset() {
+    this.t = Math.floor(p.random(8)) * p.PI / 2;
     this.randVar = p.random(0, this.seed);
-    this.x2 = Util.generateParametricEqn(this.width/4);
-    this.y2 = Util.generateParametricEqn(this.height/4);
+    this.x2 = Util.generateParametricEqn(this.width / 4);
+    this.y2 = Util.generateParametricEqn(this.height / 4);
   }
 
   draw() {
+    if (this.fillColors.length < 1) {
+      this.genFillColors();
+    }
     const debug = false;
     p.push();
     p.strokeWeight(this.strokeWeight);
     p.curveTightness(4);
+    p.stroke(0, 0);
 
-    p.translate(this.props.x + this.padding/2, this.props.y + this.padding/2)
+    p.translate(this.props.x + this.padding / 2, this.props.y + this.padding / 2);
     p.translate(this.width / 2, this.height / 2);
     const count = this.numLines * this.spacing;
+    let n = 0;
     for (let i = 0; i < count; i += this.spacing) {
       const t = this.t + i;
-      const col = [
-        p.map(i, 0, count, this.color2[0], this.color[0]),
-        p.map(i, 0, count, this.color2[1], this.color[1]),
-        p.map(i, 0, count, this.color2[2], this.color[2]),
-      ];
+      const color = this.fillColors[n];
+      p.fill(color);
 
-      p.fill(...col, this.fillOpacity);
-      p.stroke(...col, p.map(i, 0, count, 0, this.strokeOpacity));
+      if (this.strokeOpacity > 0) {
+        p.stroke(color, p.map(i, 0, count, 0, this.strokeOpacity));
+      }
       const points = [this.cx1(t), this.cy1(t), this.x1(t), this.y1(t), this.x2(t), this.y2(t), this.cx2(t), this.cy2(t)]
         .map(pt => pt * this.amp);
       p.curve(...points);
@@ -62,6 +78,8 @@ export default class ParametricPatterns {
         p.ellipse(this.x2(t), this.y2(t), 10, 10);
         p.ellipse(this.cx2(t), this.cy2(t), 5, 5);
       }
+
+      n++;
     }
     p.pop();
   }
@@ -71,11 +89,11 @@ export default class ParametricPatterns {
   }
 
   x1(t) {
-    return this.width/2 * p.sin(t / 2);
+    return this.width / 2 * p.sin(t / 2);
   }
 
   y1(t) {
-    return this.height/2 * p.cos(t / 2);
+    return this.height / 2 * p.cos(t / 2);
   }
 
   // x2(t) {
@@ -87,19 +105,19 @@ export default class ParametricPatterns {
   // }
 
   cx1(t) {
-    return this.width/2 * p.cos(t);
+    return this.width / 2 * p.cos(t);
   }
 
   cy1(t) {
-    return this.height/2 * p.sin(t);
+    return this.height / 2 * p.sin(t);
   }
 
   cx2(t) {
-    return -this.width/2 * p.sin(t / 2);
+    return -this.width / 2 * p.sin(t / 2);
   }
 
   cy2(t) {
-    return -this.height/2 * p.cos(t);
+    return -this.height / 2 * p.cos(t);
   }
 }
 

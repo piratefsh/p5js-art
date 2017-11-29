@@ -51,7 +51,6 @@ const Util = {
     }
     const params = ['t'];
     const body = `return (${expressions.join('+')});`;
-    console.log(params, body)
     return new Function(...params, body);
   },
 };
