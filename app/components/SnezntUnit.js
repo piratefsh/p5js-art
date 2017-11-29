@@ -8,7 +8,8 @@ export default class SnezntUnit {
   draw() {
     p.push();
     p.fill(0, 0);
-    p.stroke(0);
+    p.stroke(255);
+    p.strokeWeight(2);
     p.beginShape();
     this.points.forEach((pt) => {
       p.vertex(pt.x, pt.y);

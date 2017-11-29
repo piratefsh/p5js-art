@@ -2,6 +2,7 @@ import p5 from 'p5';
 import Util from 'components/utils/Utils';
 import SnezntUnit from 'components/SnezntUnit';
 import SnezntCell from 'components/SnezntCell';
+import SnezntGrid from 'components/SnezntGrid';
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
@@ -13,17 +14,17 @@ const sketch = p => {
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
     p.reset();
-    p.noLoop();
+    // p.noLoop();
     p.frameRate(60);
     p.reset();
   };
 
   p.reset = () => {
-    sz = new SnezntCell();
+    sz = new SnezntGrid({rows: 4, cols: 4});
   };
 
   p.draw = () => {
-    p.background(200);
+    p.background('teal');
     sz.update();
     sz.draw();
   };
