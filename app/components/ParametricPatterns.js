@@ -1,4 +1,5 @@
 import { p } from 'P5Instance';
+import Util from 'components/utils/Utils';
 
 export default class ParametricPatterns {
 
@@ -20,11 +21,15 @@ export default class ParametricPatterns {
     this.spacing = 0.02;
     this.amp = props.amp || 1;
     this.dir = Math.pow(-1, props.amp * 10)
+
+    this.reset();
   }
 
   reset(){
-    this.t = Math.floor(p.random(8)) * p.PI/4;
+    this.t = Math.floor(p.random(8)) * p.PI/2;
     this.randVar = p.random(0, this.seed);
+    this.x2 = Util.generateParametricEqn(this.width/4);
+    this.y2 = Util.generateParametricEqn(this.height/4);
   }
 
   draw() {
@@ -46,7 +51,10 @@ export default class ParametricPatterns {
 
       p.fill(...col, this.fillOpacity);
       p.stroke(...col, p.map(i, 0, count, 0, this.strokeOpacity));
-      p.curve(this.cx1(t), this.cy1(t), this.x1(t), this.y1(t), this.x2(t), this.y2(t), this.cx2(t), this.cy2(t));
+      const points = [this.cx1(t), this.cy1(t), this.x1(t), this.y1(t), this.x2(t), this.y2(t), this.cx2(t), this.cy2(t)]
+        .map(pt => pt * this.amp);
+      p.curve(...points);
+      // console.log('calc', this.x2(t), this.y2(t));
 
       if (debug) {
         p.ellipse(this.x1(t), this.y1(t), 10, 10);
@@ -63,20 +71,20 @@ export default class ParametricPatterns {
   }
 
   x1(t) {
-    return this.dir * this.amp * Math.pow(-1, Math.floor(this.randVar)) * this.width/2 * p.sin(t / 2);
+    return this.width/2 * p.sin(t / 2);
   }
 
   y1(t) {
-    return this.amp * this.height/2 * p.cos(t / 2);
+    return this.height/2 * p.cos(t / 2);
   }
 
-  x2(t) {
-    return this.amp * Math.pow(-1, Math.floor(this.randVar)) * this.width/3 * p.cos(t / 3);
-  }
+  // x2(t) {
+  //   return this.amp * Math.pow(-1, Math.floor(this.randVar)) * this.width * p.cos(t / 3);
+  // }
 
-  y2(t) {
-    return this.dir * this.amp * this.randVar * this.height/3 * p.sin(t / 2);
-  }
+  // y2(t) {
+  //   return this.dir * this.amp * this.randVar * this.height/3 * p.sin(t / 2);
+  // }
 
   cx1(t) {
     return this.width/2 * p.cos(t);
