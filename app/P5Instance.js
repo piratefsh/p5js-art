@@ -17,6 +17,9 @@ const sketch = p => {
   const COLORS = [[41, 93, 150]]//, [110, 195, 149], [243, 211, 76], [251, 142, 79], [255, 255, 255]];
   const NUM_LAYERS = MULTI_COLORS.length;
   p.setup = () => {
+    if(window.innerWidth < 480){
+      gui.close()
+    }
 
     p.createCanvas(window.innerWidth, window.innerHeight);
     p.reset();
@@ -24,7 +27,7 @@ const sketch = p => {
     p.frameRate(60);
     for (let n = 0; n < NUM_LAYERS; n++) {
       const folder = gui.addFolder('Color ' + n);
-      if(n == 0){
+      if(n == 0 && window.innerWidth > 480){
         folder.open();
       }
       for (let i = 0; i < gridX; i++) {
