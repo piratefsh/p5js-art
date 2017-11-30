@@ -18,16 +18,21 @@ const sketch = p => {
   };
 
   p.reset = () => {
+    p.createVector(10, 0).copy()
   };
 
   p.draw = () => {
     p.background(200);
   };
 
+  p.saveImage = () => {
+    p.save(`tadaaa-${Date.now()}.png`);
+  };
+
   p.keyPressed = () => {
     switch (p.key) {
       case 'S':
-        p.save(`tadaaa-${Date.now()}.png`);
+        p.saveImage();
         break;
       case 'R':
         p.reset();
