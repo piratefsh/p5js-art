@@ -10,12 +10,10 @@ let gui;
 const sketch = p => {
   let gridX = Math.floor(window.innerWidth / 120);
   let gridY = Math.floor(window.innerHeight / 120);
-  let fillCol;
   const padding = 40;
   let sz;
 
   p.setup = () => {
-    fillCol = p.color(220, 210, 20);
     p.createCanvas(window.innerWidth, window.innerHeight);
     // p.noLoop();
     p.frameRate(60);
@@ -30,27 +28,26 @@ const sketch = p => {
     gridX = Math.floor(window.innerWidth / 120);
     gridY = Math.floor(window.innerHeight / 120);
     sz = new SnezntGrid({
-      color: fillCol,
       rows: gridX,
       cols: gridY,
       sizeX: (p.width - (padding * 2)) / gridX,
       sizeY: (p.height - (padding * 2)) / gridY,
+      color: [p.random(210, 220), 200, p.random(10, 20)],
+      lineColor: [58, 83, 105, 100],
     });
 
     const controllers = [
-      gui.add(sz, 'jitterAmp').min(1).max(60),
+      gui.add(sz, 'jitterAmp').min(1).max(60).onChange(_ => sz.recalculatePoints()),
+      gui.add(sz, 'grainWidth').min(5).max(20).onChange(_ => sz.recalculatePoints()),
+      gui.addColor(sz, 'color'),
+      gui.addColor(sz, 'lineColor'),
     ];
 
-    controllers.forEach(ct => ct.onChange(() => {
-      sz.recalculatePoints();
-    }));
   };
 
   p.draw = () => {
-    // p.background('teal');
     p.push();
     p.translate(padding, padding);
-    p.background(fillCol);
     sz.update();
     sz.draw();
     p.pop();

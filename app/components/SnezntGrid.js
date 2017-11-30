@@ -3,44 +3,29 @@ import SnezntCell from './SnezntCell';
 import Util from 'components/utils/Utils';
 
 export default class SnezntGrid {
-  constructor({ rows, cols, sizeX = 150, sizeY = 100, color }) {
+  constructor({ rows, cols, sizeX = 150, sizeY = 100, color, lineColor }) {
     this.debug = false;
     this.color = color;
+    this.lineColor = lineColor;
     this.nr = rows;
     this.nc = cols;
     this.cells = [];
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     this.jitterAmp = sizeX * 0.3;
-
+    this.grainWidth = Math.floor(p.random(5, 13));
     this.recalculatePoints();
   }
 
   recalculatePoints() {
-    this.points = [];
-    // generate points
-    for (let i = 0; i < this.nr + 1; i++) {
-      this.points.push(new Array(this.nc + 1));
-      for (let j = 0; j < this.nc + 1; j++) {
-        const vertex = p.createVector(i * this.sizeX, j * this.sizeY);
-        this.points[i][j] = vertex;
-      }
-    }
-    // jitter them
-    this.points.forEach((row) => {
-      row.forEach((pt) => {
-        pt.jitter = pt.jitter || Util.jitter();
-        pt.add(pt.jitter * this.jitterAmp, pt.jitter * this.jitterAmp);
-      });
-    });
+    // create grid
+    this.points = this.genGrid();
 
     if (this.cells.length > 0) {
       // update cells
-      // this.cells = this.genCells().map(props => new SnezntCell(props));
       const newCells = this.genCells();
       newCells.forEach((props, i) => {
-        console.log(props.points)
-        this.cells[i].setPoints(props.points);
+        this.cells[i].setProps(props);
       });
     }
     else {
@@ -49,6 +34,28 @@ export default class SnezntGrid {
     }
   }
 
+  genGrid(amp = this.jitterAmp) {
+    const grid = [];
+    // generate points
+    for (let i = 0; i < this.nr + 1; i++) {
+      grid.push(new Array(this.nc + 1));
+      for (let j = 0; j < this.nc + 1; j++) {
+        const vertex = p.createVector(i * this.sizeX, j * this.sizeY);
+        grid[i][j] = vertex;
+      }
+    }
+    // jitter them
+    grid.forEach((row) => {
+      row.forEach((pt) => {
+        pt.jitter = pt.jitter || Util.jitter();
+        pt.add(pt.jitter * amp, pt.jitter * this.jitterAmp);
+      });
+    });
+
+    return grid;
+  }
+
+  // greate Sneznt cells out of points
   genCells() {
     const cells = [];
     // create squares
@@ -69,7 +76,7 @@ export default class SnezntGrid {
         ];
         cells.push({
           points: quad,
-          grainWidth: Math.floor(p.random(5, 16)),
+          grainWidth: this.grainWidth,
           jitterAmp: Math.max(this.sizeX, this.sizeY) * p.random(0.1, 0.3) });
       });
     });
@@ -80,9 +87,9 @@ export default class SnezntGrid {
 
   draw() {
     p.push();
-    // p.fill(0, 0);
+    p.background(this.color);
     p.fill(this.color);
-    p.stroke(20, 120);
+    p.stroke(...this.lineColor);
     p.strokeWeight(1.5);
     this.cells.forEach((u) => {
       u.draw();
@@ -99,6 +106,8 @@ export default class SnezntGrid {
   }
 
   update() {
+    // this.grainWidth += Util.jitter();
+    // this.recalculatePoints();
     this.cells.forEach(u => u.update());
   }
 }
