@@ -13,6 +13,10 @@ export default class SnezntGrid {
     this.sizeY = sizeY;
     this.jitterAmp = sizeX * 0.3;
 
+    this.recalculatePoints();
+  }
+
+  recalculatePoints() {
     this.points = [];
     // generate points
     for (let i = 0; i < this.nr + 1; i++) {
@@ -25,10 +29,28 @@ export default class SnezntGrid {
     // jitter them
     this.points.forEach((row) => {
       row.forEach((pt) => {
-        pt.add(Util.jitter() * this.jitterAmp, Util.jitter() * this.jitterAmp);
+        pt.jitter = pt.jitter || Util.jitter();
+        pt.add(pt.jitter * this.jitterAmp, pt.jitter * this.jitterAmp);
       });
     });
 
+    if (this.cells.length > 0) {
+      // update cells
+      // this.cells = this.genCells().map(props => new SnezntCell(props));
+      const newCells = this.genCells();
+      newCells.forEach((props, i) => {
+        console.log(props.points)
+        this.cells[i].setPoints(props.points);
+      });
+    }
+    else {
+      // create new cells
+      this.cells = this.genCells().map(props => new SnezntCell(props));
+    }
+  }
+
+  genCells() {
+    const cells = [];
     // create squares
     const grid = this.points;
     grid.forEach((row, i) => {
@@ -45,11 +67,16 @@ export default class SnezntGrid {
           grid[i + 1][j + 1].copy(),
           grid[i + 1][j].copy(),
         ];
-
-        this.cells.push(new SnezntCell({ points: quad }));
+        cells.push({
+          points: quad,
+          grainWidth: Math.floor(p.random(5, 16)),
+          jitterAmp: Math.max(this.sizeX, this.sizeY) * p.random(0.1, 0.3) });
       });
     });
+
+    return cells;
   }
+
 
   draw() {
     p.push();
