@@ -1,28 +1,46 @@
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
 import dat from 'dat.gui-0.6.5/build/dat.gui';
-
+import Hieroglyph from './Hieroglyph';
 const sketch = p => {
-  const gridX = 1;
-  const gridY = 1;
-  const canvasSize = 600;
+  const gridX = 15;
+  const gridY = 15;
+  const canvasSize = 700;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
-  let gui = new dat.GUI();
+  const gui = new dat.GUI();
+  let hs = [];
 
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
-    p.noLoop();
-    p.frameRate(60);
+    // p.noLoop();
+    p.frameRate(2);
   };
 
   p.reset = () => {
-    p.createVector(10, 0).copy()
+    hs = [];
+    const a = p.createVector(gridX / 2, gridY / 2);
+    for (let i = 0; i < gridX; i++) {
+      for (let j = 0; j < gridY; j++) {
+        const b = p.createVector(i, j);
+        const pos = p.createVector(i * cellSize, j * cellSize);
+        const dist = Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+        const numLines = 8 - p.constrain(dist, 0,  8);
+        console.log(numLines);
+        const h = new Hieroglyph({
+          size: cellSize,
+          pos,
+          numLines,
+        });
+        hs.push(h);
+      }
+    }
   };
 
   p.draw = () => {
-    p.background(200);
+    p.background(255);
+    hs.forEach(h => h.draw());
   };
 
   p.saveImage = () => {
