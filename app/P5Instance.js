@@ -1,3 +1,10 @@
+/**
+  @author Sher Minn Chong sherminn.chong@gmail.com
+  @author Cory Dominguez corydominguez@gmail.com
+
+  inspired by https://cloud.github.com/downloads/matthewepler/ReCode_Project/COMPUTER_GRAPHICS_AND_ART_May1978.pdf
+**/
+
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
 import dat from 'dat.gui-0.6.5/build/dat.gui';
