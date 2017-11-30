@@ -7,9 +7,10 @@ export default class SnezntCell {
     this.pos = { x: 0, y: 0 } || pos;
     this.points = points;
     this.bellyButton = {
-      x: p.random(this.points[0].x, this.points[1].x),
-      y: p.random(this.points[0].y, this.points[2].y),
+      x: p.random(this.points[1].x, this.points[2].x),
+      y: p.random(this.points[0].y, this.points[1].y),
     };
+    console.log(this.points)
     this.units = [];
     this.setup();
   }

@@ -40,7 +40,7 @@ const Util = {
   },
 
   jitter(){
-    return p.random(-10, 10);
+    return p.random(-1, 1);
   },
 
   angleJitter(){
