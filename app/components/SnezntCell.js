@@ -10,11 +10,15 @@ export default class SnezntCell {
     this.jitterAmp = jitterAmp;
     this.width = this.points[2].x - this.points[1].x;
     this.height = this.points[0].y - this.points[1].y;
+    this.calcBellyButton();
+    this.setup();
+  }
+
+  calcBellyButton() {
     this.bellyButton = {
       x: p.random(this.points[1].x, this.points[2].x) + (Util.jitter() * this.jitterAmp),
       y: p.random(this.points[0].y, this.points[1].y) + (Util.jitter() * this.jitterAmp),
     };
-    this.setup();
   }
 
   setup() {
@@ -30,9 +34,14 @@ export default class SnezntCell {
     }
   }
 
-  setProps({points, grainWidth}) {
+  setProps({ points, grainWidth, jitterAmp }) {
     this.points = points || this.points;
     this.grainWidth = grainWidth || this.grainWidth;
+    if (this.jitterAmp != jitterAmp) {
+      this.jitterAmp = jitterAmp || this.jitterAmp;
+      this.calcBellyButton();
+    }
+
     this.setup();
   }
 

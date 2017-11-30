@@ -14,24 +14,14 @@ export default class SnezntGrid {
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     this.jitterAmp = sizeX * 0.3;
+    this.cellJitterAmp = Math.max(this.sizeX, this.sizeY) * p.random(0.1, 0.3);
     this.grainWidth = Math.floor(p.random(5, 13));
     this.recalculatePoints();
   }
 
   recalculatePoints() {
     // create grid
-    if (this.grid.length > 0) {
-      this.genGrid(0).forEach((row, i) => {
-        row.forEach((cell, j) => {
-          const curr = this.grid[i][j];
-          const step = p.createVector(p.lerp(curr.x, cell.x, 0.01), p.lerp(curr.y, cell.y, 0.01));
-          curr
-            .add(Util.jitter() * this.jitterAmp*0.1, Util.jitter() * this.jitterAmp*0.1);
-        });
-      });
-    } else {
-      this.grid = this.genGrid();
-    }
+    this.grid = this.genGrid();
 
     if (this.cells.length > 0) {
       // update cells if already exist
@@ -88,7 +78,7 @@ export default class SnezntGrid {
         cells.push({
           points: quad,
           grainWidth: this.grainWidth,
-          jitterAmp: Math.max(this.sizeX, this.sizeY) * p.random(0.1, 0.3) });
+          jitterAmp: this.cellJitterAmp });
       });
     });
 

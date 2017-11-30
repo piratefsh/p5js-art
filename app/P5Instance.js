@@ -32,18 +32,25 @@ const sketch = p => {
       cols: gridY,
       sizeX: (p.width - (padding * 2)) / gridX,
       sizeY: (p.height - (padding * 2)) / gridY,
-      color: [p.random(210, 220), 200, p.random(10, 20)],
-      lineColor: [58, 83, 105, 100],
+      color: [250,247,241],
+      lineColor: [8,40,70,100],
     });
 
     const controllers = [
+      gui.add(p, 'saveImg'),
+      gui.add(p, 'generateVariation'),
+      gui.add(p, 'reset'),
       gui.add(sz, 'jitterAmp').min(1).max(60).onChange(_ => sz.recalculatePoints()),
-      gui.add(sz, 'grainWidth').min(5).max(20).onChange(_ => sz.recalculatePoints()),
+      gui.add(sz, 'cellJitterAmp').min(1).max(60).onChange(_ => sz.recalculatePoints()),
+      gui.add(sz, 'grainWidth').min(2).max(20).onChange(_ => sz.recalculatePoints()),
       gui.addColor(sz, 'color'),
       gui.addColor(sz, 'lineColor'),
     ];
-
   };
+
+  p.generateVariation= () =>{
+    sz.recalculatePoints()
+  }
 
   p.draw = () => {
     p.push();
@@ -53,10 +60,14 @@ const sketch = p => {
     p.pop();
   };
 
+  p.saveImg = () => {
+    p.save(`tadaaa-${Date.now()}.png`);
+  };
+
   p.keyPressed = () => {
     switch (p.key) {
       case 'S':
-        p.save(`tadaaa-${Date.now()}.png`);
+        p.saveImg();
         break;
       case 'R':
         p.reset();
