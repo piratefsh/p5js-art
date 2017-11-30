@@ -1,16 +1,17 @@
 import { p } from 'P5Instance';
 import SnezntUnit from './SnezntUnit';
+import Util from 'components/utils/Utils';
 
 export default class SnezntCell {
   constructor({ pos, points }) {
-    this.numUnits = 5;
+    this.numUnits = 12;
     this.pos = { x: 0, y: 0 } || pos;
     this.points = points;
+    this.jitterAmp = 30;
     this.bellyButton = {
-      x: p.random(this.points[1].x, this.points[2].x),
-      y: p.random(this.points[0].y, this.points[1].y),
+      x: p.random(this.points[1].x, this.points[2].x) + (Util.jitter() * this.jitterAmp),
+      y: p.random(this.points[0].y, this.points[1].y) + (Util.jitter() * this.jitterAmp),
     };
-    console.log(this.points)
     this.units = [];
     this.setup();
   }

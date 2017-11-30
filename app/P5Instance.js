@@ -13,7 +13,6 @@ const sketch = p => {
 
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
-    p.createCanvas(canvasSize, canvasSize);
     p.reset();
     // p.noLoop();
     p.frameRate(60);
@@ -21,12 +20,12 @@ const sketch = p => {
   };
 
   p.reset = () => {
-    sz = new SnezntGrid({rows: 3, cols: 3});
+    sz = new SnezntGrid({rows: 4, cols: 4});
   };
 
   p.draw = () => {
-    p.background('teal');
-    // p.background('#222');
+    // p.background('teal');
+    p.background(220, 210, 20);
     sz.update();
     sz.draw();
   };

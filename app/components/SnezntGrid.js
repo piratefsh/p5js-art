@@ -9,7 +9,7 @@ export default class SnezntGrid {
     this.nc = cols;
     this.cells = [];
     this.size = 100;
-    this.jitterAmp = 10;
+    this.jitterAmp = 16;
 
     this.points = [];
     // generate points
@@ -51,18 +51,20 @@ export default class SnezntGrid {
 
   draw() {
     p.push();
+    p.fill(0, 0);
+    p.stroke(20, 255);
+    p.strokeWeight(2);
     p.translate(40, 40);
     this.cells.forEach((u) => {
       u.draw();
     });
 
-    if(this.debug){
+    if (this.debug) {
       this.points.forEach((rows) => {
         rows.forEach((pt) => {
           p.ellipse(pt.x, pt.y, 5, 5);
         });
       });
-      
     }
     p.pop();
   }
