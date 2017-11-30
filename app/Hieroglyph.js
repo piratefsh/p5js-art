@@ -17,7 +17,7 @@ export default class Hieroglyph {
     const f = this.pos.copy().add(this.size / 2, this.size);
     const g = this.pos.copy().add(0, this.size);
     const h = this.pos.copy().add(0, this.size / 2);
-    p.strokeWeight(2);
+    
 
     this.outline = [[c.x, c.y, a.x, a.y],
       [c.x, c.y, e.x, e.y],
@@ -41,7 +41,9 @@ export default class Hieroglyph {
   }
 
   draw(){
+    p.strokeWeight(1);
     this.drawLines(this.outline);
+    p.strokeWeight(this.numLines/2);
     this.drawLines(this.selectedLines);
   }
 

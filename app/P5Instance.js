@@ -10,24 +10,23 @@ const sketch = p => {
   const edgeLen = cellSize / 2;
   const gui = new dat.GUI();
   let hs = [];
+  let a = p.createVector(gridX / 2, gridY / 2);
 
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
     // p.noLoop();
-    p.frameRate(2);
+    p.frameRate(60);
   };
 
   p.reset = () => {
     hs = [];
-    const a = p.createVector(gridX / 2, gridY / 2);
     for (let i = 0; i < gridX; i++) {
       for (let j = 0; j < gridY; j++) {
         const b = p.createVector(i, j);
         const pos = p.createVector(i * cellSize, j * cellSize);
         const dist = Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
-        const numLines = 8 - p.constrain(dist, 0,  8);
-        console.log(numLines);
+        const numLines = 8 - p.constrain(dist, 0,  7);
         const h = new Hieroglyph({
           size: cellSize,
           pos,
@@ -56,6 +55,11 @@ const sketch = p => {
         p.reset();
     }
   };
+
+  p.mouseMoved = () => {
+    a = p.createVector(Math.floor(p.mouseX/cellSize), Math.floor(p.mouseY/cellSize));
+    p.reset();
+  }
 };
 
 // set global functions for p5
