@@ -4,10 +4,13 @@ import Util from 'components/utils/Utils';
 
 export default class SnezntCell {
   constructor({ pos, points }) {
-    this.numUnits = 12;
     this.pos = { x: 0, y: 0 } || pos;
     this.points = points;
-    this.jitterAmp = 30;
+    this.grainWidth = Math.floor(p.random(5, 16));
+    this.width = this.points[2].x - this.points[1].x;
+    this.height = this.points[0].y - this.points[1].y;
+    this.numUnits = Math.max(this.width, this.height) / this.grainWidth;
+    this.jitterAmp = Math.max(this.width, this.height) * p.random(0.1, 0.3);
     this.bellyButton = {
       x: p.random(this.points[1].x, this.points[2].x) + (Util.jitter() * this.jitterAmp),
       y: p.random(this.points[0].y, this.points[1].y) + (Util.jitter() * this.jitterAmp),

@@ -3,20 +3,22 @@ import SnezntCell from './SnezntCell';
 import Util from 'components/utils/Utils';
 
 export default class SnezntGrid {
-  constructor({ rows, cols }) {
+  constructor({ rows, cols, sizeX = 150, sizeY = 100, color }) {
     this.debug = false;
+    this.color = color;
     this.nr = rows;
     this.nc = cols;
     this.cells = [];
-    this.size = 100;
-    this.jitterAmp = 16;
+    this.sizeX = sizeX;
+    this.sizeY = sizeY;
+    this.jitterAmp = sizeX * 0.3;
 
     this.points = [];
     // generate points
     for (let i = 0; i < this.nr + 1; i++) {
       this.points.push(new Array(this.nc + 1));
       for (let j = 0; j < this.nc + 1; j++) {
-        const vertex = p.createVector(i * this.size, j * this.size);
+        const vertex = p.createVector(i * this.sizeX, j * this.sizeY);
         this.points[i][j] = vertex;
       }
     }
@@ -51,10 +53,10 @@ export default class SnezntGrid {
 
   draw() {
     p.push();
-    p.fill(0, 0);
-    p.stroke(20, 255);
-    p.strokeWeight(2);
-    p.translate(40, 40);
+    // p.fill(0, 0);
+    p.fill(this.color);
+    p.stroke(20, 120);
+    p.strokeWeight(1.5);
     this.cells.forEach((u) => {
       u.draw();
     });

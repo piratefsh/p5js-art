@@ -4,14 +4,14 @@ import SnezntUnit from 'components/SnezntUnit';
 import SnezntCell from 'components/SnezntCell';
 import SnezntGrid from 'components/SnezntGrid';
 const sketch = p => {
-  const gridX = 1;
-  const gridY = 1;
-  const canvasSize = 400;
-  const cellSize = Math.ceil(canvasSize / gridX);
-  const edgeLen = cellSize / 2;
+  let gridX = Math.floor(window.innerWidth / 120);
+  let gridY = Math.floor(window.innerHeight / 120);
+  let fillCol;
+  const padding = 40;
   let sz;
 
   p.setup = () => {
+    fillCol = p.color(220, 210, 20);
     p.createCanvas(window.innerWidth, window.innerHeight);
     p.reset();
     // p.noLoop();
@@ -20,14 +20,26 @@ const sketch = p => {
   };
 
   p.reset = () => {
-    sz = new SnezntGrid({rows: 4, cols: 4});
+    
+    gridX = Math.floor(window.innerWidth / 120);
+    gridY = Math.floor(window.innerHeight / 120);
+    sz = new SnezntGrid({
+      color: fillCol,
+      rows: gridX,
+      cols: gridY,
+      sizeX: (p.width - padding * 2) / gridX,
+      sizeY: (p.height - padding * 2) / gridY,
+    });
   };
 
   p.draw = () => {
     // p.background('teal');
-    p.background(220, 210, 20);
+    p.push()
+    p.translate(padding, padding);
+    p.background(fillCol);
     sz.update();
     sz.draw();
+    p.pop()
   };
 
   p.keyPressed = () => {
@@ -39,6 +51,11 @@ const sketch = p => {
         p.reset();
     }
   };
+
+  p.windowResized = () => {
+    p.resizeCanvas(window.innerWidth, window.innerHeight);
+    p.reset()
+  }
 };
 
 // set global functions for p5
