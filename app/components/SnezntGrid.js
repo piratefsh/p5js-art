@@ -10,6 +10,7 @@ export default class SnezntGrid {
     this.nr = rows;
     this.nc = cols;
     this.cells = [];
+    this.grid = [];
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     this.jitterAmp = sizeX * 0.3;
@@ -19,16 +20,26 @@ export default class SnezntGrid {
 
   recalculatePoints() {
     // create grid
-    this.points = this.genGrid();
+    if (this.grid.length > 0) {
+      this.genGrid(0).forEach((row, i) => {
+        row.forEach((cell, j) => {
+          const curr = this.grid[i][j];
+          const step = p.createVector(p.lerp(curr.x, cell.x, 0.01), p.lerp(curr.y, cell.y, 0.01));
+          curr
+            .add(Util.jitter() * this.jitterAmp*0.1, Util.jitter() * this.jitterAmp*0.1);
+        });
+      });
+    } else {
+      this.grid = this.genGrid();
+    }
 
     if (this.cells.length > 0) {
-      // update cells
+      // update cells if already exist
       const newCells = this.genCells();
       newCells.forEach((props, i) => {
         this.cells[i].setProps(props);
       });
-    }
-    else {
+    } else {
       // create new cells
       this.cells = this.genCells().map(props => new SnezntCell(props));
     }
@@ -59,7 +70,7 @@ export default class SnezntGrid {
   genCells() {
     const cells = [];
     // create squares
-    const grid = this.points;
+    const grid = this.grid;
     grid.forEach((row, i) => {
       if (i === grid.length - 1) {
         return;
@@ -96,7 +107,7 @@ export default class SnezntGrid {
     });
 
     if (this.debug) {
-      this.points.forEach((rows) => {
+      this.grid.forEach((rows) => {
         rows.forEach((pt) => {
           p.ellipse(pt.x, pt.y, 5, 5);
         });
