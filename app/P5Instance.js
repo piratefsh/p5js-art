@@ -1,11 +1,15 @@
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
+import dat from 'dat.gui-0.6.5/build/dat.gui';
+
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
   const canvasSize = 600;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
+  let gui = new dat.GUI();
+
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
