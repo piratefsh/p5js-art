@@ -37,6 +37,14 @@ const Util = {
 
   midpoint(a, b) {
     return p.createVector((a.x+b.x)/2, (a.y+b.y)/2)
+  },
+
+  jitter(){
+    return p.random(-10, 10);
+  },
+
+  angleJitter(){
+    return p.random(0, 0.1);
   }
 };
 

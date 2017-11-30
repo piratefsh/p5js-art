@@ -6,13 +6,14 @@ import SnezntGrid from 'components/SnezntGrid';
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
-  const canvasSize = 600;
+  const canvasSize = 400;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   let sz;
 
   p.setup = () => {
     p.createCanvas(window.innerWidth, window.innerHeight);
+    p.createCanvas(canvasSize, canvasSize);
     p.reset();
     // p.noLoop();
     p.frameRate(60);
@@ -20,11 +21,12 @@ const sketch = p => {
   };
 
   p.reset = () => {
-    sz = new SnezntGrid({rows: 4, cols: 4});
+    sz = new SnezntGrid({rows: 3, cols: 3});
   };
 
   p.draw = () => {
     p.background('teal');
+    // p.background('#222');
     sz.update();
     sz.draw();
   };
