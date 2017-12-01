@@ -110,13 +110,12 @@
 	var _Hieroglyph2 = _interopRequireDefault(_Hieroglyph);
 
 	var sketch = function sketch(p) {
-	  var gridX = 10;
-	  var gridY = 10;
+	  var gridX = 12;
+	  var gridY = 12;
 	  var gutter = 8;
-	  var canvasSize = 600;
-	  var cellSize = Math.ceil(canvasSize / gridX) - gutter * 2;
+	  var canvasSize = 510;
+	  var cellSize = Math.ceil(canvasSize / gridX) - gutter;
 	  var edgeLen = cellSize / 2;
-	  var gui = new _datGui065BuildDatGui2['default'].GUI();
 	  var hs = [];
 	  var a = p.createVector(gridX / 2, gridY / 2);
 
