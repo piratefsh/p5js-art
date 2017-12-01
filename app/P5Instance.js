@@ -10,13 +10,12 @@ import Util from 'components/utils/Utils';
 import dat from 'dat.gui-0.6.5/build/dat.gui';
 import Hieroglyph from './Hieroglyph';
 const sketch = p => {
-  const gridX = 10;
-  const gridY = 10;
+  const gridX = 12;
+  const gridY = 12;
   const gutter = 8;
-  const canvasSize = 600;
-  const cellSize = Math.ceil(canvasSize / gridX) - gutter*2;
+  const canvasSize = 510;
+  const cellSize = Math.ceil(canvasSize / gridX) - gutter;
   const edgeLen = cellSize / 2;
-  const gui = new dat.GUI();
   let hs = [];
   let a = p.createVector(gridX / 2, gridY / 2);
 
