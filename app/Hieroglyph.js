@@ -3,7 +3,7 @@ import { p } from 'P5Instance';
 export default class Hieroglyph {
   constructor({ pos, size, numLines }) {
     this.pos = pos;
-    this.size = size ||50;
+    this.size = size || 50;
     this.numLines = numLines;
     this.setup();
   }
@@ -17,7 +17,6 @@ export default class Hieroglyph {
     const f = this.pos.copy().add(this.size / 2, this.size);
     const g = this.pos.copy().add(0, this.size);
     const h = this.pos.copy().add(0, this.size / 2);
-    
 
     this.outline = [[c.x, c.y, a.x, a.y],
       [c.x, c.y, e.x, e.y],
@@ -40,10 +39,9 @@ export default class Hieroglyph {
     }
   }
 
-  draw(){
-    p.strokeWeight(1);
+  draw() {
+    p.strokeWeight(this.numLines / 2);
     this.drawLines(this.outline);
-    p.strokeWeight(this.numLines/2);
     this.drawLines(this.selectedLines);
   }
 

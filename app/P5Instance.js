@@ -10,10 +10,11 @@ import Util from 'components/utils/Utils';
 import dat from 'dat.gui-0.6.5/build/dat.gui';
 import Hieroglyph from './Hieroglyph';
 const sketch = p => {
-  const gridX = 15;
-  const gridY = 15;
-  const canvasSize = 700;
-  const cellSize = Math.ceil(canvasSize / gridX);
+  const gridX = 10;
+  const gridY = 10;
+  const gutter = 8;
+  const canvasSize = 600;
+  const cellSize = Math.ceil(canvasSize / gridX) - gutter*2;
   const edgeLen = cellSize / 2;
   const gui = new dat.GUI();
   let hs = [];
@@ -28,12 +29,16 @@ const sketch = p => {
 
   p.reset = () => {
     hs = [];
+    let offsetX = 0;
+    let offsetY = 0;
     for (let i = 0; i < gridX; i++) {
+      offsetX = i * gutter;
       for (let j = 0; j < gridY; j++) {
+        offsetY = j * gutter;
         const b = p.createVector(i, j);
-        const pos = p.createVector(i * cellSize, j * cellSize);
+        const pos = p.createVector(i * cellSize + offsetX, j * cellSize + offsetY);
         const dist = Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
-        const numLines = 8 - p.constrain(dist, 0,  7);
+        const numLines = 8 - p.constrain(dist, 0, 7);
         const h = new Hieroglyph({
           size: cellSize,
           pos,
@@ -64,9 +69,9 @@ const sketch = p => {
   };
 
   p.mouseMoved = () => {
-    a = p.createVector(Math.floor(p.mouseX/cellSize), Math.floor(p.mouseY/cellSize));
+    a = p.createVector(Math.floor(p.mouseX / cellSize), Math.floor(p.mouseY / cellSize));
     p.reset();
-  }
+  };
 };
 
 // set global functions for p5
