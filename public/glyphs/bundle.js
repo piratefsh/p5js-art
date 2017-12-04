@@ -138,6 +138,7 @@
 	    // init GUI
 	    gui = new _datGui065BuildDatGui2['default'].GUI();
 	    gui.add(_Glyph2['default'], 'debug');
+	    gui.add(writer, 'uppercase');
 	    gui.add(writer, 'compact');
 	    gui.add(writer, 'sort');
 	    gui.add(writer, 'strokeWeight').min(1).max(10);
@@ -77923,6 +77924,7 @@
 	    this.gutterRatio = 0;
 	    this.sort = false;
 	    this.compact = false;
+	    this.uppercase = false;
 	    this.strokeWeight = 1;
 	    this.strokeOpacity = 255;
 	  }
@@ -77935,7 +77937,7 @@
 	      return text.split('\n').map(function (ln) {
 	        return ln.trim();
 	      }).map(function (ln) {
-	        return ln.toUpperCase();
+	        return _this.uppercase && ln.toUpperCase() || ln;
 	      }).join('').split('').filter(function (char) {
 	        return char.length > 0;
 	      }).filter(function (char) {
