@@ -6,7 +6,7 @@ module.exports = {
         app: ['./app/index.js']
     },
     output: {
-        path: path.resolve(__dirname, 'public/fuzzy'),
+        path: path.resolve(__dirname, 'public/glyphs'),
         publicPath: '',
         filename: 'bundle.js'
     },
