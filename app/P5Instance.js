@@ -34,20 +34,26 @@ and so cold`);
 
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize);
-    writer = new GlyphWriter({ input });
-    p.setupDOM();
-    p.reset();
-    // p.noLoop();
     p.frameRate(60);
+    // p.noLoop();
+
+    // instantiate writer
+    writer = new GlyphWriter({ input });
+
+    // add event handlers
+    p.setupDOM(writer);
+
+    // start
+    p.reset();
   };
 
-  p.setupDOM = () => {
+  p.setupDOM = (writer) => {
     document.body.appendChild(textarea);
     textarea.value = input;
     textarea.style.width = `${canvasSize}px`;
     textarea.style.height = `${canvasSize}px`;
     textarea.addEventListener('change', () => {
-      p.reset();
+      p.update();
       // p.resizeCanvas(canvasSize, (writer.lines.length + 3) * writer.size);
     });
     gui = new dat.GUI();
@@ -57,7 +63,7 @@ and so cold`);
   };
 
   p.update = () => {
-    writer.update(textarea.value);
+    writer.updateInput(textarea.value);
   };
 
   p.reset = () => {

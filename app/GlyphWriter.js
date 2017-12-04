@@ -3,11 +3,7 @@ import { p } from 'P5Instance';
 
 export default class GlyphWriter {
   constructor({ input }) {
-    this.lines = this.parseText(input);
-    this.updateSize()
-    // size = Math.ceil(p.width / (this.lines.length - 1));
-    // this.gutter = this.size * 0.16;
-    // this.size = this.size - this.gutter;
+    this.updateInput(input);
     this.glyphs = [];
   }
 
@@ -26,6 +22,8 @@ export default class GlyphWriter {
 
   updateInput(input) {
     this.lines = this.parseText(input);
+    this.updateSize();
+    this.update();
   }
 
   updateSize() {
@@ -35,6 +33,7 @@ export default class GlyphWriter {
     this.gutter = this.size * 0.16;
     this.size -= this.gutter;
   }
+
   update() {
     this.glyphs = [];
     let offsetX = 0;
