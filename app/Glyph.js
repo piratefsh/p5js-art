@@ -15,6 +15,7 @@ export default class Glyph {
       p.stroke(255, 200);
     } else {
       p.stroke(255, 255);
+      p.strokeWeight(2);
     }
     p.translate(this.pos.x, this.pos.y);
 
@@ -68,7 +69,7 @@ export default class Glyph {
 Glyph.fetchStroke = (char) => {
   return Glyph.STROKES[char] || [0, 0, 0, 0]
 }
-Glyph.debug = false;
+Glyph.debug = true;
 Glyph.DIAGONAL_LINES = [
   [0, 0, 1, 1],
   [1, 0, 0, 1],

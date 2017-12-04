@@ -1,11 +1,12 @@
 import Glyph from './Glyph';
-import Util from 'components/utils/Utils'
+import Util from 'components/utils/Utils';
 import { p } from 'P5Instance';
 
 export default class GlyphWriter {
   constructor({ input }) {
     this.updateInput(input);
     this.glyphs = [];
+    this.gutterRatio = 0;
     this.sort = false;
   }
 
@@ -13,9 +14,19 @@ export default class GlyphWriter {
     return text.split('\n')
       .map(ln => ln.trim())
       .map(ln => ln.toUpperCase())
-      .map(ln => ln.split(''))
+      .join('')
+      .split('')
+      .filter(char => char.length > 0 && char !== ' ')
+      .reduce((acc, n, i, arr) => {
+        const len = arr.length / Math.floor(Math.sqrt(arr.length));
+        if (i % len === 0) {
+          acc.push(arr.slice(i, i + len));
+        }
+        return acc;
+      }, [])
+      // .map(ln => ln.split(''))
       .map(ln => (!this.sort && ln)
-        || ln.sort((a, b) => Util.sum(Glyph.fetchStroke(a)) - Util.sum(Glyph.fetchStroke(b))))
+        || ln.sort((a, b) => Util.sum(Glyph.fetchStroke(a)) - Util.sum(Glyph.fetchStroke(b))));
   }
 
   draw() {
@@ -35,7 +46,7 @@ export default class GlyphWriter {
     const maxLineLen = this.lines.length > 0 ?
       Math.max.apply(null, (this.lines.map(ln => ln.length))) : 10;
     this.size = Math.floor(p.width / (maxLineLen + 2));
-    this.gutter = this.size * 0.16;
+    this.gutter = this.size * this.gutterRatio;
     this.size -= this.gutter;
   }
 

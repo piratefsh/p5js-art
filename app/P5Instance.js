@@ -26,7 +26,7 @@ they were delicious
 so sweet
 and so cold`);
   const canvasSize = 600;
-  const canvasHeight = 460;
+  const canvasHeight = 600;
   const textarea = document.createElement('textarea');
   let gui;
   let writer;
