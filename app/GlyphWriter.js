@@ -10,7 +10,6 @@ export default class GlyphWriter {
   parseText(text) {
     return text.split('\n')
       .map(ln => ln.trim())
-      .filter(ln => ln.length > 0);
   }
 
   draw() {

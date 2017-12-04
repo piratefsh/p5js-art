@@ -25,8 +25,6 @@ Forgive me
 they were delicious
 so sweet
 and so cold`);
-  const gridX = 12;
-  const gridY = 8;
   const canvasSize = 600;
   const textarea = document.createElement('textarea');
   let gui;
@@ -41,25 +39,26 @@ and so cold`);
     writer = new GlyphWriter({ input });
 
     // add event handlers
-    p.setupDOM(writer);
+    p.setupDOM();
 
     // start
     p.reset();
+
+
+    // init GUI
+    gui = new dat.GUI();
+    gui.add(Glyph, 'debug');
+    gui.add(p, 'saveImage');
   };
 
-  p.setupDOM = (writer) => {
+  p.setupDOM = () => {
     document.body.appendChild(textarea);
     textarea.value = input;
     textarea.style.width = `${canvasSize}px`;
     textarea.style.height = `${canvasSize}px`;
     textarea.addEventListener('change', () => {
       p.update();
-      // p.resizeCanvas(canvasSize, (writer.lines.length + 3) * writer.size);
     });
-    gui = new dat.GUI();
-    gui.add(Glyph, 'debug');
-    gui.add(p, 'saveImage');
-    gui.add(p, 'saveImage');
   };
 
   p.update = () => {
