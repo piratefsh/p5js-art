@@ -55,7 +55,7 @@ and so cold`);
 
   p.resizeCell = () => {
     longestLine = text.length > 0 ? Math.max.apply(null, (text.map(ln => ln.length))) : longestLine;
-    cellSize = Math.ceil(canvasSize / (longestLine + 1)) - gutter;
+    cellSize = Math.ceil(canvasSize / (longestLine + 2)) - gutter;
   };
 
   p.setup = () => {
@@ -100,7 +100,7 @@ and so cold`);
     p.background(0);
     p.stroke(255);
     p.push();
-    p.translate(cellSize/2, cellSize/2);
+    p.translate(cellSize, cellSize);
     hs.forEach(h => h.draw());
     p.pop();
   };

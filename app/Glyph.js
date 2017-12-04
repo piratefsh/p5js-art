@@ -11,6 +11,7 @@ export default class Glyph {
   draw() {
     p.push();
     p.fill(0, 0);
+    p.stroke(255, 255);
     p.translate(this.pos.x, this.pos.y);
 
     const [straights, diagonals, curves] = this.strokes;
@@ -33,8 +34,9 @@ export default class Glyph {
     }
 
     if (Glyph.debug) {
+      p.stroke(255);
       p.text(this.letter, 0, 0);
-      p.rect(0, 0, this.size, this.size);
+      // p.rect(0, 0, this.size, this.size);
     }
 
     p.pop();
