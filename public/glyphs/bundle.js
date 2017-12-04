@@ -116,7 +116,7 @@
 	var sketch = function sketch(p) {
 	  var input = 'I have eaten\nthe plums\nthat were in\nthe icebox\n\nand which\nyou were probably\nsaving\nfor breakfast\n\nForgive me\nthey were delicious\nso sweet\nand so cold';
 	  var canvasSize = 600;
-	  var canvasHeight = 460;
+	  var canvasHeight = 600;
 	  var textarea = document.createElement('textarea');
 	  var gui = undefined;
 	  var writer = undefined;
@@ -138,7 +138,10 @@
 	    // init GUI
 	    gui = new _datGui065BuildDatGui2['default'].GUI();
 	    gui.add(_Glyph2['default'], 'debug');
+	    gui.add(writer, 'compact');
 	    gui.add(writer, 'sort');
+	    gui.add(writer, 'strokeWeight').min(1).max(10);
+	    gui.add(writer, 'strokeOpacity').min(0).max(255);
 	    gui.add(p, 'saveImage');
 	  };
 
@@ -77917,7 +77920,11 @@
 
 	    this.updateInput(input);
 	    this.glyphs = [];
+	    this.gutterRatio = 0;
 	    this.sort = false;
+	    this.compact = false;
+	    this.strokeWeight = 1;
+	    this.strokeOpacity = 255;
 	  }
 
 	  _createClass(GlyphWriter, [{
@@ -77929,9 +77936,17 @@
 	        return ln.trim();
 	      }).map(function (ln) {
 	        return ln.toUpperCase();
-	      }).map(function (ln) {
-	        return ln.split('');
-	      }).map(function (ln) {
+	      }).join('').split('').filter(function (char) {
+	        return char.length > 0;
+	      }).filter(function (char) {
+	        return !_this.compact || char !== ' ';
+	      }).reduce(function (acc, n, i, arr) {
+	        var len = Math.floor(arr.length / Math.floor(Math.sqrt(arr.length)));
+	        if (i % len === 0) {
+	          acc.push(arr.slice(i, i + len));
+	        }
+	        return acc;
+	      }, []).map(function (ln) {
 	        return !_this.sort && ln || ln.sort(function (a, b) {
 	          return _componentsUtilsUtils2['default'].sum(_Glyph2['default'].fetchStroke(a)) - _componentsUtilsUtils2['default'].sum(_Glyph2['default'].fetchStroke(b));
 	        });
@@ -77961,7 +77976,7 @@
 	        return ln.length;
 	      })) : 10;
 	      this.size = Math.floor(_P5Instance.p.width / (maxLineLen + 2));
-	      this.gutter = this.size * 0.16;
+	      this.gutter = this.size * this.gutterRatio;
 	      this.size -= this.gutter;
 	    }
 	  }, {
@@ -77978,7 +77993,9 @@
 	          var h = new _Glyph2['default']({
 	            pos: pos,
 	            size: this.size,
-	            letter: this.lines[i][j]
+	            letter: this.lines[i][j],
+	            strokeWeight: this.strokeWeight,
+	            strokeOpacity: this.strokeOpacity
 	          });
 	          this.glyphs.push(h);
 	        }
@@ -78092,6 +78109,10 @@
 	    var letter = _ref$letter === undefined ? 'A' : _ref$letter;
 	    var pos = _ref.pos;
 	    var size = _ref.size;
+	    var _ref$strokeWeight = _ref.strokeWeight;
+	    var strokeWeight = _ref$strokeWeight === undefined ? 1 : _ref$strokeWeight;
+	    var _ref$strokeOpacity = _ref.strokeOpacity;
+	    var strokeOpacity = _ref$strokeOpacity === undefined ? 255 : _ref$strokeOpacity;
 
 	    _classCallCheck(this, Glyph);
 
@@ -78099,6 +78120,8 @@
 	    this.size = size;
 	    this.letter = letter;
 	    this.strokes = Glyph.STROKES[this.letter] || [0, 0];
+	    this.strokeOpacity = strokeOpacity;
+	    this.strokeWeight = strokeWeight;
 	  }
 
 	  _createClass(Glyph, [{
@@ -78106,11 +78129,8 @@
 	    value: function draw() {
 	      _P5Instance.p.push();
 	      _P5Instance.p.fill(0, 0);
-	      if (Glyph.debug) {
-	        _P5Instance.p.stroke(255, 200);
-	      } else {
-	        _P5Instance.p.stroke(255, 255);
-	      }
+	      _P5Instance.p.stroke(255, this.strokeOpacity);
+	      _P5Instance.p.strokeWeight(this.strokeWeight);
 	      _P5Instance.p.translate(this.pos.x, this.pos.y);
 
 	      var _strokes = _slicedToArray(this.strokes, 4);
@@ -78145,9 +78165,12 @@
 	      }
 
 	      if (Glyph.debug) {
-	        _P5Instance.p.stroke(255);
+	        _P5Instance.p.push();
+	        _P5Instance.p.stroke(255, 0);
+	        _P5Instance.p.fill(255);
 	        _P5Instance.p.text(this.letter, 0, 0);
 	        // p.rect(0, 0, this.size, this.size);
+	        _P5Instance.p.pop();
 	      }
 
 	      _P5Instance.p.pop();
@@ -78165,7 +78188,7 @@
 	Glyph.fetchStroke = function (char) {
 	  return Glyph.STROKES[char] || [0, 0, 0, 0];
 	};
-	Glyph.debug = false;
+	Glyph.debug = true;
 	Glyph.DIAGONAL_LINES = [[0, 0, 1, 1], [1, 0, 0, 1], [1, 0, 1, 1], [0, 0, 0, 1]];
 	Glyph.STROKES = {
 	  A: [1, 2, 0, 0],
@@ -78174,7 +78197,7 @@
 	  D: [1, 0, 1, 0],
 	  E: [4, 0, 0, 0],
 	  F: [3, 0, 0, 0],
-	  G: [3, 0, 0, 0],
+	  G: [2, 0, 1, 0],
 	  H: [3, 0, 0, 0],
 	  I: [3, 0, 0, 0],
 	  J: [1, 0, 1, 0],
