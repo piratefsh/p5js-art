@@ -4,7 +4,7 @@ export default class Glyph {
   constructor({ letter = 'A', pos, size }) {
     this.pos = pos.copy();
     this.size = size;
-    this.letter = letter
+    this.letter = letter;
     this.strokes = Glyph.STROKES[this.letter] || [0, 0];
   }
 
@@ -18,8 +18,9 @@ export default class Glyph {
     }
     p.translate(this.pos.x, this.pos.y);
 
-    const [straights, diagonals, curves] = this.strokes;
+    const [straights, diagonals, curves, dots] = this.strokes;
     const step = this.size / straights;
+
     for (let i = 0; i < straights; i++) {
       p.line(step * 0, step * i, step, step * i);
     }
@@ -29,6 +30,17 @@ export default class Glyph {
         this.size - (this.size / curves * (i)),
         this.size - (this.size / curves * (i)));
     }
+
+    p.push();
+    p.fill(255);
+    p.stroke(0, 0);
+    for (let i = 0; i < dots; i++) {
+      p.ellipse(this.size/2 - this.size/dots * i,
+        0,
+        this.size * 0.3,
+        this.size * 0.3);
+    }
+    p.pop();
 
     for (let i = 0; i < diagonals; i++) {
       const s = Glyph.DIAGONAL_LINES[i % 4];
@@ -113,5 +125,9 @@ Glyph.STROKES = {
   x: [0, 2, 0, 0],
   y: [0, 2, 0, 0],
   z: [2, 1, 0, 0],
+  '.': [0, 0, 0, 1],
+  ':': [0, 0, 0, 2],
+  ')': [0, 0, 0.5, 0],
+  '(': [0, 0, 0.5, 0],
 };
 

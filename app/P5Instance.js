@@ -13,7 +13,6 @@ import Glyph from './Glyph';
 const sketch = p => {
   const gridX = 12;
   const gridY = 8;
-  const gutter = 4;
   const canvasSize = 800;
   const textarea = document.createElement('textarea');
   const input = (`I have eaten
@@ -31,6 +30,7 @@ they were delicious
 so sweet
 and so cold`);
   let cellSize = Math.ceil(canvasSize / (gridX - 1)) - gutter;
+  let gutter = 4;
   let longestLine = gridX;
   let hs = [];
   let a = p.createVector(gridX / 2, gridY / 2);
@@ -43,10 +43,11 @@ and so cold`);
     textarea.style.width = `${canvasSize}px`;
     textarea.addEventListener('change', () => {
       p.reset();
-      p.resizeCanvas(canvasSize, (text.length + 2) * cellSize);
+      p.resizeCanvas(canvasSize, (text.length + 3) * cellSize);
     });
     gui = new dat.GUI();
     gui.add(Glyph, 'debug');
+    gui.add(p, 'saveImage');
     gui.add(p, 'saveImage');
   };
 
@@ -58,7 +59,9 @@ and so cold`);
 
   p.resizeCell = () => {
     longestLine = text.length > 0 ? Math.max.apply(null, (text.map(ln => ln.length))) : longestLine;
-    cellSize = Math.floor(canvasSize / (longestLine + 2)) - gutter;
+    cellSize = Math.floor(canvasSize / (longestLine + 2));
+    gutter = cellSize * 0.16;
+    cellSize -= gutter;
   };
 
   p.setup = () => {
