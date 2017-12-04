@@ -6,6 +6,7 @@ export default class GlyphWriter {
   constructor({ input }) {
     this.updateInput(input);
     this.glyphs = [];
+    this.sort = true;
   }
 
   parseText(text) {
@@ -13,7 +14,8 @@ export default class GlyphWriter {
       .map(ln => ln.trim())
       .map(ln => ln.toUpperCase())
       .map(ln => ln.split(''))
-      .map(ln => ln.sort((a, b) => Util.sum(Glyph.fetchStroke(a)) - Util.sum(Glyph.fetchStroke(b))))
+      .map(ln => (!this.sort && ln)
+        || ln.sort((a, b) => Util.sum(Glyph.fetchStroke(a)) - Util.sum(Glyph.fetchStroke(b))))
   }
 
   draw() {
@@ -25,7 +27,6 @@ export default class GlyphWriter {
 
   updateInput(input) {
     this.lines = this.parseText(input);
-    console.log(this.lines)
     this.updateSize();
     this.update();
   }
