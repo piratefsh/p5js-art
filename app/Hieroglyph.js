@@ -40,7 +40,7 @@ export default class Hieroglyph {
   }
 
   draw() {
-    p.strokeWeight(this.numLines / 2);
+    // p.strokeWeight(this.numLines / 2);
     this.drawLines(this.outline);
     this.drawLines(this.selectedLines);
   }
