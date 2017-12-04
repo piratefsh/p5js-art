@@ -116,12 +116,13 @@
 	var sketch = function sketch(p) {
 	  var input = 'I have eaten\nthe plums\nthat were in\nthe icebox\n\nand which\nyou were probably\nsaving\nfor breakfast\n\nForgive me\nthey were delicious\nso sweet\nand so cold';
 	  var canvasSize = 600;
+	  var canvasHeight = 460;
 	  var textarea = document.createElement('textarea');
 	  var gui = undefined;
 	  var writer = undefined;
 
 	  p.setup = function () {
-	    p.createCanvas(canvasSize, canvasSize);
+	    p.createCanvas(canvasSize, canvasHeight);
 	    p.frameRate(60);
 	    // p.noLoop();
 
@@ -145,7 +146,7 @@
 	    document.body.appendChild(textarea);
 	    textarea.value = input;
 	    textarea.style.width = canvasSize + 'px';
-	    textarea.style.height = canvasSize + 'px';
+	    textarea.style.height = canvasHeight + 'px';
 	    textarea.addEventListener('change', function () {
 	      p.update();
 	    });
@@ -77916,7 +77917,7 @@
 
 	    this.updateInput(input);
 	    this.glyphs = [];
-	    this.sort = true;
+	    this.sort = false;
 	  }
 
 	  _createClass(GlyphWriter, [{
@@ -78164,7 +78165,7 @@
 	Glyph.fetchStroke = function (char) {
 	  return Glyph.STROKES[char] || [0, 0, 0, 0];
 	};
-	Glyph.debug = true;
+	Glyph.debug = false;
 	Glyph.DIAGONAL_LINES = [[0, 0, 1, 1], [1, 0, 0, 1], [1, 0, 1, 1], [0, 0, 0, 1]];
 	Glyph.STROKES = {
 	  A: [1, 2, 0, 0],
