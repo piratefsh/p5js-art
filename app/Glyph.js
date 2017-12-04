@@ -65,6 +65,9 @@ export default class Glyph {
   }
 }
 
+Glyph.fetchStroke = (char) => {
+  return Glyph.STROKES[char] || [0, 0, 0, 0]
+}
 Glyph.debug = true;
 Glyph.DIAGONAL_LINES = [
   [0, 0, 1, 1],

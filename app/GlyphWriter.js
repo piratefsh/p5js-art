@@ -1,4 +1,5 @@
 import Glyph from './Glyph';
+import Util from 'components/utils/Utils'
 import { p } from 'P5Instance';
 
 export default class GlyphWriter {
@@ -10,6 +11,9 @@ export default class GlyphWriter {
   parseText(text) {
     return text.split('\n')
       .map(ln => ln.trim())
+      .map(ln => ln.toUpperCase())
+      .map(ln => ln.split(''))
+      .map(ln => ln.sort((a, b) => Util.sum(Glyph.fetchStroke(a)) - Util.sum(Glyph.fetchStroke(b))))
   }
 
   draw() {
@@ -21,6 +25,7 @@ export default class GlyphWriter {
 
   updateInput(input) {
     this.lines = this.parseText(input);
+    console.log(this.lines)
     this.updateSize();
     this.update();
   }

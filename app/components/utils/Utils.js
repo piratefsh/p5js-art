@@ -37,6 +37,10 @@ const Util = {
 
   midpoint(a, b) {
     return p.createVector((a.x+b.x)/2, (a.y+b.y)/2)
+  },
+
+  sum(arr){
+    return arr.reduce((acc, n) => acc + n, 0)
   }
 };
 
