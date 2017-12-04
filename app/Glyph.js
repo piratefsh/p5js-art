@@ -12,7 +12,7 @@ export default class Glyph {
     p.push();
     p.fill(0, 0);
     p.translate(this.pos.x, this.pos.y);
-    p.rect(0, 0, this.size, this.size);
+
     const [straights, diagonals, curves] = this.strokes;
     const step = this.size / straights;
     for (let i = 0; i < straights; i++) {
@@ -20,20 +20,21 @@ export default class Glyph {
     }
 
     for (let i = 0; i < curves; i++) {
-      p.ellipse(0, 0, this.size, this.size);
+      p.ellipse(0, 0, this.size - (this.size / curves * (i)), this.size - (this.size / curves * (i)));
     }
 
     for (let i = 0; i < diagonals; i++) {
       const s = Glyph.DIAGONAL_LINES[i % 4];
 
       p.line(s[0] * this.size,
-        s[1] * this.size,
+        s[1] * this.size * 1.1,
         s[2] * this.size,
         s[3] * this.size);
     }
 
     if (Glyph.debug) {
       p.text(this.letter, 0, 0);
+      p.rect(0, 0, this.size, this.size);
     }
 
     p.pop();
@@ -54,7 +55,7 @@ Glyph.DIAGONAL_LINES = [
 Glyph.STROKES = {
   A: [1, 2, 0],
   B: [1, 0, 2],
-  C: [0, 0, 2],
+  C: [0, 0, 1],
   D: [1, 0, 1],
   E: [4, 0, 0],
   F: [3, 0, 0],
@@ -70,7 +71,7 @@ Glyph.STROKES = {
   P: [1, 0, 1],
   Q: [0, 1, 1],
   R: [1, 1, 1],
-  S: [0, 0, 1],
+  S: [0, 0, 2],
   T: [2, 0, 0],
   U: [0, 0, 1],
   V: [0, 2, 0],
