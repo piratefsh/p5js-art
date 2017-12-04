@@ -26,12 +26,13 @@ they were delicious
 so sweet
 and so cold`);
   const canvasSize = 600;
+  const canvasHeight = 460;
   const textarea = document.createElement('textarea');
   let gui;
   let writer;
 
   p.setup = () => {
-    p.createCanvas(canvasSize, canvasSize);
+    p.createCanvas(canvasSize, canvasHeight);
     p.frameRate(60);
     // p.noLoop();
 
@@ -56,7 +57,7 @@ and so cold`);
     document.body.appendChild(textarea);
     textarea.value = input;
     textarea.style.width = `${canvasSize}px`;
-    textarea.style.height = `${canvasSize}px`;
+    textarea.style.height = `${canvasHeight}px`;
     textarea.addEventListener('change', () => {
       p.update();
     });

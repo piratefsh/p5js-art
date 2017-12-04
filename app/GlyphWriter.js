@@ -6,7 +6,7 @@ export default class GlyphWriter {
   constructor({ input }) {
     this.updateInput(input);
     this.glyphs = [];
-    this.sort = true;
+    this.sort = false;
   }
 
   parseText(text) {
