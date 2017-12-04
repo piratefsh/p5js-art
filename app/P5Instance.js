@@ -48,6 +48,7 @@ and so cold`);
     // init GUI
     gui = new dat.GUI();
     gui.add(Glyph, 'debug');
+    gui.add(writer, 'uppercase');
     gui.add(writer, 'compact');
     gui.add(writer, 'sort');
     gui.add(writer, 'strokeWeight').min(1).max(10);

@@ -9,6 +9,7 @@ export default class GlyphWriter {
     this.gutterRatio = 0;
     this.sort = false;
     this.compact = false;
+    this.uppercase = false;
     this.strokeWeight = 1;
     this.strokeOpacity = 255;
   }
@@ -16,7 +17,7 @@ export default class GlyphWriter {
   parseText(text) {
     return text.split('\n')
       .map(ln => ln.trim())
-      .map(ln => ln.toUpperCase())
+      .map(ln => (this.uppercase && ln.toUpperCase()) || ln)
       .join('')
       .split('')
       .filter(char => char.length > 0)
