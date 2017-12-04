@@ -1,22 +1,20 @@
 import { p } from 'P5Instance';
 
 export default class Glyph {
-  constructor({ letter = 'A', pos, size }) {
+  constructor({ letter = 'A', pos, size, strokeWeight=1, strokeOpacity=255 }) {
     this.pos = pos.copy();
     this.size = size;
     this.letter = letter;
     this.strokes = Glyph.STROKES[this.letter] || [0, 0];
+    this.strokeOpacity = strokeOpacity;
+    this.strokeWeight = strokeWeight;
   }
 
   draw() {
     p.push();
     p.fill(0, 0);
-    if (Glyph.debug) {
-      p.stroke(255, 200);
-    } else {
-      p.stroke(255, 255);
-      p.strokeWeight(2);
-    }
+    p.stroke(255, this.strokeOpacity);
+    p.strokeWeight(this.strokeWeight);
     p.translate(this.pos.x, this.pos.y);
 
     const [straights, diagonals, curves, dots] = this.strokes;
@@ -33,14 +31,14 @@ export default class Glyph {
     }
 
     p.push();
-    p.fill(255);
-    p.stroke(0, 0);
-    for (let i = 0; i < dots; i++) {
-      p.ellipse(this.size/2 - this.size/dots * i,
-        0,
-        this.size * 0.3,
-        this.size * 0.3);
-    }
+      p.fill(255);
+      p.stroke(0, 0);
+      for (let i = 0; i < dots; i++) {
+        p.ellipse(this.size/2 - this.size/dots * i,
+          0,
+          this.size * 0.3,
+          this.size * 0.3);
+      }
     p.pop();
 
     for (let i = 0; i < diagonals; i++) {
@@ -53,9 +51,12 @@ export default class Glyph {
     }
 
     if (Glyph.debug) {
-      p.stroke(255);
+      p.push()
+      p.stroke(255, 0);
+      p.fill(255);
       p.text(this.letter, 0, 0);
       // p.rect(0, 0, this.size, this.size);
+      p.pop()
     }
 
     p.pop();

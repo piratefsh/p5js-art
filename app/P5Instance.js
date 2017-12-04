@@ -45,12 +45,13 @@ and so cold`);
     // start
     p.reset();
 
-
     // init GUI
     gui = new dat.GUI();
     gui.add(Glyph, 'debug');
     gui.add(writer, 'compact');
     gui.add(writer, 'sort');
+    gui.add(writer, 'strokeWeight').min(1).max(10);
+    gui.add(writer, 'strokeOpacity').min(0).max(255);
     gui.add(p, 'saveImage');
   };
 

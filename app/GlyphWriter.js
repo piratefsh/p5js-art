@@ -9,6 +9,8 @@ export default class GlyphWriter {
     this.gutterRatio = 0;
     this.sort = false;
     this.compact = false;
+    this.strokeWeight = 1;
+    this.strokeOpacity = 255;
   }
 
   parseText(text) {
@@ -66,6 +68,8 @@ export default class GlyphWriter {
           pos,
           size: this.size,
           letter: this.lines[i][j],
+          strokeWeight: this.strokeWeight,
+          strokeOpacity: this.strokeOpacity,
         });
         this.glyphs.push(h);
       }
