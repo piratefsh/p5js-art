@@ -14,7 +14,7 @@ const sketch = p => {
   const gridX = 12;
   const gridY = 8;
   const gutter = 4;
-  const canvasSize = 600;
+  const canvasSize = 800;
   const textarea = document.createElement('textarea');
   const input = (`I have eaten
 the plums
@@ -41,7 +41,10 @@ and so cold`);
     document.body.appendChild(textarea);
     textarea.value = input;
     textarea.style.width = `${canvasSize}px`;
-    textarea.addEventListener('change', p.reset);
+    textarea.addEventListener('change', () => {
+      p.reset();
+      p.resizeCanvas(canvasSize, (text.length + 2) * cellSize);
+    });
     gui = new dat.GUI();
     gui.add(Glyph, 'debug');
     gui.add(p, 'saveImage');
@@ -55,7 +58,7 @@ and so cold`);
 
   p.resizeCell = () => {
     longestLine = text.length > 0 ? Math.max.apply(null, (text.map(ln => ln.length))) : longestLine;
-    cellSize = Math.ceil(canvasSize / (longestLine + 2)) - gutter;
+    cellSize = Math.floor(canvasSize / (longestLine + 2)) - gutter;
   };
 
   p.setup = () => {

@@ -4,24 +4,30 @@ export default class Glyph {
   constructor({ letter = 'A', pos, size }) {
     this.pos = pos.copy();
     this.size = size;
-    this.letter = letter.toUpperCase();
+    this.letter = letter
     this.strokes = Glyph.STROKES[this.letter] || [0, 0];
   }
 
   draw() {
     p.push();
     p.fill(0, 0);
-    p.stroke(255, 255);
+    if (Glyph.debug) {
+      p.stroke(255, 200);
+    } else {
+      p.stroke(255, 255);
+    }
     p.translate(this.pos.x, this.pos.y);
 
     const [straights, diagonals, curves] = this.strokes;
     const step = this.size / straights;
     for (let i = 0; i < straights; i++) {
-      p.line((step * 0), (step * i), (step * (0 + 1)), (step * i));
+      p.line(step * 0, step * i, step, step * i);
     }
 
     for (let i = 0; i < curves; i++) {
-      p.ellipse(0, 0, this.size - (this.size / curves * (i)), this.size - (this.size / curves * (i)));
+      p.ellipse(0, 0,
+        this.size - (this.size / curves * (i)),
+        this.size - (this.size / curves * (i)));
     }
 
     for (let i = 0; i < diagonals; i++) {
@@ -55,31 +61,57 @@ Glyph.DIAGONAL_LINES = [
   [0, 0, 0, 1],
 ];
 Glyph.STROKES = {
-  A: [1, 2, 0],
-  B: [1, 0, 2],
-  C: [0, 0, 1],
-  D: [1, 0, 1],
-  E: [4, 0, 0],
-  F: [3, 0, 0],
-  G: [3, 0, 0],
-  H: [3, 0, 0],
-  I: [3, 0, 0],
-  J: [1, 0, 1],
-  K: [1, 2, 0],
-  L: [1, 0, 0],
-  M: [2, 2, 0],
-  N: [2, 1, 0],
-  O: [0, 0, 1],
-  P: [1, 0, 1],
-  Q: [0, 1, 1],
-  R: [1, 1, 1],
-  S: [0, 0, 2],
-  T: [2, 0, 0],
-  U: [0, 0, 1],
-  V: [0, 2, 0],
-  W: [0, 4, 0],
-  X: [0, 2, 0],
-  Y: [1, 2, 0],
-  Z: [2, 1, 0],
+  A: [1, 2, 0, 0],
+  B: [1, 0, 2, 0],
+  C: [0, 0, 1, 0],
+  D: [1, 0, 1, 0],
+  E: [4, 0, 0, 0],
+  F: [3, 0, 0, 0],
+  G: [3, 0, 0, 0],
+  H: [3, 0, 0, 0],
+  I: [3, 0, 0, 0],
+  J: [1, 0, 1, 0],
+  K: [1, 2, 0, 0],
+  L: [1, 0, 0, 0],
+  M: [2, 2, 0, 0],
+  N: [2, 1, 0, 0],
+  O: [0, 0, 1, 0],
+  P: [1, 0, 1, 0],
+  Q: [0, 1, 1, 0],
+  R: [1, 1, 1, 0],
+  S: [0, 0, 2, 0],
+  T: [2, 0, 0, 0],
+  U: [0, 0, 1, 0],
+  V: [0, 2, 0, 0],
+  W: [0, 4, 0, 0],
+  X: [0, 2, 0, 0],
+  Y: [1, 2, 0, 0],
+  Z: [2, 1, 0, 0],
+  a: [1, 0, 1, 0],
+  b: [1, 0, 1, 0],
+  c: [0, 0, 1, 0],
+  d: [1, 0, 1, 0],
+  e: [0, 0, 2, 0],
+  f: [1, 0, 1, 0],
+  g: [0, 0, 3, 0],
+  h: [1, 0, 1, 0],
+  i: [1, 0, 0, 1],
+  j: [0, 0, 1, 1],
+  k: [1, 2, 0, 0],
+  l: [1, 0, 0, 0],
+  m: [1, 0, 2, 0],
+  n: [1, 0, 1, 0],
+  o: [0, 0, 1, 0],
+  p: [1, 0, 1, 0],
+  q: [1, 0, 2, 0],
+  r: [1, 0, 1, 0],
+  s: [0, 0, 2, 0],
+  t: [2, 0, 0, 0],
+  u: [0, 0, 1, 0],
+  v: [0, 0, 1, 0],
+  w: [0, 0, 2, 0],
+  x: [0, 2, 0, 0],
+  y: [0, 2, 0, 0],
+  z: [2, 1, 0, 0],
 };
 
