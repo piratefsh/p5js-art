@@ -8,6 +8,7 @@ export default class GlyphWriter {
     this.glyphs = [];
     this.gutterRatio = 0;
     this.sort = false;
+    this.compact = false;
   }
 
   parseText(text) {
@@ -16,15 +17,15 @@ export default class GlyphWriter {
       .map(ln => ln.toUpperCase())
       .join('')
       .split('')
-      .filter(char => char.length > 0 && char !== ' ')
+      .filter(char => char.length > 0)
+      .filter(char => !this.compact || char !== ' ')
       .reduce((acc, n, i, arr) => {
-        const len = arr.length / Math.floor(Math.sqrt(arr.length));
+        const len = Math.floor(arr.length / Math.floor(Math.sqrt(arr.length)));
         if (i % len === 0) {
           acc.push(arr.slice(i, i + len));
         }
         return acc;
       }, [])
-      // .map(ln => ln.split(''))
       .map(ln => (!this.sort && ln)
         || ln.sort((a, b) => Util.sum(Glyph.fetchStroke(a)) - Util.sum(Glyph.fetchStroke(b))));
   }

@@ -49,6 +49,7 @@ and so cold`);
     // init GUI
     gui = new dat.GUI();
     gui.add(Glyph, 'debug');
+    gui.add(writer, 'compact');
     gui.add(writer, 'sort');
     gui.add(p, 'saveImage');
   };
