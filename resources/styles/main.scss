@@ -3,6 +3,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: 6px solid teal;
+  opacity: 0.0;
+
 }
 
 #canvas-holder {
@@ -17,6 +20,9 @@
 }
 
 #snap-canvas{
-  position: relative;
+  opacity: 0.0;
+  position: absolute;
+  top: 0;
+  border: 1px solid teal;
   z-index: 2;
 }

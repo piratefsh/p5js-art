@@ -7,6 +7,7 @@ tracking.ViolaJones.classifiers.face = face;
 tracking.ViolaJones.classifiers.eye = eye;
 export default class EyeSeeYou {
   constructor({ video, canvas }) {
+    this.first = true;
     this.pause = false;
     this.drawn = false;
     this.video = video;
@@ -24,26 +25,78 @@ export default class EyeSeeYou {
     this.snapCanvas.height = 200;
     document.body.appendChild(this.snapCanvas);
 
+    this.lastBlink = Date.now();
+    this.maxShots = Math.floor(window.innerWidth/200) * 4;
+
     this.lastFacePos = null;
+    this.throttle = 0;
+    // this.drawVideoCanvas()
   }
 
-  trackEyes(canvas) {
+  drawVideoCanvas(){
+    this.videoCanvasContext.drawImage(this.video, 0, 0, this.videoCanvas.width, this.videoCanvas.height);
+    requestAnimationFrame(() => {
+      this.drawVideoCanvas()
+    })
+  }
+
+  trackEyes(canvas, faceRect) {
     const context = canvas.getContext('2d');
     const eyeTracker = new tracking.ObjectTracker('eye');
     eyeTracker.setInitialScale(2);
     eyeTracker.setStepSize(2);
     eyeTracker.setEdgesDensity(0.1);
     eyeTracker.on('track', (event) => {
-      console.log(event.data)
-      event.data.forEach((rect) => {
-        // context.fill = 0;
-        context.strokeStyle = '#a64ceb';
-        context.strokeRect(rect.x, rect.y, rect.width, rect.height);
-      });
+      this.videoCanvasContext.drawImage(this.video, 0, 0, this.videoCanvas.width, this.videoCanvas.height);
+
+      if (event.data.length > 0) {
+        event.data.forEach((rect) => {
+          // context.fill = 0;
+          context.strokeStyle = '#a64ceb';
+          context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        });
+        this.hasEyes = true;
+        this.eyesLastSeen = Date.now();
+      } else {
+        this.hasEyes = false;
+
+        // dont snap too often
+        if(Date.now() - this.lastBlink < this.throttle || this.first){
+          this.first = false;
+          return;
+        } else {
+          this.lastBlink = Date.now()
+          const newSnapCanvas = this.makeSmallCanvas();
+          this.extractRectToNewCanvas(
+            this.snapCanvas,
+            newSnapCanvas, {
+            x: 0,
+            y: 0,
+            width: 200,
+            height: 200,
+          });
+          const shotsHolder = document.getElementById('shots');
+
+          if(shotsHolder.children.length > this.maxShots){
+            shotsHolder.removeChild(shotsHolder.children[shotsHolder.children.length - 1]);
+            shotsHolder.prepend(newSnapCanvas);
+          } else {
+            shotsHolder.prepend(newSnapCanvas);
+          }
+          console.log('blink');
+        }
+      }
     });
 
     tracking.track(this.snapCanvas, eyeTracker);
     // tracking.track('#myface', eyeTracker);
+  }
+
+  makeSmallCanvas(){
+    const c = document.createElement('canvas');
+    c.width = 200;
+    c.height = 200;
+    return c;
   }
 
   addTracker({ object, initScale, color }) {
@@ -54,8 +107,6 @@ export default class EyeSeeYou {
     tracking.track('#video', tracker, { camera: true });
 
     tracker.on('track', (event) => {
-      this.videoCanvasContext.drawImage(this.video, 0, 0, this.videoCanvas.width, this.videoCanvas.height);
-
       // if face, save biggest one as last face
       const biggestFace = event.data.reduce((acc, rect, i) => {
         p.stroke(...color);
@@ -72,19 +123,23 @@ export default class EyeSeeYou {
       if (biggestFace) {
         p.clear();
         this.drawRect(biggestFace);
-        this.snapshot(biggestFace);
-        this.trackEyes(this.snapCanvas);
+        this.extractRectToNewCanvas(
+          this.videoCanvas,
+          this.snapCanvas,
+          biggestFace,
+        );
+        this.trackEyes(this.snapCanvas, biggestFace);
       }
     });
   }
 
-  snapshot(rect) {
-    const snapPixels = this.videoCanvasContext
+  extractRectToNewCanvas(sourceCanvas, destCanvas, rect) {
+    const context = destCanvas.getContext('2d');
+    const snapPixels = sourceCanvas
+      .getContext('2d')
       .getImageData(rect.x, rect.y, rect.width, rect.height);
-    const snap = this.snapCanvas;
-    const context = snap.getContext('2d');
-    context.fillStyle = 'black'
-    context.rect(0, 0, snap.width, snap.height);
+    context.fillStyle = 'black';
+    context.rect(0, 0, destCanvas.width, destCanvas.height);
     context.fill();
     context.putImageData(snapPixels, 0, 0, 0, 0, rect.width, rect.height);
     this.drawn = true;

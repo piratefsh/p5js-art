@@ -21,7 +21,6 @@ const sketch = p => {
     p.createCanvas(canvasSize, canvasHeight);
     p.reset();
     p.noLoop();
-    p.frameRate(24);
 
     esy = new EyeSeeYou({
       video,
