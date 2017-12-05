@@ -1,7 +1,11 @@
 import p5 from 'p5';
+import thing from 'p5/lib/addons/p5.dom';
 import Util from 'components/utils/Utils';
 import dat from 'dat.gui-0.6.5/build/dat.gui';
-
+import EyeSeeYou from 'EyeSeeYou';
+console.log('thing', thing)
+console.log('thing', p5.createVideo)
+// Object.assign(p5, p5dom);
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
@@ -9,12 +13,14 @@ const sketch = p => {
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   let gui = new dat.GUI();
+  let esy = new EyeSeeYou();
 
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
     p.noLoop();
     p.frameRate(60);
+    esy.setup();
   };
 
   p.reset = () => {
