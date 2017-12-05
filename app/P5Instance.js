@@ -6,7 +6,7 @@ import EyeSeeYou from 'EyeSeeYou';
 const sketch = p => {
   const canvasSize = 480;
   const canvasHeight = 360;
-  const gui = new dat.GUI();
+  // const gui = new dat.GUI();
   let esy;
   p.setup = () => {
     const video = document.getElementById('video');
