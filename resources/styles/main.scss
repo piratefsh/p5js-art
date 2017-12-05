@@ -1,10 +1,22 @@
-video{
-  position: fixed;
-  top: 0px;
+#canvas-holder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-#canvas-holder canvas {
-  position: fixed;
-  top: 0px;
-  z-index: 1;
+#canvas-holder {
+  video {
+    position: fixed;
+    top: 0px;
+  }
+
+  canvas {
+    z-index: 1;
+  }
+}
+
+#snap-canvas{
+  position: relative;
+  z-index: 2;
 }

@@ -3,10 +3,6 @@ import Util from 'components/utils/Utils';
 import dat from 'dat.gui-0.6.5/build/dat.gui';
 import EyeSeeYou from 'EyeSeeYou';
 
-const canvasHolder = document.createElement('div');
-canvasHolder.id = 'canvas-holder';
-document.body.appendChild(canvasHolder);
-
 const sketch = p => {
   const canvasSize = 480;
   const canvasHeight = 360;
@@ -14,7 +10,7 @@ const sketch = p => {
   let esy;
   p.setup = () => {
     const video = document.getElementById('video');
-    const canvas = document.getElementById('canvas-holder').children[0];
+    const canvas = document.querySelector('#canvas-holder canvas');
     video.style.width = `${canvasSize}px`;
     video.style.height = `${canvasHeight}px`;
     // hide video
@@ -25,7 +21,7 @@ const sketch = p => {
     p.createCanvas(canvasSize, canvasHeight);
     p.reset();
     p.noLoop();
-    p.frameRate(60);
+    p.frameRate(24);
 
     esy = new EyeSeeYou({
       video,
@@ -58,5 +54,5 @@ const sketch = p => {
 };
 
 // set global functions for p5
-const p = new p5(sketch, canvasHolder);
+const p = new p5(sketch, document.getElementById('canvas-holder'));
 export { p };
