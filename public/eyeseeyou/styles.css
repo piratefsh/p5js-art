@@ -5024,6 +5024,9 @@ button.close {
 #canvas-holder canvas {
   z-index: 1; }
 
+#shots {
+  background-color: black; }
+
 #snap-canvas {
   opacity: 0.0;
   position: absolute;

@@ -77889,6 +77889,7 @@
 
 	    _classCallCheck(this, EyeSeeYou);
 
+	    this.snapSize = 180;
 	    this.first = true;
 	    this.pause = false;
 	    this.drawn = false;
@@ -77903,12 +77904,12 @@
 
 	    this.snapCanvas = document.createElement('canvas');
 	    this.snapCanvas.id = 'snap-canvas';
-	    this.snapCanvas.width = 200;
-	    this.snapCanvas.height = 200;
+	    this.snapCanvas.width = this.snapSize;
+	    this.snapCanvas.height = this.snapSize;
 	    document.body.appendChild(this.snapCanvas);
 
 	    this.lastBlink = Date.now();
-	    this.maxShots = Math.floor(window.innerWidth / 200) * 4;
+	    this.maxShots = Math.floor(window.innerWidth / this.snapSize) * 4;
 
 	    this.lastFacePos = null;
 	    this.throttle = 0;
@@ -77959,8 +77960,8 @@
 	            _this2.extractRectToNewCanvas(_this2.snapCanvas, newSnapCanvas, {
 	              x: 0,
 	              y: 0,
-	              width: 200,
-	              height: 200
+	              width: _this2.snapSize,
+	              height: _this2.snapSize
 	            });
 	            var shotsHolder = document.getElementById('shots');
 
@@ -77970,7 +77971,7 @@
 	            } else {
 	              shotsHolder.prepend(newSnapCanvas);
 	            }
-	            console.log('blink');
+	            // console.log('blink');
 	          }
 	        }
 	      });
@@ -77982,8 +77983,8 @@
 	    key: 'makeSmallCanvas',
 	    value: function makeSmallCanvas() {
 	      var c = document.createElement('canvas');
-	      c.width = 200;
-	      c.height = 200;
+	      c.width = this.snapSize;
+	      c.height = this.snapSize;
 	      return c;
 	    }
 	  }, {
@@ -78026,8 +78027,13 @@
 	  }, {
 	    key: 'extractRectToNewCanvas',
 	    value: function extractRectToNewCanvas(sourceCanvas, destCanvas, rect) {
+	      if (rect.width == 0 || rect.height == 0) {
+	        return;
+	      }
 	      var context = destCanvas.getContext('2d');
 	      var snapPixels = sourceCanvas.getContext('2d').getImageData(rect.x, rect.y, rect.width, rect.height);
+	      destCanvas.width = rect.width;
+	      destCanvas.height = rect.height;
 	      context.fillStyle = 'black';
 	      context.rect(0, 0, destCanvas.width, destCanvas.height);
 	      context.fill();
