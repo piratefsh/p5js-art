@@ -1,0 +1,10 @@
+video{
+  position: fixed;
+  top: 0px;
+}
+
+#canvas-holder canvas {
+  position: fixed;
+  top: 0px;
+  z-index: 1;
+}

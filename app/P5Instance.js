@@ -19,7 +19,8 @@ const sketch = p => {
     video.style.height = `${canvasHeight}px`;
     // hide video
     video.style.position = 'fixed';
-    video.style.bottom = '99999px';
+    video.style.zIndex = -1;
+    video.style.top = '0px';
 
     p.createCanvas(canvasSize, canvasHeight);
     p.reset();
@@ -38,7 +39,7 @@ const sketch = p => {
   };
 
   p.draw = () => {
-    p.background(200);
+    p.background(0, 0);
   };
 
   p.saveImage = () => {
