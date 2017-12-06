@@ -1,0 +1,10 @@
+textarea {
+  min-height: 200px;
+  height: 100%;
+  font-family: monospace; }
+
+* {
+  vertical-align: top; }
+
+body {
+  margin: 0; }
