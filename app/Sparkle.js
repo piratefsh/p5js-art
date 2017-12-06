@@ -4,7 +4,7 @@ import { pointer } from 'components/utils/MousePointer';
 export default class Sparkle {
   constructor() {
     this.rings = [];
-    this.numRings = 5;
+    this.numRings = 8;
     for (let i = 0; i < this.numRings; i++) {
       this.rings.push(new Ring({ minRadius: 150, maxRadius: p.width / 2 }));
     }
@@ -12,11 +12,13 @@ export default class Sparkle {
     this.radius = 100;
     this.minRadius = 100;
     this.maxRadius = 200;
+
+    this.center = p.createVector(p.random(p.width), p.random(p.height))
   }
 
   draw() {
     p.push();
-    p.translate(p.width / 2, p.height / 2);
+    p.translate(this.center.x, this.center.y);
     p.rotate(this.angle);
     p.translate(-this.radius / 2, -this.radius / 2);
     p.fill(255, 190);
@@ -54,8 +56,8 @@ class Ring {
     this.minRadius = props.minRadius;
     this.maxRadius = props.maxRadius;
     this.radius = props.minRadius;
-    this.glowRadius = 5 + Math.floor(p.random(7));
-    this.size = 2 + Math.floor(p.random(15));
+    this.glowRadius = 5 + Math.floor(p.random(12));
+    this.size = 2 + Math.floor(p.random(24));
 
     this.numSteps = 24;
     this.points = [];

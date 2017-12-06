@@ -8,20 +8,22 @@ const sketch = p => {
   const canvasSize = window.innerWidth;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
+  let color;
   let s;
 
   p.setup = () => {
-    p.createCanvas(canvasSize, window.innerHeight);
+    p.createCanvas(500, 500);
     p.reset();
     // p.noLoop();
     s = new Sparkle();
   };
 
   p.reset = () => {
+    color = p.random(['red', 'mediumvioletred', 'darkred', 'firebrick', 'orange', 'chocolate']);
   };
 
   p.draw = () => {
-    p.background(0, 50);
+    p.background(color);
     s.update();
     s.draw()
   };
