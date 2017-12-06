@@ -21,9 +21,7 @@ const sketch = p => {
   };
 
   p.draw = () => {
-    p.background(18, 170, 161);
-
-    p.blendMode(p.BLEND);
+    p.background(0, 50);
     s.update();
     s.draw()
   };
