@@ -7,7 +7,7 @@
 
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
-import dat from 'dat.gui-0.6.5/build/dat.gui';
+import dat from 'dat.gui/build/dat.gui';
 import GlyphWriter from './GlyphWriter';
 import Glyph from './Glyph';
 const sketch = p => {
