@@ -1,8 +1,8 @@
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
 import DotGrid from 'components/DotGrid';
+import Modulator from 'components/Modulator';
 import dat from 'dat.gui/build/dat.gui';
-
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
@@ -10,7 +10,7 @@ const sketch = p => {
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   let gui = new dat.GUI();
-
+  const m = new Modulator();
   let segGrid;
   let controllers;
 
@@ -18,9 +18,9 @@ const sketch = p => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
     // p.noLoop();
-    // p.frameRate(60);
+    p.frameRate(24);
 
-    segGrid = new DotGrid({rows:18, cols:10, numDotsPerSegment: 10})
+    segGrid = new DotGrid({rows:10, cols:6, numDotsPerSegment: 6})
 
     controllers = [
       gui.add(segGrid, 'rows', 1, 30, 1),
@@ -32,9 +32,14 @@ const sketch = p => {
     ];
 
     controllers.map((c) => c.onFinishChange(() => {
-      segGrid.update()
+      segGrid.update();
+      m.resetInitValue(c.object, c.property, c.getValue());
     }));
 
+    m.add(segGrid, 'numDotsPerSegment', (t, v) => v + 3 - v * p.sin(t))
+    m.add(segGrid, 'rows', (t, v) => v + 5 * p.cos(t) )
+    // m.add(segGrid, 'yJitter', (t) => p.sin(t))
+    // m.add(segGrid, 'cols', (t) => p.cos(t))
     // segGrid.update();
   };
 
@@ -43,6 +48,8 @@ const sketch = p => {
   };
 
   p.draw = () => {
+    m.tick();
+    segGrid.update()
     p.background(20);
     segGrid.draw();
   };
