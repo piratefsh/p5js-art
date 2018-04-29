@@ -11,32 +11,31 @@ class Dot{
 
   draw(){
     const { x, y, size } = this;
-    p.push();
-    p.color(255, 10);
     p.ellipse(x, y, size, size)
-    p.pop();
   }
 }
 
 export default class DotSegment {
-  constructor(x, y){
+  constructor({
+    x,
+    y,
+    step=10,
+    numDots=10,
+    dotSize=5 }){
     Object.assign(this, {
       x,
       y,
+      step,
+      numDots,
+      dotSize,
       dots: [],
-      step: 12,
-      numDots: 5,
     })
 
     for(let i = 0; i < this.numDots; i++){
-      this.dots.push(new Dot(i * this.step, 0));
+      this.dots.push(new Dot(i * this.step, 0, dotSize));
     }
 
     this.width = this.step * this.numDots;
-  }
-
-  update(){
-
   }
 
   draw(){
