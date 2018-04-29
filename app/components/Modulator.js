@@ -22,6 +22,7 @@ export default class Modulator {
     this.mods.map((m) => {
       if(m.obj === obj && m.param == param){
         m.initValue = val;
+        console.log(m)
       }
     })
   }

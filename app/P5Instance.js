@@ -6,7 +6,7 @@ import dat from 'dat.gui/build/dat.gui';
 const sketch = p => {
   const gridX = 1;
   const gridY = 1;
-  const canvasSize = 600; window.innerWidth;
+  const canvasSize = 500; window.innerWidth;
   const cellSize = Math.ceil(canvasSize / gridX);
   const edgeLen = cellSize / 2;
   let gui = new dat.GUI();
@@ -20,7 +20,7 @@ const sketch = p => {
     // p.noLoop();
     p.frameRate(24);
 
-    segGrid = new DotGrid({rows:10, cols:6, numDotsPerSegment: 6})
+    segGrid = new DotGrid({rows:10, cols:6, numDotsPerSegment: 6, dotSize: 10})
 
     controllers = [
       gui.add(segGrid, 'rows', 1, 30, 1),
@@ -28,16 +28,19 @@ const sketch = p => {
       gui.add(segGrid, 'numDotsPerSegment', 1, 30, 1),
       gui.add(segGrid, 'xJitter', 1, 30, 0.5),
       gui.add(segGrid, 'yJitter', 1, 30, 0.5),
-      gui.add(segGrid, 'dotSize', 1, 8, 0.5),
+      gui.add(segGrid, 'dotSize', 1, 20, 0.5),
     ];
 
     controllers.map((c) => c.onFinishChange(() => {
+      console.log(arguments)
       segGrid.update();
       m.resetInitValue(c.object, c.property, c.getValue());
     }));
 
-    m.add(segGrid, 'numDotsPerSegment', (t, v) => v + 3 - v * p.sin(t))
-    m.add(segGrid, 'rows', (t, v) => v + 5 * p.cos(t) )
+    // m.add(segGrid, 'numDotsPerSegment', (t, v) => v + 3 - v * p.sin(t))
+    m.add(segGrid, 'rows', (t, v) => Math.abs(p.cos(t/50)) * v)
+    m.add(segGrid, 'numDotsPerSegment', (t, v) => Math.abs(p.cos(t/50)) * v)
+    m.add(segGrid, 'dotSize', (t, v) => Math.abs(p.sin(t/50)) * v)
     // m.add(segGrid, 'yJitter', (t) => p.sin(t))
     // m.add(segGrid, 'cols', (t) => p.cos(t))
     // segGrid.update();
@@ -50,7 +53,7 @@ const sketch = p => {
   p.draw = () => {
     m.tick();
     segGrid.update()
-    p.background(20);
+    p.background(20, 200);
     segGrid.draw();
   };
 
