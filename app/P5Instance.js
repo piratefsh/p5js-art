@@ -1,5 +1,6 @@
 import p5 from 'p5';
 import Util from 'components/utils/Utils';
+import DotGrid from 'components/DotGrid';
 import dat from 'dat.gui/build/dat.gui';
 
 const sketch = p => {
@@ -10,11 +11,15 @@ const sketch = p => {
   const edgeLen = cellSize / 2;
   let gui = new dat.GUI();
 
+  let segGrid;
+
   p.setup = () => {
     p.createCanvas(canvasSize, canvasSize / gridX * gridY);
     p.reset();
     p.noLoop();
     p.frameRate(60);
+
+    segGrid = new DotGrid({rows:18, cols:10})
   };
 
   p.reset = () => {
@@ -22,7 +27,8 @@ const sketch = p => {
   };
 
   p.draw = () => {
-    p.background(200);
+    p.background(20);
+    segGrid.draw();
   };
 
   p.saveImage = () => {
